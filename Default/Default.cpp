@@ -13,11 +13,6 @@ WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 HWND	g_hWnd;
 
-// Hi
-// ㅇㅇ
-
-
-//test
 // 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM                MyRegisterClass(HINSTANCE hInstance);		// 창 생성 시 각종 외관적인 디자인을 담당하는 함수
 BOOL                InitInstance(HINSTANCE, int);			// 창 생성 메세지
@@ -143,7 +138,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, 
 	   WS_OVERLAPPEDWINDOW,
-       200, 200,	// 창이 생성되는 left, top위 위치
+       500, 30,	// 창이 생성되는 left, top위 위치
 	   rc.right - rc.left, 
 	   rc.bottom - rc.top,	// 창의 가로, 세로 사이즈
 	   nullptr, nullptr, 
