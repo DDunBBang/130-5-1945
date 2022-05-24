@@ -40,7 +40,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,				// 메모리에 할당되는 실체, 즉
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_DEFAULT, szWindowClass, MAX_LOADSTRING);
-   
 	MyRegisterClass(hInstance);
 
     // 응용 프로그램 초기화를 수행합니다.
