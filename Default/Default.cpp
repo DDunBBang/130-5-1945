@@ -14,7 +14,7 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 HWND	g_hWnd;
 
 // Hi
-
+// ㅇㅇ
 
 
 //test
