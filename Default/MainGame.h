@@ -3,6 +3,7 @@
 #include "Define.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "Monster.h"
 
 class CMainGame
 {

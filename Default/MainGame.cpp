@@ -33,6 +33,8 @@ void CMainGame::Update(void)
 			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);//테스트용//테스트용
 		}
 	}
+	m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(20, 20, DIR_RIGHT));
+
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{
 		for (auto& iter = m_ObjList[i].begin();
