@@ -50,7 +50,6 @@ void CMainGame::Update(void)
 				++iter;
 		}
 	}
-	
 }
 
 void CMainGame::Late_Update(void)
