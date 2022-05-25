@@ -20,6 +20,5 @@ public:					// 생성자, 소멸자
 // public, protected, private 변수
 private:
 	HDC			m_hDC;
-	CObj*		m_pPlayer;
-	list<CObj*>	m_BulletList;
+	list<CObj*> m_ObjList[OBJ_END];
 };

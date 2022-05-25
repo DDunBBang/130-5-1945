@@ -28,6 +28,15 @@
     <Filter Include="01. Obj\01. Bullet">
       <UniqueIdentifier>{cb354089-a3ec-4072-9787-d3188e847d88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98.Design">
+      <UniqueIdentifier>{d27db535-e5a9-4a99-b4e1-a5dcc845c350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Design\AbstractFactory">
+      <UniqueIdentifier>{f06e3285-fd2c-48b9-882c-5fd171aae776}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Design\CollisionMgr">
+      <UniqueIdentifier>{5cd42ace-4170-4a0d-ae8b-b3fa07cc59be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -72,6 +81,12 @@
     <ClInclude Include="Enum.h">
       <Filter>99. Header</Filter>
     </ClInclude>
+    <ClInclude Include="AbstractFactory.h">
+      <Filter>98.Design\AbstractFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMgr.h">
+      <Filter>98.Design\CollisionMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -91,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>01. Obj\01. Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>98.Design\CollisionMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

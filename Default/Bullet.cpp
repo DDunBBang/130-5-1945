@@ -15,8 +15,12 @@ void CBullet::Initialize(void)
 {
 }
 
-void CBullet::Update(void)
+int CBullet::Update(void)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
+	return OBJ_NOEVENT;
 }
 
 void CBullet::Render(HDC hDC)

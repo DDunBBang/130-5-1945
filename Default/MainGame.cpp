@@ -1,9 +1,8 @@
 #include "stdafx.h"
 #include "MainGame.h"
-
+#include "AbstractFactory.h"
 
 CMainGame::CMainGame()
-	: m_pPlayer(nullptr)
 {
 }
 
@@ -15,27 +14,48 @@ CMainGame::~CMainGame()
 void CMainGame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
-
-	if (!m_pPlayer)
-	{
-		m_pPlayer = new CPlayer;
-		m_pPlayer->Initialize();
-	}
+	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
+	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
 }
 
 void CMainGame::Update(void)
 {
-	m_pPlayer->Update();
+	for (size_t i = 0; i < OBJ_END; ++i)
+	{
+		for (auto& iter = m_ObjList[i].begin();
+			iter != m_ObjList[i].end();)
+		{
+			int iEvent = (*iter)->Update();
+			if (OBJ_DEAD == iEvent)
+			{
+				Safe_Delete<CObj*>(*iter);
+				iter = m_ObjList[i].erase(iter);
+			}
+			else
+				++iter;
+		}
+	}
 }
 
 void CMainGame::Render(void)
 {
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
-	m_pPlayer->Render(m_hDC);
+	for (size_t i = 0; i < OBJ_END; ++i)
+	{
+		for (auto& iter : m_ObjList[i])
+			iter->Render(m_hDC);
+	}
 }
 
 void CMainGame::Release(void)
 {
-	Safe_Delete<CObj*>(m_pPlayer);
+	for (size_t i = 0; i < OBJ_END; ++i)
+	{
+		for (auto& iter : m_ObjList[i])
+		{
+			Safe_Delete<CObj*>(iter);
+		}
+		m_ObjList[i].clear();
+	}
 	ReleaseDC(g_hWnd, m_hDC);
 }
