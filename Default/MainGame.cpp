@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "MainGame.h"
 #include "AbstractFactory.h"
+#include "CollisionMgr.h"
 
 CMainGame::CMainGame()
 {
+	m_iHp = 100;
 }
 
 CMainGame::~CMainGame()
@@ -20,6 +22,17 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
+
+	if (GetAsyncKeyState('Y') & 0x80000)
+	{
+		--m_iHp;
+		if (m_ObjList[OBJ_PLAYER].size())
+		{
+			m_ObjList[OBJ_PLAYER].front()->Set_Dead();
+			m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());	
+			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);//테스트용//테스트용
+		}
+	}
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{
 		for (auto& iter = m_ObjList[i].begin();
@@ -35,6 +48,43 @@ void CMainGame::Update(void)
 				++iter;
 		}
 	}
+	
+}
+
+void CMainGame::Late_Update(void)
+{
+	for (size_t i = 0; i < OBJ_END; ++i)
+	{
+		for (auto& iter : m_ObjList[i])
+			iter->Late_Update();
+	}
+
+	CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
+
+	CCollisionMgr::Collision_Sphere(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MBULLET]);
+	if (!m_ObjList[OBJ_PLAYER].size())
+	{
+		--m_iHp;
+		if (m_iHp)
+		{
+			m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
+			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
+		}
+	}
+
+	if (CCollisionMgr::Collision_Monster(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]))
+	{
+		--m_iHp;
+		if (m_iHp)
+		{
+			m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
+			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
+		}
+	}
+
+	
+
+
 }
 
 void CMainGame::Render(void)
@@ -45,6 +95,10 @@ void CMainGame::Render(void)
 		for (auto& iter : m_ObjList[i])
 			iter->Render(m_hDC);
 	}
+
+	TCHAR	szBuff[32] = L"";
+	swprintf_s(szBuff, L"Player Count : %d", m_iHp);
+	TextOut(m_hDC, 50, WINCY - 50, szBuff, lstrlen(szBuff));
 }
 
 void CMainGame::Release(void)

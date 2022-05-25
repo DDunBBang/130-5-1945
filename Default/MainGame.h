@@ -14,6 +14,7 @@ public:					// 持失切, 社瑚切
  public:
 	void		Initialize(void);
 	void		Update(void);
+	void		Late_Update(void);
 	void		Render(void);
 	void		Release(void);
 
@@ -21,4 +22,6 @@ public:					// 持失切, 社瑚切
 private:
 	HDC			m_hDC;
 	list<CObj*> m_ObjList[OBJ_END];
+
+	int			m_iHp;
 };
