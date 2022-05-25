@@ -4,6 +4,7 @@
 #define		WINCY 750
 
 #define		PI		3.141592f;
+#define		DEGREE	3.141592f/180
 
 #define		PURE		= 0
 

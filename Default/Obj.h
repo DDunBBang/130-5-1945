@@ -14,16 +14,18 @@ public:
 		m_tInfo.fX = _fX;
 		m_tInfo.fY = _fY;
 	}
-	void		Set_Dir(float _fX, float _fY, DIRECTION _eDir) { m_eDir = _eDir; }
+	void		Set_Dir(DIRECTION _eDir) { m_eDir = _eDir; }
 	void		Set_Dead() { m_bDead = true; }
-	RECT& const Get_Rect() { return m_tRect; }
-	INFO& const Get_Info() { return m_tInfo; }
-
+	const RECT& Get_Rect() { return m_tRect; }
+	const INFO& Get_Info() { return m_tInfo; }
+	void		Set_Up_iLv(void)	{ ++m_iLv; }
 public:
 	virtual		void	Initialize(void)	PURE;
-	virtual		int	Update(void)		PURE;
+	virtual		int		Update(void)		PURE;
+	virtual		void	Late_Update(void)	PURE;
 	virtual		void	Render(HDC hDC)		PURE;
 	virtual		void	Release(void)		PURE;
+
 
 protected:
 	void		Update_Rect(void);
@@ -34,5 +36,6 @@ protected:
 	DIRECTION	m_eDir;
 	bool		m_bDead;
 	float		m_fSpeed;
+	int			m_iLv;
 };
 

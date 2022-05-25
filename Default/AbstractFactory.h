@@ -20,8 +20,8 @@ public:
 	{
 		CObj* pInstace = new T;
 		pInstace->Initialize();
-		pInstace->Set_Pos();
-		pInstace->Set_Dir();
+		pInstace->Set_Pos(_fX,_fY);
+		pInstace->Set_Dir(_eDir);
 
 		return pInstace;
 	}
