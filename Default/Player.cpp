@@ -94,6 +94,28 @@ void CPlayer::Key_Input(void)
 		}
 	}
 
+	if (GetAsyncKeyState('X'))
+	{
+		if (m_pMonster->size()!=0)
+		{
+			float fRadian = atan2((m_pMonster->front()->Get_Info().fY - m_tInfo.fY), (m_pMonster->front()->Get_Info().fX - m_tInfo.fX))*180/PI;
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_MD, fRadian));
+		}
+	}
+
+	if (GetAsyncKeyState('C'))
+	{		
+		if (m_dwTime + 10000 <= GetTickCount())
+		{				
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(75, WINCY - 75, DIR_UT));
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(WINCX - 75, WINCY - 75, DIR_UT));
+			m_dwTime = GetTickCount();
+		}
+	}
+
 	if (GetAsyncKeyState('T'))
 		++m_iLv;
+
+	if (GetAsyncKeyState('M'))
+		m_pMonster->push_back(CAbstractFactory<CMonster>::Create(250, 150, DIR_LEFT));
 }

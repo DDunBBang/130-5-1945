@@ -2,6 +2,7 @@
 
 #include "Obj.h"
 #include "Bullet.h"
+#include "Monster.h"
 class CPlayer :	public CObj
 {
 public:
@@ -10,7 +11,7 @@ public:
 	
 public:
 	void Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
-
+	void Set_Monster(list<CObj*>* _pMonster) { m_pMonster = _pMonster; }
 public:
 	virtual void Initialize(void) override;
 	virtual int Update(void) override;
@@ -23,6 +24,7 @@ private:
 	
 
 	list<CObj*>* m_pBullet;
+	list<CObj*>* m_pMonster;
 
 };
 

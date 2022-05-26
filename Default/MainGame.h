@@ -3,6 +3,7 @@
 #include "Define.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "Monster.h"
 
 class CMainGame
 {
@@ -18,10 +19,13 @@ public:					// 생성자, 소멸자
 	void		Render(void);
 	void		Release(void);
 
+
 // public, protected, private 변수
 private:
 	HDC			m_hDC;
 	list<CObj*> m_ObjList[OBJ_END];
-
+	DWORD		m_dwStTime;
+	/*DWORD		m_dwEdTime;
+	DWORD		m_dwDfTime;*/
 	int			m_iHp;
 };

@@ -19,6 +19,8 @@ public:
 	const RECT& Get_Rect() { return m_tRect; }
 	const INFO& Get_Info() { return m_tInfo; }
 	void		Set_Up_iLv(void)	{ ++m_iLv; }
+	void		Set_Radian(float _fRadian) { m_fRadian = _fRadian; }
+	DIRECTION		Get_Dir() { return m_eDir; }
 public:
 	virtual		void	Initialize(void)	PURE;
 	virtual		int		Update(void)		PURE;
@@ -34,8 +36,11 @@ protected:
 	INFO		m_tInfo;
 	RECT		m_tRect;
 	DIRECTION	m_eDir;
+	DWORD		m_dwTime;
 	bool		m_bDead;
+	float		m_fRadian;
 	float		m_fSpeed;
 	int			m_iLv;
+	
 };
 

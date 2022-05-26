@@ -5,7 +5,6 @@ CCollisionMgr::CCollisionMgr()
 {
 }
 
-
 CCollisionMgr::~CCollisionMgr()
 {
 }
@@ -13,7 +12,6 @@ CCollisionMgr::~CCollisionMgr()
 void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour)
 {
 	RECT		rc{};
-
 
 	for (auto& Dest : _Dest)
 	{
@@ -58,7 +56,6 @@ void CCollisionMgr::Collision_Item(list<CObj*> _Player, list<CObj*> _Item)
 {
 	RECT		rc{};
 
-
 	for (auto& Player : _Player)
 	{
 		for (auto& Item : _Item)
@@ -76,14 +73,18 @@ bool CCollisionMgr::Collision_Monster(list<CObj*> _Player, list<CObj*> _Monster)
 {
 	RECT		rc{};
 
-
 	for (auto& Player : _Player)
 	{
 		for (auto& Monster : _Monster)
 		{
 			if (IntersectRect(&rc, &(Player->Get_Rect()), &(Monster->Get_Rect())))
 			{
-				Player->Set_Dead();
+				Player->Set_Dead(); //몬스터와 플레이어가 충돌할때 플레이어만 삭제
+				if (Monster->Get_Info().fCX == 10) //MBULLET 사이즈가 10이므로 MBULLET과 충돌할때는 MBULLET도 삭제
+				{
+					Monster->Set_Dead();
+					return true;
+				}
 				return true;
 			}
 		}

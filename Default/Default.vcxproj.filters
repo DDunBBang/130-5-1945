@@ -37,6 +37,9 @@
     <Filter Include="98.Design\CollisionMgr">
       <UniqueIdentifier>{5cd42ace-4170-4a0d-ae8b-b3fa07cc59be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\02. Monster">
+      <UniqueIdentifier>{9bf57bb2-4bd3-44f5-8c44-012c2858b782}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -87,6 +90,9 @@
     <ClInclude Include="CollisionMgr.h">
       <Filter>98.Design\CollisionMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>01. Obj\02. Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -109,6 +115,9 @@
     </ClCompile>
     <ClCompile Include="CollisionMgr.cpp">
       <Filter>98.Design\CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>01. Obj\02. Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
