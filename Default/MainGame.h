@@ -25,4 +25,6 @@ private:
 	list<CObj*> m_ObjList[OBJ_END];
 
 	int			m_iHp;
+
+	DWORD		m_dwTime;
 };

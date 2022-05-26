@@ -4,6 +4,7 @@
 #include "CollisionMgr.h"
 
 CMainGame::CMainGame()
+	: m_dwTime(GetTickCount())
 {
 	m_iHp = 100;
 }
@@ -33,7 +34,12 @@ void CMainGame::Update(void)
 			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);//테스트용//테스트용
 		}
 	}
-	m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(20, 20, DIR_RIGHT));
+	if (m_dwTime + 2000 < GetTickCount())
+	{
+		int iLv = rand() % 100+1;
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+		m_dwTime = GetTickCount();
+	}
 
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{

@@ -19,6 +19,7 @@ public:
 	const RECT& Get_Rect() { return m_tRect; }
 	const INFO& Get_Info() { return m_tInfo; }
 	void		Set_Up_iLv(void)	{ ++m_iLv; }
+
 public:
 	virtual		void	Initialize(void)	PURE;
 	virtual		int		Update(void)		PURE;

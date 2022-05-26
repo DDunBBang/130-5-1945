@@ -6,6 +6,7 @@ class CMonster : public CObj
 {
 public:
 	CMonster();
+	CMonster(int _iLv);
 	virtual ~CMonster();
 
 public:
