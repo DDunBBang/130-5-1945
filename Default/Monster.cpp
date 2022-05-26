@@ -19,31 +19,75 @@ void CMonster::Initialize(void)
 {
 	m_tInfo.fCX = 30.f;
 	m_tInfo.fCY = 30.f;
-	m_fSpeed = 5.f;
+	m_fSpeed = 3.f;
 
-	if (m_iLv > 60)
+	if (m_iLv > 85)
 	{
-		m_tInfo.fX = -10;
-		m_tInfo.fY = 20;
+		m_iLv = 1;
+		m_tInfo.fX = -10.f;
+		m_tInfo.fY = 20.f;
 		m_eDir = DIR_RIGHT;
+		m_iHP = 10;
+	}
+	else if (m_iLv > 70)
+	{
+		m_iLv = 1;
+		m_tInfo.fX = WINCX + 10;
+		m_tInfo.fY = 20.f;
+		m_eDir = DIR_LEFT;
+		m_iHP = 10;
+	}
+	else if (m_iLv > 55)
+	{
+		m_iLv = 2;
+		m_tInfo.fX = WINCX - 20.f;
+		m_tInfo.fY = 20.f;
+		m_eDir = DIR_DOWN;
+		m_iHP = 60;
+	}
+	else if (m_iLv > 40)
+	{
+		m_iLv = 2;
+		m_tInfo.fX = 20.f;
+		m_tInfo.fY = 20.f;
+		m_eDir = DIR_DOWN;
+		m_iHP = 60;
 	}
 	else if (m_iLv > 30)
 	{
-		m_tInfo.fX = WINCX - 20;
-		m_tInfo.fY = 20;
-		m_eDir = DIR_DOWN;
+		m_iLv = 3;
+		m_tInfo.fX = WINCX / 2;
+		m_tInfo.fY = -10.f;
+		m_eDir = DIR_LT;
+		m_iHP = 120;
 	}
-	else if (m_iLv > 10)
+	else if (m_iLv > 20)
 	{
-		m_tInfo.fX = WINCX + 10;
-		m_tInfo.fY = 300;
-		m_eDir = DIR_LEFT;
+		m_iLv = 3;
+		m_tInfo.fX = WINCX / 2;
+		m_tInfo.fY = -10.f;
+		m_eDir = DIR_RT;
+		m_iHP = 120;
+	}
+	else if (m_iLv > 10 )
+	{
+		m_iLv = 4;
+		m_tInfo.fCX = 50.f;
+		m_tInfo.fCY = 50.f;
+		m_tInfo.fX = 100.f;
+		m_tInfo.fY = 0.f;
+		m_eDir = DIR_DOWN;
+		m_iHP = 300;
 	}
 	else
 	{
-		m_tInfo.fX = WINCX / 2;
-		m_tInfo.fY = WINCY / 2;
-		m_eDir = DIR_UP;
+		m_iLv = 4;
+		m_tInfo.fCX = 50.f;
+		m_tInfo.fCY = 50.f;
+		m_tInfo.fX = WINCX - 100;
+		m_tInfo.fY = 0.f;
+		m_eDir = DIR_DOWN;
+		m_iHP = 300;
 	}
 }
 
@@ -59,6 +103,10 @@ int CMonster::Update(void)
 
 void CMonster::Late_Update(void)
 {
+	if (4 == m_iLv && 250 < m_tInfo.fY)
+		m_eDir = DIR_END;
+	if (3 == m_iLv && (20 == m_tInfo.fX || WINCX - 20 == m_tInfo.fX))
+		m_fSpeed *= -1.f;
 }
 
 void CMonster::Render(HDC hDC)
@@ -91,8 +139,12 @@ void CMonster::Direction()
 		m_tInfo.fY += m_fSpeed;
 		break;
 	case DIR_LT:
+		m_tInfo.fY += 3.f;
+		m_tInfo.fX -= m_fSpeed;
 		break;
 	case DIR_RT:
+		m_tInfo.fY += 3.f;
+		m_tInfo.fX += m_fSpeed;
 		break;
 	}
 }

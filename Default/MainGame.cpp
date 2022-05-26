@@ -4,7 +4,7 @@
 #include "CollisionMgr.h"
 
 CMainGame::CMainGame()
-	: m_dwTime(GetTickCount())
+	: m_dwTime(GetTickCount()), m_bUnique{false}
 {
 	m_iHp = 100;
 }
@@ -16,6 +16,7 @@ CMainGame::~CMainGame()
 
 void CMainGame::Initialize(void)
 {
+	srand(unsigned(time(nullptr)));
 	m_hDC = GetDC(g_hWnd);
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
@@ -23,7 +24,6 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
-
 	if (GetAsyncKeyState('Y') & 0x80000)
 	{
 		--m_iHp;
@@ -34,10 +34,28 @@ void CMainGame::Update(void)
 			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);//테스트용//테스트용
 		}
 	}
-	if (m_dwTime + 2000 < GetTickCount())
+	if (m_dwTime + 1000 < GetTickCount())
 	{
 		int iLv = rand() % 100+1;
-		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+		if (20 >= iLv && 10 < iLv)
+		{
+			if (!m_bUnique[0])
+			{
+				m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+				m_bUnique[0] = true;
+			}
+		}
+		else if (10 >= iLv)
+		{
+			if (!m_bUnique[1])
+			{
+				m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+				m_bUnique[1] = true;
+			}
+		}
+		else
+			m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+
 		m_dwTime = GetTickCount();
 	}
 

@@ -23,4 +23,5 @@ private:
 	void		Key_Input(void);
 	void		Direction();
 	list<CObj*>* m_pBullet;
+	int			m_iHP;
 };

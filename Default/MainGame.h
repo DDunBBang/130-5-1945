@@ -27,4 +27,6 @@ private:
 	int			m_iHp;
 
 	DWORD		m_dwTime;
+
+	bool		m_bUnique[2];
 };
