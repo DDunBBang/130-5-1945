@@ -19,7 +19,7 @@ void CMonster::Initialize(void)
 {
 	m_tInfo.fCX = 30.f;
 	m_tInfo.fCY = 30.f;
-	m_fSpeed = 3.f;
+	m_fSpeed = 4.f;
 
 	if (m_iLv > 85)
 	{
@@ -105,7 +105,7 @@ void CMonster::Late_Update(void)
 {
 	if (4 == m_iLv && 250 < m_tInfo.fY)
 		m_eDir = DIR_END;
-	if (3 == m_iLv && (20 == m_tInfo.fX || WINCX - 20 == m_tInfo.fX))
+	if (3 == m_iLv && (20 > m_tInfo.fX || WINCX - 20 < m_tInfo.fX))
 		m_fSpeed *= -1.f;
 }
 
