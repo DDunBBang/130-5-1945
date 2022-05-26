@@ -3,6 +3,7 @@
 #include "Define.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "Monster.h"
 
 class CMainGame
 {
@@ -24,4 +25,8 @@ private:
 	list<CObj*> m_ObjList[OBJ_END];
 
 	int			m_iHp;
+
+	DWORD		m_dwTime;
+
+	bool		m_bUnique[2];
 };

@@ -25,6 +25,13 @@ public:
 
 		return pInstace;
 	}
+	static CObj* Create(int _iLV)
+	{
+		CObj* pInstace = new T(_iLV);
+		pInstace->Initialize();
+
+		return pInstace;
+	}
 
 };
 
