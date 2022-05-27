@@ -26,8 +26,14 @@ void CMainGame::Initialize(void)
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Monster(&m_ObjList[OBJ_MONSTER]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Pet(&m_ObjList[OBJ_PET]);
-	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Item(&m_ObjList[OBJ_ITEM]);	
+//	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Item(&m_ObjList[OBJ_ITEM]);	
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Shield(&m_ObjList[OBJ_SHIELD]);
+
+	for (auto& iter : m_ObjList[OBJ_MONSTER])
+	{
+		dynamic_cast<CMonster*>(iter)->Set_Item(&m_ObjList[OBJ_ITEM]);
+	}
+	
 }
 
 void CMainGame::Update(void)
@@ -193,7 +199,7 @@ void CMainGame::Re_Init(void)
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Monster(&m_ObjList[OBJ_MONSTER]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Pet(&m_ObjList[OBJ_PET]);
-	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Item(&m_ObjList[OBJ_ITEM]);
+	// dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Item(&m_ObjList[OBJ_ITEM]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Shield(&m_ObjList[OBJ_SHIELD]);
 	m_dwStTime = GetTickCount();
 }
