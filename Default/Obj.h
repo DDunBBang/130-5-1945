@@ -23,6 +23,7 @@ public:
 	DIRECTION		Get_Dir() { return m_eDir; }
 	void		Set_Target(CObj* m_tar) { m_Target = m_tar; }
 	void		Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
+
 public:
 	virtual		void	Initialize(void)	PURE;
 	virtual		int		Update(void)		PURE;

@@ -24,6 +24,7 @@
 #include <map>
 #include <algorithm>
 #include <ctime>
+#include <time.h>
 
 
 #ifdef _DEBUG

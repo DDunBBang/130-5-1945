@@ -4,6 +4,8 @@
 #include "CollisionMgr.h"
 
 CMainGame::CMainGame():m_dwStTime(GetTickCount())//,m_dwEdTime(m_dwStTime+1000)
+CMainGame::CMainGame()
+	: m_dwTime(GetTickCount()), m_bUnique{false}
 {
 	m_iHp = 1;
 	//m_dwDfTime = (m_dwEdTime - m_dwStTime) / 1000;
@@ -29,7 +31,6 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
-
 	if (GetAsyncKeyState('Y') & 0x80000)
 	{
 		--m_iHp;
@@ -39,6 +40,36 @@ void CMainGame::Update(void)
 			Re_Init();
 		}
 	}
+	if (m_dwTime + 1000 < GetTickCount())
+	{
+		int iLv = rand() % 100+1;
+		if (20 >= iLv && 10 < iLv)
+		{
+			if (!m_bUnique[0])
+			{
+				m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
+				m_bUnique[0] = true;
+			}
+		}
+		else if (10 >= iLv)
+		{
+			if (!m_bUnique[1])
+			{
+				m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
+				m_bUnique[1] = true;
+			}
+		}
+		else
+		{
+			m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+			dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
+		}
+
+		m_dwTime = GetTickCount();
+	}
+
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{
 		for (auto& iter = m_ObjList[i].begin();
@@ -54,7 +85,6 @@ void CMainGame::Update(void)
 				++iter;
 		}
 	}
-	
 }
 
 void CMainGame::Late_Update(void)

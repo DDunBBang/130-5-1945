@@ -26,6 +26,7 @@ public:
 
 		return pInstace;
 	}
+
 	static CObj* Create(float _fX, float _fY, DIRECTION _eDir,float fRadian)
 	{
 		CObj* pInstace = new T;
@@ -36,6 +37,12 @@ public:
 		return pInstace;
 	}
 
+	static CObj* Create(int _iLV)
+	{
+		CObj* pInstace = new T(_iLV);
+		pInstace->Initialize();
 
+		return pInstace;
+	}
 };
 

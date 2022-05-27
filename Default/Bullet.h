@@ -7,6 +7,9 @@ public:
 	virtual ~CBullet();
 
 public:
+	void Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
+
+public:
 	virtual void Initialize(void) override;
 	virtual int Update(void) override;
 	virtual	void Late_Update(void) override;
@@ -15,5 +18,7 @@ public:
 
 private:
 	void	Direction(void);
+
+	list<CObj*>* m_pBullet;
 };
 
