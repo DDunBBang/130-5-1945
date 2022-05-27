@@ -25,6 +25,7 @@ public:
 	void		Set_Target(CObj* m_tar) { m_Target = m_tar; }
 	void		Set_Target_List(list<CObj*>* m_tar) { m_pTarget_List = m_tar; }
 	void		Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
+	void		Hit() { --m_iHP; }
 
 public:
 	virtual		void	Initialize(void)	PURE;
@@ -48,6 +49,7 @@ protected:
 	float		m_fDistance;
 	int			m_iLv;
 	int			m_iShieldCount;
+	int			m_iHP;
 
 	
 	POINT		m_Pt;

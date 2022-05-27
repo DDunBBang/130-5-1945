@@ -49,6 +49,7 @@ void CMainGame::Update(void)
 			{
 				m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
 				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
+				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Unique(&m_bUnique[0]);
 				m_bUnique[0] = true;
 			}
 		}
@@ -58,6 +59,7 @@ void CMainGame::Update(void)
 			{
 				m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
 				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
+				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Unique(&m_bUnique[1]);
 				m_bUnique[1] = true;
 			}
 		}
@@ -102,10 +104,7 @@ void CMainGame::Late_Update(void)
 		if (iter->Get_Dir() == DIR_UT)
 			CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PBULLET]);
 		else
-			if (CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]))
-			{
-
-			}
+			CCollisionMgr::Collision_Sphere(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]);
 	}
 	
 
