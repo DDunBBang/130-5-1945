@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "AbstractFactory.h"
-CPlayer::CPlayer():iCount(2)
+CPlayer::CPlayer():iCount(2), m_fdwTime(GetTickCount())
 {
 }
 
@@ -121,11 +121,11 @@ void CPlayer::Key_Input(void)
 	{
 		if (iCount > 0)
 		{
-			if (m_dwTime + 2000 <= GetTickCount())
+			if (m_fdwTime + 2000 <= GetTickCount())
 			{
 				m_pPet->push_back(Create_Pet());
 				--iCount;
-				m_dwTime = GetTickCount();
+				m_fdwTime = GetTickCount();
 			}
 		}
 	}

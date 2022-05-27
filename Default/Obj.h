@@ -16,6 +16,7 @@ public:
 	}
 	void		Set_Dir(DIRECTION _eDir) { m_eDir = _eDir; }
 	void		Set_Dead() { m_bDead = true; }
+	bool		Get_Dead() { return m_bDead; }
 	const RECT& Get_Rect() { return m_tRect; }
 	const INFO& Get_Info() { return m_tInfo; }
 	void		Set_Up_iLv(void)	{ ++m_iLv; }

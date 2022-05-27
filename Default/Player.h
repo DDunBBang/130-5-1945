@@ -33,6 +33,6 @@ private:
 	list<CObj*>* m_pItem;
 
 	int iCount;
-
+	float m_fdwTime;
 };
 

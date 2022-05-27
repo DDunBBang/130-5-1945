@@ -21,7 +21,9 @@ void CPet::Initialize(void)
 };
 int CPet::Update(void)
 {
-	
+	if(m_bDead)
+		return OBJ_DEAD;
+
 	Shot();
 	Move();
 	Update_Rect();
@@ -51,6 +53,11 @@ void CPet::Late_Update(void)
 		}
 	}
 
+	if (m_Target->Get_Dead())
+	{
+		m_bDead = true;
+	}
+
 }
 
 void CPet::Render(HDC hDC)
@@ -66,11 +73,8 @@ void CPet::Shot()
 {
 	if (m_dwTime + 1000 <= GetTickCount())
 	{
-		if(m_pTarget_List->size())
-		{
-			m_pBullet->push_back(Create_Udo());
-			m_dwTime = GetTickCount();
-		}		
+		m_pBullet->push_back(Create_Udo());
+		m_dwTime = GetTickCount();	
 	}
 }
 
@@ -84,8 +88,7 @@ void CPet::Move()
 
 CObj * CPet::Create_Udo()
 {
-	CObj* Udo = CAbstractFactory<CUdoBullet>::Create();
-	Udo->Set_Pos(m_tInfo.fX, m_tInfo.fY);
+	CObj* Udo = CAbstractFactory<CUdoBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 	Udo->Set_Target_List(m_pTarget_List);
 
 	return Udo;

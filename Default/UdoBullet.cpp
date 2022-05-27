@@ -36,7 +36,7 @@ int CUdoBullet::Update(void)
 				Set_Target((*iter));
 			}
 		}
-		if (m_pTarget_List->begin() != m_pTarget_List->end())
+		if (m_Target)
 		{
 			float disX = m_Target->Get_Info().fX - m_tInfo.fX;
 			float disY = m_Target->Get_Info().fY - m_tInfo.fY;

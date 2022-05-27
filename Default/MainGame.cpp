@@ -5,7 +5,7 @@
 
 //,m_dwEdTime(m_dwStTime+1000)
 CMainGame::CMainGame()
-	: m_dwTime(GetTickCount()), m_bUnique{false}
+	: m_dwTime(GetTickCount()), m_bUnique{false},m_dwStTime(GetTickCount())
 {
 	m_iHp = 1;
 	//m_dwDfTime = (m_dwEdTime - m_dwStTime) / 1000;
@@ -154,13 +154,14 @@ void CMainGame::Render(void)
 	{
 		if (i > 0 && i <= 10)
 		{
-			swprintf_s(szBuff2, L"필살기 남은 시간 : %d", ((i)));
-			TextOut(m_hDC, 250, 50, szBuff2, lstrlen(szBuff2));
+			Rectangle(m_hDC, 50, WINCY - 80, 150, WINCY - 50);
+			Rectangle(m_hDC, 50, WINCY - 80, 150 - i * 10, WINCY-50);
 		}
 		else if (i <= 0)
 		{
+			Rectangle(m_hDC, 50, WINCY - 80, 150, WINCY - 50);
 			swprintf_s(szBuff2, L"필살기 준비 완료 사용 : C");
-			TextOut(m_hDC, 250, 50, szBuff2, lstrlen(szBuff2));
+			TextOut(m_hDC, 50, WINCY - 100, szBuff2, lstrlen(szBuff2));
 			if (GetAsyncKeyState('C'))
 				m_dwStTime = GetTickCount();
 		}
