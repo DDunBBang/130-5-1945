@@ -148,6 +148,7 @@ CObj * CPlayer::Create_Pet()
 		CObj* pet = CAbstractFactory<CPet>::Create(m_tInfo.fX-40,m_tInfo.fY,DIR_LEFT);
 		pet->Set_Target(this);
 		pet->Set_Bullet(m_pBullet);
+		pet->Set_Target_List(m_pMonster);
 		return pet;
 	}
 	else if (iCount == 1)
@@ -155,6 +156,7 @@ CObj * CPlayer::Create_Pet()
 		CObj* pet = CAbstractFactory<CPet>::Create(m_tInfo.fX + 40, m_tInfo.fY, DIR_RIGHT);
 		pet->Set_Target(this);
 		pet->Set_Bullet(m_pBullet);
+		pet->Set_Target_List(m_pMonster);
 		return pet;
 	}
 }

@@ -22,6 +22,7 @@ public:
 	void		Set_Radian(float _fRadian) { m_fRadian = _fRadian; }
 	DIRECTION		Get_Dir() { return m_eDir; }
 	void		Set_Target(CObj* m_tar) { m_Target = m_tar; }
+	void		Set_Target_List(list<CObj*>* m_tar) { m_pTarget_List = m_tar; }
 	void		Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
 
 public:
@@ -51,5 +52,6 @@ protected:
 	POINT		m_Pt;
 	CObj* m_Target;
 	list<CObj*>* m_pBullet;
+	list<CObj*>* m_pTarget_List;
 };
 

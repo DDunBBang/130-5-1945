@@ -52,6 +52,9 @@
     <Filter Include="01. Obj\02. Monster">
       <UniqueIdentifier>{7c3aa1bc-34c5-4966-953c-962a90a2c3ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\01. Bullet\UdoBullet">
+      <UniqueIdentifier>{59b6fbe0-9e0a-4a38-b08b-c422617acb7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -120,6 +123,12 @@
     <ClInclude Include="Monster.h">
       <Filter>01. Obj\02. Monster</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UdoBullet.h">
+      <Filter>01. Obj\01. Bullet\UdoBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -160,6 +169,12 @@
     </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>01. Obj\02. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="UdoBullet.cpp">
+      <Filter>01. Obj\01. Bullet\UdoBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
