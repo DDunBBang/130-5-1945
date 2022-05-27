@@ -127,7 +127,7 @@ void CMainGame::Late_Update(void)
 		}
 	} //체크 완료
 	bool check = CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MBULLET], m_ObjList[OBJ_SHIELD]);
-	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_SHIELD], m_ObjList[OBJ_MONSTER]);
+	CCollisionMgr::Collision_Sphere(m_ObjList[OBJ_SHIELD], m_ObjList[OBJ_MONSTER]);
 	
 	
 }
