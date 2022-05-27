@@ -1,13 +1,12 @@
 #pragma once
 #include "Obj.h"
-class CBullet : public CObj
+#include "Bullet.h"
+class CPet :
+	public CObj
 {
 public:
-	CBullet();
-	virtual ~CBullet();
-
-public:
-	void Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
+	CPet();
+	virtual ~CPet();
 
 public:
 	virtual void Initialize(void) override;
@@ -16,9 +15,9 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release(void) override;
 
+	void Shot();
+	void Move();
 private:
-	void	Direction(void);
 
-	list<CObj*>* m_pBullet;
 };
 
