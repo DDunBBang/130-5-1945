@@ -21,6 +21,8 @@ public:
 	void		Set_Up_iLv(void)	{ ++m_iLv; }
 	void		Set_Radian(float _fRadian) { m_fRadian = _fRadian; }
 	DIRECTION		Get_Dir() { return m_eDir; }
+	void		Set_Target(CObj* m_tar) { m_Target = m_tar; }
+	void		Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
 public:
 	virtual		void	Initialize(void)	PURE;
 	virtual		int		Update(void)		PURE;
@@ -40,7 +42,13 @@ protected:
 	bool		m_bDead;
 	float		m_fRadian;
 	float		m_fSpeed;
+	float		m_fDistance;
 	int			m_iLv;
+	int			m_iShieldCount;
+
 	
+	POINT		m_Pt;
+	CObj* m_Target;
+	list<CObj*>* m_pBullet;
 };
 

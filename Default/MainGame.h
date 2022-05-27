@@ -18,6 +18,7 @@ public:					// 생성자, 소멸자
 	void		Late_Update(void);
 	void		Render(void);
 	void		Release(void);
+	void		Re_Init(void);
 
 
 // public, protected, private 변수

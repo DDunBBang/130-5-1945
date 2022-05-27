@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "AbstractFactory.h"
-CPlayer::CPlayer()
+CPlayer::CPlayer():iCount(2)
 {
 }
 
@@ -56,6 +56,7 @@ void CPlayer::Render(HDC hDC)
 void CPlayer::Release(void)
 {	
 }
+
 
 void CPlayer::Key_Input(void)
 {
@@ -116,6 +117,52 @@ void CPlayer::Key_Input(void)
 	if (GetAsyncKeyState('T'))
 		++m_iLv;
 
-	if (GetAsyncKeyState('M'))
-		m_pMonster->push_back(CAbstractFactory<CMonster>::Create(250, 150, DIR_LEFT));
+	if (GetAsyncKeyState('P'))
+	{
+		if (iCount > 0)
+		{
+			if (m_dwTime + 2000 <= GetTickCount())
+			{
+				m_pPet->push_back(Create_Pet());
+				--iCount;
+				m_dwTime = GetTickCount();
+			}
+		}
+	}
+	if (GetAsyncKeyState('S'))
+	{
+		if (m_iShieldCount > 0)
+		{
+			--m_iShieldCount;
+			m_pItem->push_back(Create_Shield());
+		}
+	}
+		
+	//if (GetAsyncKeyState('M'))
+		//m_pMonster->push_back(CAbstractFactory<CMonster>::Create(250, 150, DIR_LEFT));
+}
+CObj * CPlayer::Create_Pet()
+{
+	if (iCount == 2)
+	{
+		CObj* pet = CAbstractFactory<CPet>::Create(m_tInfo.fX-40,m_tInfo.fY,DIR_LEFT);
+		pet->Set_Target(this);
+		pet->Set_Bullet(m_pBullet);
+		return pet;
+	}
+	else if (iCount == 1)
+	{
+		CObj* pet = CAbstractFactory<CPet>::Create(m_tInfo.fX + 40, m_tInfo.fY, DIR_RIGHT);
+		pet->Set_Target(this);
+		pet->Set_Bullet(m_pBullet);
+		return pet;
+	}
+}
+
+CObj * CPlayer::Create_Shield()
+{
+	CObj* Shield = CAbstractFactory<CShield>::Create();
+	Shield->Set_Target(this);
+
+	return Shield;
 }

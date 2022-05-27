@@ -18,11 +18,13 @@ void CMainGame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
-	for(int i=0;i<10;++i)
-		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(250,150,DIR_LEFT));
+
+	//for(int i=0;i<10;++i)
+		//m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(250,150,DIR_LEFT));
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Monster(&m_ObjList[OBJ_MONSTER]);
-	
+	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Pet(&m_ObjList[OBJ_PET]);
+	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Item(&m_ObjList[OBJ_ITEM]);	
 }
 
 void CMainGame::Update(void)
@@ -34,9 +36,7 @@ void CMainGame::Update(void)
 		if (m_ObjList[OBJ_PLAYER].size())
 		{
 			m_ObjList[OBJ_PLAYER].front()->Set_Dead();
-			m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());	
-			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);//테스트용
-			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Monster(&m_ObjList[OBJ_MONSTER]);
+			Re_Init();
 		}
 	}
 	for (size_t i = 0; i < OBJ_END; ++i)
@@ -81,10 +81,7 @@ void CMainGame::Late_Update(void)
 		--m_iHp;
 		if (m_iHp!=0)
 		{
-			m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
-			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
-			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Monster(&m_ObjList[OBJ_MONSTER]);
-			m_dwStTime = GetTickCount();
+			Re_Init();
 		}
 	}
 
@@ -93,12 +90,10 @@ void CMainGame::Late_Update(void)
 		--m_iHp;
 		if (m_iHp != 0)
 		{
-			m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
-			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
-			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Monster(&m_ObjList[OBJ_MONSTER]);
-			m_dwStTime = GetTickCount();
+			Re_Init();
 		}
 	} //체크 완료
+	bool check = CCollisionMgr::Collision_Monster(m_ObjList[OBJ_MBULLET], m_ObjList[OBJ_SHIELD]);
 
 }
 
@@ -157,4 +152,14 @@ void CMainGame::Release(void)
 		m_ObjList[i].clear();
 	}
 	ReleaseDC(g_hWnd, m_hDC);
+}
+
+void CMainGame::Re_Init(void)
+{
+	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
+	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
+	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Monster(&m_ObjList[OBJ_MONSTER]);
+	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Pet(&m_ObjList[OBJ_PET]);
+	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Item(&m_ObjList[OBJ_ITEM]);
+	m_dwStTime = GetTickCount();
 }

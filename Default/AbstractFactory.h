@@ -16,10 +16,11 @@ public:
 
 		return pInstance;
 	}
-	static CObj* Create(float _fX, float _fY, DIRECTION _eDir)
+	static CObj* Create(float _fX, float _fY, DIRECTION _eDir=DIR_END)
 	{
 		CObj* pInstace = new T;
-		pInstace->Set_Dir(_eDir);
+		if(_eDir!=DIR_END)
+			pInstace->Set_Dir(_eDir);
 		pInstace->Initialize();
 		pInstace->Set_Pos(_fX,_fY);
 
