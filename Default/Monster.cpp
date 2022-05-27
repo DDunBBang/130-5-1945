@@ -99,6 +99,11 @@ int CMonster::Update(void)
 		return OBJ_DEAD;
 
 	Direction();
+	if (m_dwTime + 500 < GetTickCount())
+	{
+		Attack_Player();
+		m_dwTime = GetTickCount();
+	}
 	Update_Rect();
 	return OBJ_NOEVENT;
 }
@@ -128,8 +133,10 @@ void CMonster::Release(void)
 {
 }
 
-void CMonster::Key_Input(void)
+void CMonster::Attack_Player()
 {
+	m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_DOWN));
+	dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
 }
 
 void CMonster::Direction()

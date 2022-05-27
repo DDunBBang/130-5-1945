@@ -8,6 +8,7 @@ public:
 
 public:
 	void Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
+	void Check_Bullet() { m_bCheck = true; }
 
 public:
 	virtual void Initialize(void) override;
@@ -20,5 +21,6 @@ private:
 	void	Direction(void);
 
 	list<CObj*>* m_pBullet;
+	bool		m_bCheck;
 };
 
