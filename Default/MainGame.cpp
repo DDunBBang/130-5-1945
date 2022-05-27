@@ -3,7 +3,7 @@
 #include "AbstractFactory.h"
 #include "CollisionMgr.h"
 
-CMainGame::CMainGame():m_dwStTime(GetTickCount())//,m_dwEdTime(m_dwStTime+1000)
+//,m_dwEdTime(m_dwStTime+1000)
 CMainGame::CMainGame()
 	: m_dwTime(GetTickCount()), m_bUnique{false}
 {

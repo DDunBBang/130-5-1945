@@ -48,8 +48,6 @@
     </Filter>
     <Filter Include="01. Obj\04, Item\00. Shield">
       <UniqueIdentifier>{9019fc30-79c9-44de-8c58-14859862fce6}</UniqueIdentifier>
-    <Filter Include="01. Obj\03. Item">
-      <UniqueIdentifier>{6f08b251-cb95-4d2d-aa06-59a5869aa3f2}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. Obj\02. Monster">
       <UniqueIdentifier>{7c3aa1bc-34c5-4966-953c-962a90a2c3ab}</UniqueIdentifier>
