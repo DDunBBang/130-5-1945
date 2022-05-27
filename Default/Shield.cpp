@@ -9,6 +9,7 @@ CShield::CShield()
 
 CShield::~CShield()
 {
+	Release();
 }
 
 void CShield::Initialize(void)
@@ -27,8 +28,9 @@ int CShield::Update(void)
 		return OBJ_DEAD;
 
 	m_fRadian += m_fSpeed;
-	m_tInfo.fX = m_Target->Get_Info().fX + m_fDistance*cos(m_fRadian*DEGREE);
-	m_tInfo.fY = m_Target->Get_Info().fY - m_fDistance*sin(m_fRadian*DEGREE);
+	
+	Direction();
+
 	Update_Rect();
 
 	return OBJ_NOEVENT;
@@ -46,6 +48,34 @@ void CShield::Render(HDC hDC)
 	Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 }
 
+void CShield::Direction(void)
+{
+	switch (m_eDir)
+	{
+	case DIR_DOWN:
+		m_tInfo.fX = m_Target->Get_Info().fX + m_fDistance *cos((225 + m_fRadian) * PI / 180.f);
+		m_tInfo.fY = m_Target->Get_Info().fY - m_fDistance *sin((225 + m_fRadian)* PI / 180.f);
+		break;
+	case DIR_UP:
+		m_tInfo.fX = m_Target->Get_Info().fX + m_fDistance *cos((45 + m_fRadian) * PI / 180.f);
+		m_tInfo.fY = m_Target->Get_Info().fY - m_fDistance *sin((45 + m_fRadian)* PI / 180.f);
+		break;
+	case DIR_LEFT:
+		m_tInfo.fX = m_Target->Get_Info().fX + m_fDistance *cos((135 + m_fRadian) * PI / 180.f);
+		m_tInfo.fY = m_Target->Get_Info().fY - m_fDistance *sin((135 + m_fRadian)* PI / 180.f);
+		break;
+	case DIR_RIGHT:
+		m_tInfo.fX = m_Target->Get_Info().fX + m_fDistance *cos((315 + m_fRadian) * PI / 180.f);
+		m_tInfo.fY = m_Target->Get_Info().fY - m_fDistance *sin((315 + m_fRadian)* PI / 180.f);
+		break;
+	}
+}
+
+
+
+
 void CShield::Release(void)
 {
 }
+
+

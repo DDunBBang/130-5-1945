@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include "Monster.h"
 #include "AbstractFactory.h"
+#include "Item.h"
 
 CMonster::CMonster()
 {
@@ -96,7 +97,10 @@ void CMonster::Initialize(void)
 int CMonster::Update(void)
 {
 	if (m_bDead)
+	{
+		m_pItem->push_back(CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
 		return OBJ_DEAD;
+	}
 
 	Direction();
 	Update_Rect();

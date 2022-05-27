@@ -24,7 +24,7 @@ public:
 	virtual void Release(void) override;
 
 	CObj* Create_Pet();
-	CObj* Create_Shield();
+	CObj* Create_Shield(DIRECTION eDir);
 private:
 	void		Key_Input(void);
 
