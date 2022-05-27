@@ -37,8 +37,17 @@
     <Filter Include="98.Design\CollisionMgr">
       <UniqueIdentifier>{5cd42ace-4170-4a0d-ae8b-b3fa07cc59be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\03. Item">
-      <UniqueIdentifier>{6f08b251-cb95-4d2d-aa06-59a5869aa3f2}</UniqueIdentifier>
+    <Filter Include="01. Obj\02. Monster">
+      <UniqueIdentifier>{9bf57bb2-4bd3-44f5-8c44-012c2858b782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\03. Pet">
+      <UniqueIdentifier>{fd86c327-c728-4de2-b286-353962c7cf7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04, Item">
+      <UniqueIdentifier>{720fd5c0-a367-492a-bd5c-3d8b029b8298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04, Item\00. Shield">
+      <UniqueIdentifier>{9019fc30-79c9-44de-8c58-14859862fce6}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. Obj\02. Monster">
       <UniqueIdentifier>{7c3aa1bc-34c5-4966-953c-962a90a2c3ab}</UniqueIdentifier>
@@ -93,6 +102,18 @@
     <ClInclude Include="CollisionMgr.h">
       <Filter>98.Design\CollisionMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>01. Obj\02. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Pet.h">
+      <Filter>01. Obj\03. Pet</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>01. Obj\04, Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Shield.h">
+      <Filter>01. Obj\04, Item\00. Shield</Filter>
+    </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>01. Obj\03. Item</Filter>
     </ClInclude>
@@ -121,6 +142,18 @@
     </ClCompile>
     <ClCompile Include="CollisionMgr.cpp">
       <Filter>98.Design\CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>01. Obj\02. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Pet.cpp">
+      <Filter>01. Obj\03. Pet</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>01. Obj\04, Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Shield.cpp">
+      <Filter>01. Obj\04, Item\00. Shield</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>01. Obj\03. Item</Filter>

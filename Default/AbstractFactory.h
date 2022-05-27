@@ -16,15 +16,27 @@ public:
 
 		return pInstance;
 	}
-	static CObj* Create(float _fX, float _fY, DIRECTION _eDir)
+	static CObj* Create(float _fX, float _fY, DIRECTION _eDir=DIR_END)
 	{
 		CObj* pInstace = new T;
+		if(_eDir!=DIR_END)
+			pInstace->Set_Dir(_eDir);
 		pInstace->Initialize();
 		pInstace->Set_Pos(_fX,_fY);
-		pInstace->Set_Dir(_eDir);
 
 		return pInstace;
 	}
+
+	static CObj* Create(float _fX, float _fY, DIRECTION _eDir,float fRadian)
+	{
+		CObj* pInstace = new T;
+		pInstace->Initialize();
+		pInstace->Set_Pos(_fX, _fY);
+		pInstace->Set_Dir(_eDir);
+		pInstace->Set_Radian(fRadian);
+		return pInstace;
+	}
+
 	static CObj* Create(int _iLV)
 	{
 		CObj* pInstace = new T(_iLV);
@@ -32,6 +44,5 @@ public:
 
 		return pInstace;
 	}
-
 };
 
