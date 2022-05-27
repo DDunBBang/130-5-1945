@@ -99,14 +99,17 @@ void CMainGame::Late_Update(void)
 
 	for (auto& iter : m_ObjList[OBJ_PBULLET])
 	{
-		if(iter->Get_Dir()==DIR_UT)
-			CCollisionMgr::Collision_Monster(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PBULLET]);
+		if (iter->Get_Dir() == DIR_UT)
+			CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PBULLET]);
 		else
-			CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PBULLET]);
+			if (CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]))
+			{
+
+			}
 	}
 	
 
-	if(CCollisionMgr::Collision_Monster(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MBULLET]))
+	if(CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MBULLET]))
 	{
 		--m_iHp;
 		if (m_iHp!=0)
@@ -115,7 +118,7 @@ void CMainGame::Late_Update(void)
 		}
 	}
 
-	if (CCollisionMgr::Collision_Monster(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]))
+	if (CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]))
 	{
 		--m_iHp;
 		if (m_iHp != 0)
@@ -123,7 +126,7 @@ void CMainGame::Late_Update(void)
 			Re_Init();
 		}
 	} //체크 완료
-	bool check = CCollisionMgr::Collision_Monster(m_ObjList[OBJ_MBULLET], m_ObjList[OBJ_SHIELD]);
+	bool check = CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MBULLET], m_ObjList[OBJ_SHIELD]);
 
 }
 
