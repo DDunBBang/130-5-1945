@@ -3,7 +3,7 @@
 
 
 CItem::CItem()
-	: m_ffXSpeed(0), m_iItem_Count(0), m_bFirst(true)
+	: m_ffXSpeed(0), m_bFirst(true)
 {
 }
 

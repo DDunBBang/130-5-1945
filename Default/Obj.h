@@ -46,7 +46,7 @@ protected:
 	float		m_fDistance;
 	int			m_iLv;
 	int			m_iShieldCount;
-
+	int			m_iItem_Count;
 
 	
 	POINT		m_Pt;

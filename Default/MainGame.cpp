@@ -27,6 +27,7 @@ void CMainGame::Initialize(void)
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Monster(&m_ObjList[OBJ_MONSTER]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Pet(&m_ObjList[OBJ_PET]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Item(&m_ObjList[OBJ_ITEM]);	
+	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Shield(&m_ObjList[OBJ_SHIELD]);
 }
 
 void CMainGame::Update(void)
@@ -100,7 +101,7 @@ void CMainGame::Late_Update(void)
 	for (auto& iter : m_ObjList[OBJ_PBULLET])
 	{
 		if (iter->Get_Dir() == DIR_UT)
-			CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PBULLET]);
+			CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PBULLET]); 
 		else
 			if (CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]))
 			{
@@ -127,7 +128,9 @@ void CMainGame::Late_Update(void)
 		}
 	} //체크 완료
 	bool check = CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MBULLET], m_ObjList[OBJ_SHIELD]);
-
+	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_SHIELD], m_ObjList[OBJ_MONSTER]);
+	
+	
 }
 
 void CMainGame::Render(void)
@@ -194,5 +197,6 @@ void CMainGame::Re_Init(void)
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Monster(&m_ObjList[OBJ_MONSTER]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Pet(&m_ObjList[OBJ_PET]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Item(&m_ObjList[OBJ_ITEM]);
+	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Item(&m_ObjList[OBJ_SHIELD]);
 	m_dwStTime = GetTickCount();
 }

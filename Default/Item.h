@@ -18,7 +18,7 @@ private:
 	float	m_ffXSpeed;
 	float m_fX;
 	float m_fY;
-	int m_iItem_Count;
+
 	bool m_bFirst;
 };
 
