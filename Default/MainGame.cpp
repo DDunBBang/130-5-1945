@@ -16,7 +16,6 @@ CMainGame::~CMainGame()
 
 void CMainGame::Initialize(void)
 {
-	srand(unsigned(time(nullptr)));
 	m_hDC = GetDC(g_hWnd);
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
@@ -42,6 +41,7 @@ void CMainGame::Update(void)
 			if (!m_bUnique[0])
 			{
 				m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
 				m_bUnique[0] = true;
 			}
 		}
@@ -50,11 +50,15 @@ void CMainGame::Update(void)
 			if (!m_bUnique[1])
 			{
 				m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
 				m_bUnique[1] = true;
 			}
 		}
 		else
+		{
 			m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+			dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
+		}
 
 		m_dwTime = GetTickCount();
 	}
