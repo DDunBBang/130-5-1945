@@ -18,6 +18,7 @@ private:
 	float	m_ffXSpeed;
 	float m_fX;
 	float m_fY;
-	int m_iFirst;
+
+	bool m_bFirst;
 };
 

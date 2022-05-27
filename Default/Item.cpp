@@ -3,7 +3,7 @@
 
 
 CItem::CItem()
-	: m_ffXSpeed(0), m_iFirst(1)
+	: m_ffXSpeed(0), m_bFirst(true)
 {
 }
 
@@ -15,8 +15,12 @@ CItem::~CItem()
 
 void CItem::Initialize(void)
 {
-	m_tInfo.fCX = 60.f;
-	m_tInfo.fCY = 25.f;
+	m_tInfo.fCX = 50.f;
+	m_tInfo.fCY = 20.f;
+
+	m_iItem_Count = rand() % 2 + 1;
+	m_fSpeed = float(rand() % 45 + 3.f) / 10;
+	m_ffXSpeed = float(rand() % 25 + 0.5f) / 10;
 }
 
 
@@ -49,7 +53,23 @@ void CItem::Late_Update(void)
 
 void CItem::Render(HDC hDC)
 {
-	Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+	if (m_iItem_Count == 1)
+	{
+		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+		TCHAR	szBuff[32] = L"";
+		wsprintf(szBuff, L"B", nullptr);
+		TextOut(hDC, m_tInfo.fX - 5, m_tInfo.fY - 8, szBuff, lstrlen(szBuff));
+
+	}
+
+	if (m_iItem_Count == 2)
+	{
+		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+		TCHAR	szBuff[32] = L"";
+		wsprintf(szBuff, L"SHIELD", nullptr);
+		TextOut(hDC, m_tInfo.fX - 25, m_tInfo.fY - 8, szBuff, lstrlen(szBuff));
+
+	}
 }
 
 
@@ -60,16 +80,12 @@ void CItem::Release(void)
 
 void CItem::Create_Speed(void)
 {
-	if (1 == m_iFirst)
+	if (true == m_bFirst)
 	{
 		m_fX = m_tInfo.fX;
 		m_fY = m_tInfo.fY;
 
-		srand(unsigned(time(NULL)));
-
-		m_fSpeed = float(rand() % 45 + 3.f) / 10;
-		m_ffXSpeed = float(rand() % 25 + 0.5f) / 10;
-		m_iFirst = 0;
+		m_bFirst = false;
 	}
 
 	if (WINCX - 400 > m_fX)

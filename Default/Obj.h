@@ -23,6 +23,7 @@ public:
 	DIRECTION		Get_Dir() { return m_eDir; }
 	void		Set_Target(CObj* m_tar) { m_Target = m_tar; }
 	void		Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
+	void		Set_m_iShieldCount(void) { ++m_iShieldCount; }
 	void		Hit() { --m_iHP; }
 
 public:
@@ -47,6 +48,7 @@ protected:
 	float		m_fDistance;
 	int			m_iLv;
 	int			m_iShieldCount;
+	int			m_iItem_Count;
 	int			m_iHP;
 
 	
