@@ -30,7 +30,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = -10.f;
 		m_tInfo.fY = 20.f;
 		m_eDir = DIR_RIGHT;
-		m_iHP = 10;
+		m_iHP = 60;
 	}
 	else if (m_iLv > 70)
 	{
@@ -38,7 +38,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX + 10;
 		m_tInfo.fY = 20.f;
 		m_eDir = DIR_LEFT;
-		m_iHP = 10;
+		m_iHP = 60;
 	}
 	else if (m_iLv > 55)
 	{
@@ -46,7 +46,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX - 20.f;
 		m_tInfo.fY = 20.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 60;
+		m_iHP = 120;
 	}
 	else if (m_iLv > 40)
 	{
@@ -54,7 +54,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = 20.f;
 		m_tInfo.fY = 20.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 60;
+		m_iHP = 120;
 	}
 	else if (m_iLv > 30)
 	{
@@ -62,7 +62,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX / 2;
 		m_tInfo.fY = -10.f;
 		m_eDir = DIR_LT;
-		m_iHP = 120;
+		m_iHP = 180;
 	}
 	else if (m_iLv > 20)
 	{
@@ -70,7 +70,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX / 2;
 		m_tInfo.fY = -10.f;
 		m_eDir = DIR_RT;
-		m_iHP = 120;
+		m_iHP = 180;
 	}
 	else if (m_iLv > 10 )
 	{
@@ -80,7 +80,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = 100.f;
 		m_tInfo.fY = 0.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 300;
+		m_iHP = 3000;
 	}
 	else
 	{
@@ -90,7 +90,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX - 100;
 		m_tInfo.fY = 0.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 300;
+		m_iHP = 3000;
 	}
 }
 
@@ -113,6 +113,14 @@ void CMonster::Late_Update(void)
 		m_eDir = DIR_END;
 	if (3 == m_iLv && (20 > m_tInfo.fX || WINCX - 20 < m_tInfo.fX))
 		m_fSpeed *= -1.f;
+
+	if (0 >= m_iHP)
+	{
+		if (4 == m_iLv)
+			m_pUnique = false;
+		m_bDead = true;
+	}
+
 }
 
 void CMonster::Render(HDC hDC)

@@ -24,6 +24,8 @@ public:
 	void		Set_Target(CObj* m_tar) { m_Target = m_tar; }
 	void		Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
 	void		Set_m_iShieldCount(void) { ++m_iShieldCount; }
+	void		Hit() { --m_iHP; }
+
 public:
 	virtual		void	Initialize(void)	PURE;
 	virtual		int		Update(void)		PURE;
@@ -47,6 +49,7 @@ protected:
 	int			m_iLv;
 	int			m_iShieldCount;
 	int			m_iItem_Count;
+	int			m_iHP;
 
 	
 	POINT		m_Pt;
