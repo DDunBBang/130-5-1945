@@ -69,20 +69,20 @@ void CCollisionMgr::Collision_Item(list<CObj*> _Player, list<CObj*> _Item)
 	}
 }
 
-bool CCollisionMgr::Collision_Monster(list<CObj*> _Player, list<CObj*> _Monster)
+bool CCollisionMgr::Collision_Oneside(list<CObj*> _Dest, list<CObj*> _Sour)
 {
 	RECT		rc{};
 
-	for (auto& Player : _Player)
+	for (auto& Dest : _Dest)
 	{
-		for (auto& Monster : _Monster)
+		for (auto& Sour : _Sour)
 		{
-			if (IntersectRect(&rc, &(Player->Get_Rect()), &(Monster->Get_Rect())))
+			if (IntersectRect(&rc, &(Dest->Get_Rect()), &(Sour->Get_Rect())))
 			{
-				Player->Set_Dead(); //몬스터와 플레이어가 충돌할때 플레이어만 삭제
-				if (Monster->Get_Info().fCX == 10) //MBULLET 사이즈가 10이므로 MBULLET과 충돌할때는 MBULLET도 삭제
+				Dest->Set_Dead(); //몬스터와 플레이어가 충돌할때 플레이어만 삭제
+				if (Sour->Get_Info().fCX == 10) //MBULLET 사이즈가 10이므로 MBULLET과 충돌할때는 MBULLET도 삭제
 				{
-					Monster->Set_Dead();
+					Sour->Set_Dead();
 					return true;
 				}
 				return true;

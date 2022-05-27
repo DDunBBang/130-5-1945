@@ -23,7 +23,7 @@ void CBullet::Initialize(void)
 	{
 		m_tInfo.fCX = 10.f;
 		m_tInfo.fCY = 10.f;
-		m_fSpeed = 10.f;
+		m_fSpeed = 20.f;
 	}
 }
 
