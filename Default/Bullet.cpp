@@ -48,7 +48,7 @@ void CBullet::Late_Update(void)
 	{
 		m_tInfo.fCX = 15.f;
 		m_tInfo.fCY = 15.f;
-		m_fSpeed = 5.f;
+		m_fSpeed = 3.f;
 	}
 }
 
@@ -69,6 +69,20 @@ void CBullet::Direction(void)
 		break;
 	case DIR_DOWN:
 		m_tInfo.fY += m_fSpeed;
+		break;
+	case DIR_RIGHT:
+		m_tInfo.fX += m_fSpeed;
+		break;
+	case DIR_LEFT:
+		m_tInfo.fX -= m_fSpeed;
+		break;
+	case DIR_LB:
+		m_tInfo.fX -= m_fSpeed*cos(75 * DEGREE);
+		m_tInfo.fY += m_fSpeed*sin(75 * DEGREE);
+		break;
+	case DIR_RB:
+		m_tInfo.fX += m_fSpeed*cos(75 * DEGREE);
+		m_tInfo.fY += m_fSpeed*sin(75 * DEGREE);
 		break;
 	case DIR_LT:
 		m_tInfo.fX -= m_fSpeed*cos(75 * DEGREE);
