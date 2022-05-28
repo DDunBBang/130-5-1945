@@ -5,7 +5,7 @@
 
 //,m_dwEdTime(m_dwStTime+1000)
 CMainGame::CMainGame()
-	: m_dwTime(GetTickCount()), m_bUnique{ false }, m_bCheck(false), m_bCheck2(false), m_dwMTime(GetTickCount())
+	: m_dwTime(GetTickCount()), m_bUnique{ false }, m_bCheck(false), m_bCheck2(false), m_dwMTime(GetTickCount()), m_iScore(0), m_bBoss(false)
 {
 	m_iHp = 3;
 	//m_dwDfTime = (m_dwEdTime - m_dwStTime) / 1000;
@@ -43,49 +43,54 @@ void CMainGame::Update(void)
 			m_ObjList[OBJ_PLAYER].front()->Set_Dead();
 		}
 	}*/
-	if (m_dwTime + 1500 < GetTickCount())
+	
+	if (4 == m_iScore && !m_bBoss)
 	{
-		int iLv = rand() % 100 + 1;
-		if (20 >= iLv && 10 < iLv)
-		{
-			if (!m_bUnique[0])
-			{
-				m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
-				m_ObjList[OBJ_MONSTER].back()->Set_Target(m_ObjList[OBJ_PLAYER].front());
-				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
-				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Unique(&m_bUnique[0]);
-				m_bUnique[0] = true;
-			}
-		}
-		else if (10 >= iLv)
-		{
-			if (!m_bUnique[1])
-			{
-				m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
-				m_ObjList[OBJ_MONSTER].back()->Set_Target(m_ObjList[OBJ_PLAYER].front());
-				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
-				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Unique(&m_bUnique[1]);
-				m_bUnique[1] = true;
-			}
-		}
-		else
-		{
-			m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
-			m_ObjList[OBJ_MONSTER].back()->Set_Target(m_ObjList[OBJ_PLAYER].front());
-			dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
-		}
-
 		for (auto& iter : m_ObjList[OBJ_MONSTER])
 		{
-			dynamic_cast<CMonster*>(iter)->Set_Item(&m_ObjList[OBJ_ITEM]);
+			Safe_Delete<CObj*>(iter);
 		}
-		m_dwTime = GetTickCount();
+		m_ObjList[OBJ_MONSTER].clear();
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(101));
+		m_ObjList[OBJ_MONSTER].back()->Set_Target(m_ObjList[OBJ_PLAYER].front());
+		m_bBoss = true;
 	}
-
-
-
-
-	
+	else if (!m_bBoss)
+	{
+		if (m_dwTime + 1500 < GetTickCount())
+		{
+			int iLv = rand() % 100 + 1;
+			if (20 >= iLv && 10 < iLv)
+			{
+				if (!m_bUnique[0])
+				{
+					m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+					m_ObjList[OBJ_MONSTER].back()->Set_Target(m_ObjList[OBJ_PLAYER].front());
+					dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
+					dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Unique(&m_bUnique[0]);
+					m_bUnique[0] = true;
+				}
+			}
+			else if (10 >= iLv)
+			{
+				if (!m_bUnique[1])
+				{
+					m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+					m_ObjList[OBJ_MONSTER].back()->Set_Target(m_ObjList[OBJ_PLAYER].front());
+					dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
+					dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Unique(&m_bUnique[1]);
+					m_bUnique[1] = true;
+				}
+			}
+			else
+			{
+				m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+				m_ObjList[OBJ_MONSTER].back()->Set_Target(m_ObjList[OBJ_PLAYER].front());
+				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
+			}
+			m_dwTime = GetTickCount();
+		}
+	}
 
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{
@@ -95,6 +100,10 @@ void CMainGame::Update(void)
 			int iEvent = (*iter)->Update();
 			if (OBJ_DEAD == iEvent)
 			{
+				if (OBJ_MONSTER == i)
+				{
+					++m_iScore;
+				}
 				Safe_Delete<CObj*>(*iter);
 				iter = m_ObjList[i].erase(iter);
 			}
@@ -102,8 +111,10 @@ void CMainGame::Update(void)
 				++iter;
 		}
 	}
-
-
+	for (auto& iter : m_ObjList[OBJ_MONSTER])
+	{
+		dynamic_cast<CMonster*>(iter)->Set_Item(&m_ObjList[OBJ_ITEM]);
+	}
 }
 
 void CMainGame::Late_Update(void)
@@ -148,7 +159,7 @@ void CMainGame::Late_Update(void)
 		if (iter->Get_Dir() == DIR_UT)
 			CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PBULLET]);
 		else
-			CCollisionMgr::Collision_Sphere(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]);
+			CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]);
 	}
 
 	if (!dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Get_HitCheck())
@@ -184,13 +195,17 @@ void CMainGame::Render(void)
 
 	TCHAR	szBuff1[32] = L"";
 	swprintf_s(szBuff1, L"Bullet Count : %d", m_ObjList[OBJ_PBULLET].size());
-	TextOut(m_hDC, WINCX - 150, WINCY - 50, szBuff1, lstrlen(szBuff1));
+	TextOut(m_hDC, WINCX-150, WINCY - 50, szBuff1, lstrlen(szBuff1));
 
+	TCHAR	szBuff4[32] = L"";
+	swprintf_s(szBuff4, L"SCORE : %d", m_iScore);
+	TextOut(m_hDC, WINCX *0.5, WINCY - 50, szBuff4, lstrlen(szBuff4));
+	
 	//if()
 	TCHAR	szBuff2[32] = L"";
 
 	int i = ((m_dwStTime / 1000) + 20) - (GetTickCount() / 1000);
-	if (m_iHp > 0)
+	if (m_ObjList[OBJ_PLAYER].front()->Get_HP() > 0)
 	{
 		if (i > 0 && i <= 20)
 		{

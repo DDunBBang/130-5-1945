@@ -27,6 +27,7 @@ private:
 	/*DWORD		m_dwEdTime;
 	DWORD		m_dwDfTime;*/
 	int			m_iHp;
+	int			m_iScore;
 
 	DWORD		m_dwTime;
 	DWORD		m_dwHitTime;
@@ -35,4 +36,5 @@ private:
 	bool		m_bUnique[2];
 	bool		m_bCheck;
 	bool		m_bCheck2;
+	bool		m_bBoss;
 };
