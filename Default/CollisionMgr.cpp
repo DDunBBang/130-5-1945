@@ -83,28 +83,25 @@ bool CCollisionMgr::Collision_Item(list<CObj*> _Player, list<CObj*> _Item)
 				if (Item->Get_ItemCount() == 1)
 				{
 					Player->Set_Up_iLv();
-					
 				}
 
 				else if (Item->Get_ItemCount() == 2)
 				{
 					Player->Set_Shield_Count();
-					
 				}
 				else if (Item->Get_ItemCount() == 3)
 				{
-					Item->Set_Dead();
-				
+					Item->Set_Dead();	
 					return true;
 				}
-
 				Item->Set_Dead();
 			}
-			
 		}
 	}
 	return false;
 }
+
+
 
 bool CCollisionMgr::Collision_Oneside(list<CObj*> _Dest, list<CObj*> _Sour)
 {

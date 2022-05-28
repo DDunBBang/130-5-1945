@@ -3,10 +3,9 @@
 #include "AbstractFactory.h"
 
 CPlayer::CPlayer::CPlayer()
-	:iCount(2), m_bHitCheck(false)
+	:iCount(2), m_bHitCheck(false), m_fdwTime(GetTickCount()), m_fSCTime(GetTickCount()), m_fRCTime(GetTickCount())
 {
 }
-
 
 CPlayer::~CPlayer()
 {
@@ -40,14 +39,6 @@ int CPlayer::Update(void)
 
 void CPlayer::Late_Update(void)
 {
-	/*if(m_tRect.left<=0)
-		m_tInfo.fX= m_tInfo.fCX/2.f;
-	else if (m_tRect.right >= WINCX)
-		m_tInfo.fX = WINCX-m_tInfo.fCX / 2.f;
-	else if (m_tRect.top <= 0)
-		m_tInfo.fY = m_tInfo.fCY / 2.f;
-	else if (m_tRect.bottom >= WINCY)
-		m_tInfo.fY = WINCY-m_tInfo.fCY / 2.f;*/
 }
 
 void CPlayer::Render(HDC hDC)
@@ -108,17 +99,35 @@ void CPlayer::Key_Input(void)
 
 	if (GetAsyncKeyState(VK_LBUTTON))
 	{
-		m_fRadian = atan2f(m_tInfo.fY - m_pMouse->front()->Get_Info().fY, m_tInfo.fX - m_pMouse->front()->Get_Info().fX);
-		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_MD, m_fRadian));
-		/*m_pBullet->*/
+		m_fRadian = atan2f(m_pMouse->front()->Get_Info().fY - m_tInfo.fY, m_pMouse->front()->Get_Info().fX - m_tInfo.fX);
+		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_LC, m_fRadian));
 	}
 
-	else if (GetAsyncKeyState('C'))
+	if (GetAsyncKeyState(VK_RBUTTON))
+	{
+		if ((m_fRCTime / 1000) + 2 <= (GetTickCount() / 1000))
+		{
+			m_fRadian = atan2f(m_pMouse->front()->Get_Info().fY - m_tInfo.fY, m_pMouse->front()->Get_Info().fX - m_tInfo.fX);
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_pMouse->front()->Get_Info().fX, m_pMouse->front()->Get_Info().fY, DIR_RC));
+			m_fRCTime = GetTickCount();
+		}
+	}
+
+	else if (GetAsyncKeyState('R'))
 	{		
 		if ((m_dwTime /1000)+20 <= (GetTickCount()/1000))
 		{				
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(75, WINCY - 75, DIR_UT));
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(WINCX - 75, WINCY - 75, DIR_UT));
+			m_dwTime = GetTickCount();
+		}
+	}
+	else if (GetAsyncKeyState('C'))
+	{
+		if ((m_fSCTime / 1000) + 2 <= (GetTickCount() / 1000))
+		{
+			m_pBullet->push_back(CAbstractFactory<CScrewBullet>::Create(m_tInfo.fX, m_tInfo.fY));
+			m_fSCTime = GetTickCount();
 		}
 	}
 
@@ -175,6 +184,5 @@ CObj * CPlayer::Create_Shield(DIRECTION eDir)
 	CObj* Shield = CAbstractFactory<CShield>::Create();
 	Shield->Set_Target(this);
 	Shield->Set_Dir(eDir);
-
 	return Shield;
 }

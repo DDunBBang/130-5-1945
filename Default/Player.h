@@ -5,7 +5,7 @@
 #include "Monster.h"
 #include "Pet.h"
 #include "Shield.h"
-
+#include "ScrewBullet.h"
 class CPlayer :	public CObj
 {
 public:
@@ -18,8 +18,8 @@ public:
 	void Set_Pet(list<CObj*>* _pPet) { m_pPet = _pPet; }
 	void Set_Shield(list<CObj*>* _pShield) { m_pShield = _pShield; }
 	void Set_Mouse(list<CObj*>* _pMouse) { m_pMouse = _pMouse; }
-	const bool Get_HitCheck() const { return m_bHitCheck; }
 	void Set_HitCheck(bool _bCheck) { m_bHitCheck = _bCheck; }
+	const bool Get_HitCheck() const { return m_bHitCheck; }
 
 public:
 	virtual void Initialize(void) override;
@@ -30,6 +30,7 @@ public:
 
 private:
 	void		Key_Input(void);
+
 	CObj* Create_Pet();
 	CObj* Create_Shield(DIRECTION eDir);
 
@@ -40,6 +41,8 @@ private:
 
 	int iCount;
 	float m_fdwTime;
+	float m_fSCTime;
+	float m_fRCTime;
 	bool m_bHitCheck;
 };
 

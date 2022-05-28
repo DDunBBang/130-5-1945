@@ -17,12 +17,10 @@ void CItem::Initialize(void)
 {
 	m_tInfo.fCX = 50.f;
 	m_tInfo.fCY = 20.f;
-	
 
-	
 	m_fSpeed = float(rand() % 45 + 3.f) / 10.f;
 	m_fXSpeed = float(rand() % 25 + 0.5f) / 10.f;
-	
+
 	m_iItemCount = rand() % 3 + 1;
 	m_iTime = rand() % 4 + 3;
 }
@@ -49,8 +47,7 @@ int CItem::Update(void)
 	{
 		m_tInfo.fX += m_fXSpeed;
 		m_tInfo.fY += m_fSpeed;
-	}
-	
+	}	
 
 	Update_Rect();
 
@@ -66,22 +63,13 @@ void CItem::Late_Update(void)
 	if (WINCY <= m_tInfo.fY || 0 >= m_tInfo.fY)
 	{
 		m_fSpeed *= -1.f;
-	}
-
-	/*if (m_dwTime + 5000 < GetTickCount())
-	{
-		m_bDead = true;
-	}
-*/
-	
+	}	
 }
 
 
 
 void CItem::Render(HDC hDC)
 {
-
-
 	if (m_iItemCount == 1)
 	{
 		HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(184, 134, 11));
@@ -94,10 +82,7 @@ void CItem::Render(HDC hDC)
 
 		SelectObject(hDC, oldBrush);
 		DeleteObject(myBrush);
-
 	}
-
-
 	else if (m_iItemCount == 2)
 	{
 		HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(0, 0, 139));

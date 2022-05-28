@@ -52,11 +52,14 @@
     <Filter Include="01. Obj\02. Monster">
       <UniqueIdentifier>{7c3aa1bc-34c5-4966-953c-962a90a2c3ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\01. Bullet\UdoBullet">
-      <UniqueIdentifier>{59b6fbe0-9e0a-4a38-b08b-c422617acb7c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Obj\05.Mouse">
       <UniqueIdentifier>{15dcaf5b-a546-41d6-90fe-34a6e954a624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01. Bullet\00. UdoBullet">
+      <UniqueIdentifier>{59b6fbe0-9e0a-4a38-b08b-c422617acb7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01. Bullet\01. ScrewBullet">
+      <UniqueIdentifier>{41976088-61c0-47bf-b664-ef47fa40ebbe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -121,7 +124,7 @@
       <Filter>01. Obj\02. Monster</Filter>
     </ClInclude>
     <ClInclude Include="UdoBullet.h">
-      <Filter>01. Obj\01. Bullet\UdoBullet</Filter>
+      <Filter>01. Obj\01. Bullet\00. UdoBullet</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>헤더 파일</Filter>
@@ -129,11 +132,8 @@
     <ClInclude Include="Mouse.h">
       <Filter>01. Obj\05.Mouse</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>01. Obj\04, Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>01. Obj\04, Item</Filter>
+    <ClInclude Include="ScrewBullet.h">
+      <Filter>01. Obj\01. Bullet\01. ScrewBullet</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>01. Obj\04, Item</Filter>
@@ -174,7 +174,7 @@
       <Filter>01. Obj\02. Monster</Filter>
     </ClCompile>
     <ClCompile Include="UdoBullet.cpp">
-      <Filter>01. Obj\01. Bullet\UdoBullet</Filter>
+      <Filter>01. Obj\01. Bullet\00. UdoBullet</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>소스 파일</Filter>
@@ -182,11 +182,8 @@
     <ClCompile Include="Mouse.cpp">
       <Filter>01. Obj\05.Mouse</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>01. Obj\04, Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>01. Obj\04, Item</Filter>
+    <ClCompile Include="ScrewBullet.cpp">
+      <Filter>01. Obj\01. Bullet\01. ScrewBullet</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>01. Obj\04, Item</Filter>

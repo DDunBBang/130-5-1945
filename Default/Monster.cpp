@@ -5,7 +5,7 @@
 #include "AbstractFactory.h"
 #include "Item.h"
 
-CMonster::CMonster()
+CMonster::CMonster():m_bDrop(true)
 {
 }
 
@@ -70,6 +70,7 @@ void CMonster::Initialize(void)
 	{
 		m_iLv = 4;
 		m_tInfo.fX = WINCX / 2;
+
 		m_tInfo.fY = 0.f;
 		m_eDir = DIR_LT;
 		m_iHP = 1;// 180;
@@ -78,6 +79,7 @@ void CMonster::Initialize(void)
 	{
 		m_iLv = 4;
 		m_tInfo.fX = WINCX / 2;
+
 		m_tInfo.fY = 0.f;
 		m_eDir = DIR_RT;
 		m_iHP = 1;// 180;
@@ -88,7 +90,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fCX = 50.f;
 		m_tInfo.fCY = 50.f;
 		m_tInfo.fX = 100.f;
-		m_tInfo.fY = 0.f;
+		m_tInfo.fY = 10.f;
 		m_eDir = DIR_DOWN;
 		m_iHP = 3000;
 	}
@@ -98,7 +100,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fCX = 50.f;
 		m_tInfo.fCY = 50.f;
 		m_tInfo.fX = WINCX - 100;
-		m_tInfo.fY = 0.f;
+		m_tInfo.fY = 10.f;
 		m_eDir = DIR_DOWN;
 		m_iHP = 3000;
 	}
@@ -108,10 +110,12 @@ int CMonster::Update(void)
 {
 	if (m_bDead)
 	{
-		/*if (2 == rand() % 2 + 1)
-		{*/
-			m_pItem->push_back(CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
-		//}
+		if(m_bDrop)
+ 			m_pItem->push_back(CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
+		///*if (2 == rand() % 2 + 1)
+		//{*/
+		//	m_pItem->push_back(CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
+		////}
 		return OBJ_DEAD;
 	}
 
@@ -151,8 +155,16 @@ void CMonster::Late_Update(void)
 			m_pUnique = false;
 		m_bDead = true;
 	}
+
+	if (m_tRect.left < -100 || m_tRect.top < -100 || m_tRect.right > WINCX + 300 || m_tRect.bottom > WINCY + 300)
+	{
+		m_bDrop = false;
+		m_bDead = true;
+	}
+
 	if (101 == m_iLv && 0 >= m_iHP)
    		m_bDead = true;
+
 }
 
 void CMonster::Render(HDC hDC)

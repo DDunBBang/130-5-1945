@@ -1,11 +1,12 @@
 #pragma once
 #include "Obj.h"
-class CUdoBullet :
+class CScrewBullet :
 	public CObj
 {
 public:
-	CUdoBullet();
-	virtual ~CUdoBullet();
+	CScrewBullet();
+	virtual ~CScrewBullet();
+
 public:
 	virtual void Initialize(void) override;
 	virtual int Update(void) override;
@@ -13,8 +14,12 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release(void) override;
 
+	void Update_Rect2();
 private:
-	float disX;
-	float disY;
+	float m_fTspeed;
+	float m_fRadian2;
+	INFO  m_tInfo2;
+	RECT  m_tRect2;
+
 };
 

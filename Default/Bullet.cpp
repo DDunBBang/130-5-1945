@@ -3,7 +3,7 @@
 
 
 CBullet::CBullet()
-	: m_bCheck(false)
+	: m_bCheck(false), m_bRCSize(false)
 {
 }
 
@@ -19,6 +19,12 @@ void CBullet::Initialize(void)
 		m_fSpeed = 10.f;
 		m_tInfo.fCX = 150.f;
 		m_tInfo.fCY = 10.f;
+	}
+	else if (m_eDir == DIR_RC)
+	{
+		m_tInfo.fCX = 0;
+		m_tInfo.fCY = 0;
+		m_fSpeed = 5.f;
 	}
 	else
 	{
@@ -42,7 +48,7 @@ int CBullet::Update(void)
 
 void CBullet::Late_Update(void)
 {
-	if (m_tRect.left <= 0 || m_tRect.top <= 0 || m_tRect.right >= WINCX || m_tRect.bottom >= WINCY)
+	if (m_tRect.left < 0 || m_tRect.top < 0 || m_tRect.right > WINCX || m_tRect.bottom > WINCY)
 		m_bDead = true;
 	if (m_bCheck)
 	{
@@ -92,9 +98,26 @@ void CBullet::Direction(void)
 		m_tInfo.fX += m_fSpeed*cos(75 * DEGREE);
 		m_tInfo.fY -= m_fSpeed*sin(75 * DEGREE);
 		break;
-	case DIR_MD:
-		m_tInfo.fX -= m_fSpeed*cos(m_fRadian);
-		m_tInfo.fY -= m_fSpeed*sin(m_fRadian);
+	case DIR_LC:
+		m_tInfo.fX += m_fSpeed*cosf(m_fRadian);
+		m_tInfo.fY += m_fSpeed*sinf(m_fRadian);
+		break;
+	case DIR_RC:
+		while(m_tInfo.fCX<=150.f&&!m_bRCSize)
+		{
+			m_tInfo.fCY += m_fSpeed;
+			m_tInfo.fCX += m_fSpeed;
+			m_dwTime = GetTickCount();
+			break;
+		}
+		if (m_tInfo.fCX > 150.f)
+		{			
+			m_bRCSize = true;
+			if (m_dwTime + 3000 < GetTickCount())
+			{
+				m_bDead = true;
+			}
+		}
 		break;
 	case DIR_UT:
 		while (m_tInfo.fCY < 150)

@@ -3,12 +3,12 @@
 #include "AbstractFactory.h"
 #include "CollisionMgr.h"
 
-//,m_dwEdTime(m_dwStTime+1000)
 CMainGame::CMainGame()
 	: m_dwTime(GetTickCount()), m_bUnique{ false }, m_bCheck(false), m_bCheck2(false), m_dwMTime(GetTickCount()), m_iScore(0), m_bBoss(false)
+
 {
 	m_iHp = 3;
-	//m_dwDfTime = (m_dwEdTime - m_dwStTime) / 1000;
+	
 }
 
 CMainGame::~CMainGame()
@@ -20,10 +20,8 @@ CMainGame::~CMainGame()
 void CMainGame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
-	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 	m_dwStTime = GetTickCount();
-	//for(int i=0;i<10;++i)
-		//m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(250,150,DIR_LEFT));
+	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());	
 	m_ObjList[OBJ_MOUSE].push_back(CAbstractFactory<CMouse>::Create());
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Monster(&m_ObjList[OBJ_MONSTER]);
@@ -35,17 +33,10 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
-	/*if (GetAsyncKeyState('Y') & 0x80000)
-	{
-		--m_iHp;
-		if (m_ObjList[OBJ_PLAYER].size())
-		{
-			m_ObjList[OBJ_PLAYER].front()->Set_Dead();
-		}
-	}*/
-	
+
 	if (4 == m_iScore && !m_bBoss)
 	{
+
 		for (auto& iter : m_ObjList[OBJ_MONSTER])
 		{
 			Safe_Delete<CObj*>(iter);
@@ -126,6 +117,7 @@ void CMainGame::Late_Update(void)
 	}
 
 	m_bCheck = CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
+
 	if (m_bCheck)
 	{
 		m_bCheck2 = true;
@@ -149,14 +141,9 @@ void CMainGame::Late_Update(void)
 		m_dwMTime = GetTickCount();
 	}
 
-
-
-
-
-
 	for (auto& iter : m_ObjList[OBJ_PBULLET])
 	{
-		if (iter->Get_Dir() == DIR_UT)
+		if (iter->Get_Dir() == DIR_UT|| iter->Get_Dir() == DIR_RC)
 			CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PBULLET]);
 		else
 			CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]);
@@ -194,7 +181,7 @@ void CMainGame::Render(void)
 	TextOut(m_hDC, 50, WINCY - 50, szBuff, lstrlen(szBuff));
 
 	TCHAR	szBuff1[32] = L"";
-	swprintf_s(szBuff1, L"Bullet Count : %d", m_ObjList[OBJ_PBULLET].size());
+	swprintf_s(szBuff1, L"Bullet Count : %zd", m_ObjList[OBJ_PBULLET].size());
 	TextOut(m_hDC, WINCX-150, WINCY - 50, szBuff1, lstrlen(szBuff1));
 
 	TCHAR	szBuff4[32] = L"";
@@ -210,14 +197,40 @@ void CMainGame::Render(void)
 		if (i > 0 && i <= 20)
 		{
 			Rectangle(m_hDC, 50, WINCY - 65, 150, WINCY - 50);
-			Rectangle(m_hDC, 50, WINCY - 65, 150 - i * 5, WINCY - 50);
+			if (i <= 10)
+			{
+				HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(255, 215, 0));
+				HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
+
+				Rectangle(m_hDC, 50, WINCY - 65, 150 - i * 5, WINCY - 50);
+
+				SelectObject(m_hDC, oldBrush);
+				DeleteObject(myBrush);				
+			}
+			else if (i>10&&i <= 20)
+			{
+				HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(255, 0, 0));
+				HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
+
+				Rectangle(m_hDC, 50, WINCY - 65, 150 - i * 5, WINCY - 50);
+
+				SelectObject(m_hDC, oldBrush);
+				DeleteObject(myBrush);
+			}
 		}
 		else if (i <= 0)
 		{
+			HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(0, 255, 127));
+			HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
+
 			Rectangle(m_hDC, 50, WINCY - 65, 150, WINCY - 50);
-			swprintf_s(szBuff2, L"필살기 준비 완료 사용 : C");
+
+			SelectObject(m_hDC, oldBrush);
+			DeleteObject(myBrush);
+
+			swprintf_s(szBuff2, L"필살기 사용 : R");
 			TextOut(m_hDC, 50, WINCY - 90, szBuff2, lstrlen(szBuff2));
-			if (GetAsyncKeyState('C'))
+			if (GetAsyncKeyState('R'))
 			{
 				m_dwStTime = GetTickCount();
 				dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Time(GetTickCount());
@@ -226,11 +239,18 @@ void CMainGame::Render(void)
 	}
 	else if (m_ObjList[OBJ_PLAYER].front()->Get_HP() <= 0)
 	{
-		TCHAR	szBuff3[32] = L"";
-		swprintf_s(szBuff3, L"GAME OVER!!!");
-		TextOut(m_hDC, WINCX *0.5 - 50, WINCY *0.5, szBuff3, lstrlen(szBuff3));
+		if (m_dwStTime + 2000 < GetTickCount())
+		{
+			m_dwStTime = GetTickCount();
+			while ((m_dwStTime + 2000) > GetTickCount())
+			{
+				TCHAR	szBuff3[32] = L"";	
+				swprintf_s(szBuff3, L"GAME OVER!!!");
+				TextOut(m_hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff3, (int)lstrlen(szBuff3));
+			}
+			m_dwStTime = GetTickCount();
+		}
 	}
-
 }
 
 void CMainGame::Release(void)

@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "Monster.h"
 #include "Mouse.h"
+#include "Item.h"
 class CMainGame
 {
 public:					// 持失切, 社瑚切
@@ -24,17 +25,13 @@ private:
 	HDC			m_hDC;
 	list<CObj*> m_ObjList[OBJ_END];
 	DWORD		m_dwStTime;
-	/*DWORD		m_dwEdTime;
-	DWORD		m_dwDfTime;*/
-	int			m_iHp;
-	int			m_iScore;
-
 	DWORD		m_dwTime;
 	DWORD		m_dwHitTime;
 	DWORD		m_dwMTime;
 	DWORD		m_dwGetItemTime;
 
-	TCHAR		szBuff[32];
+	int			m_iHp;
+	int			m_iScore;
 	bool		m_bUnique[2];
 	bool		m_bCheck;
 	bool		m_bCheck2;
