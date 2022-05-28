@@ -157,6 +157,13 @@ void CPlayer::Key_Input(void)
 			}
 		}
 	}
+	else if (GetAsyncKeyState('O'))
+	{
+		while (GetAsyncKeyState('L')&0x8001)
+		{
+			continue;
+		}
+	}
 		
 }
 CObj * CPlayer::Create_Pet()

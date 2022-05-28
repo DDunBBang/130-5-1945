@@ -170,12 +170,15 @@ void CMainGame::Late_Update(void)
 void CMainGame::Render(void)
 {
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
-	for (size_t i = 0; i < OBJ_END; ++i)
+	if (m_iScore < 6 && m_iHp>0)
 	{
-		for (auto& iter : m_ObjList[i])
-			iter->Render(m_hDC);
+		for (size_t i = 0; i < OBJ_END; ++i)
+		{
+			for (auto& iter : m_ObjList[i])
+				iter->Render(m_hDC);
+		}
 	}
-
+	
 	TCHAR	szBuff[32] = L"";
 	swprintf_s(szBuff, L"Player Count : %d", m_ObjList[OBJ_PLAYER].front()->Get_HP());
 	TextOut(m_hDC, 50, WINCY - 50, szBuff, lstrlen(szBuff));
@@ -241,14 +244,16 @@ void CMainGame::Render(void)
 	{
 		if (m_dwStTime + 2000 < GetTickCount())
 		{
-			m_dwStTime = GetTickCount();
-			while ((m_dwStTime + 2000) > GetTickCount())
+			if ((m_dwStTime + 4000) < GetTickCount())
 			{
-				TCHAR	szBuff3[32] = L"";	
+				m_dwStTime = GetTickCount();
+			}
+			else
+			{
+				TCHAR	szBuff3[32] = L"";
 				swprintf_s(szBuff3, L"GAME OVER!!!");
 				TextOut(m_hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff3, (int)lstrlen(szBuff3));
 			}
-			m_dwStTime = GetTickCount();
 		}
 	}
 }
