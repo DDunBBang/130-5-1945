@@ -22,7 +22,7 @@ public:
 		if(_eDir!=DIR_END)
 			pInstace->Set_Dir(_eDir);
 		pInstace->Initialize();
-		pInstace->Set_Pos(_fX,_fY);
+		pInstace->Set_Pos(_fX,_fY);	
 
 		return pInstace;
 	}

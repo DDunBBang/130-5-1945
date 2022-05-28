@@ -17,7 +17,7 @@ void CBullet::Initialize(void)
 	{
 		m_fSpeed = 10.f;
 		m_tInfo.fCX = 150.f;
-		m_tInfo.fCY = 0.f;
+		m_tInfo.fCY = 10.f;
 	}
 	else
 	{
@@ -68,13 +68,13 @@ void CBullet::Direction(void)
 		m_tInfo.fY -= m_fSpeed*sin(75* DEGREE);
 		break;
 	case DIR_MD:
-		m_tInfo.fX += m_fSpeed*cos(m_fRadian*DEGREE)*2;
-		m_tInfo.fY += m_fSpeed*sin(m_fRadian*DEGREE)*2;
+		m_tInfo.fX -= m_fSpeed*cos(m_fRadian);
+		m_tInfo.fY -= m_fSpeed*sin(m_fRadian);
 		break;
 	case DIR_UT:
 		while (m_tInfo.fCY < 150)
 		{
-			m_tInfo.fY -= m_fSpeed*0.5f;
+			m_tInfo.fY -= m_fSpeed*0.3f;
 			m_tInfo.fCY += m_fSpeed;
 			break;
 		}

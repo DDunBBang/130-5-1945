@@ -18,13 +18,14 @@ public:
 	void		Set_Dead() { m_bDead = true; }
 	bool		Get_Dead() { return m_bDead; }
 	const RECT& Get_Rect() { return m_tRect; }
-	const INFO& Get_Info() { return m_tInfo; }
+	INFO&		Get_Info() { return m_tInfo; }
 	void		Set_Up_iLv(void)	{ ++m_iLv; }
 	void		Set_Radian(float _fRadian) { m_fRadian = _fRadian; }
 	DIRECTION		Get_Dir() { return m_eDir; }
 	void		Set_Target(CObj* m_tar) { m_Target = m_tar; }
 	void		Set_Target_List(list<CObj*>* m_tar) { m_pTarget_List = m_tar; }
 	void		Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
+	void		Set_Time(DWORD _m_dwTime) { m_dwTime = _m_dwTime; }
 	void		Hit() { --m_iHP; }
 
 public:

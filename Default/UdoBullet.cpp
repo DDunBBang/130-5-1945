@@ -15,7 +15,7 @@ void CUdoBullet::Initialize(void)
 {
 	m_tInfo.fCX = 10.f;
 	m_tInfo.fCY = 10.f;
-	m_fSpeed = 20.f;
+	m_fSpeed = 10.f;
 }
 
 int CUdoBullet::Update(void)
@@ -37,18 +37,25 @@ int CUdoBullet::Update(void)
 			}
 		}
 		if (m_Target)
-		{
-			float disX = m_Target->Get_Info().fX - m_tInfo.fX;
-			float disY = m_Target->Get_Info().fY - m_tInfo.fY;
-			m_fRadian = atan2f(disY, disX);
+		{		
+			if (m_Target->Get_Info().fX > WINCX + 30 && m_Target->Get_Info().fY > WINCY + 30)
+				m_bDead = true;
+			disX = m_Target->Get_Info().fX - m_tInfo.fX;
+			disY = m_Target->Get_Info().fY - m_tInfo.fY;
+			m_fRadian = atan2(disY, disX);
 			m_tInfo.fX += m_fSpeed*cosf(m_fRadian);
 			m_tInfo.fY += m_fSpeed*sinf(m_fRadian);
-		}		
+		}
+		else
+		{
+			m_tInfo.fX += 10.f;
+			m_tInfo.fY += 10.f;
+		}
 	}
 	else
 	{
-		m_tInfo.fX += m_fSpeed*cosf(m_fRadian);
-		m_tInfo.fY += m_fSpeed*sinf(m_fRadian);
+		m_tInfo.fX += 10.f;
+		m_tInfo.fY += 10.f;
 	}
 	Update_Rect();
 
@@ -59,6 +66,11 @@ void CUdoBullet::Late_Update(void)
 {
 	if (m_tRect.left < 0 || m_tRect.top < 0 || m_tRect.right > WINCX || m_tRect.bottom > WINCY)
 		m_bDead = true;
+
+	if(!m_Target)
+		m_bDead = true;
+	
+	
 }
 
 void CUdoBullet::Render(HDC hDC)

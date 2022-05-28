@@ -157,6 +157,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Pet.h" />
     <ClInclude Include="Player.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Pet.cpp" />
     <ClCompile Include="Player.cpp" />

@@ -19,5 +19,6 @@ public:
 	void Move();
 private:
 	CObj* Create_Udo();
+
 };
 

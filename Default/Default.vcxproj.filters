@@ -55,6 +55,9 @@
     <Filter Include="01. Obj\01. Bullet\UdoBullet">
       <UniqueIdentifier>{59b6fbe0-9e0a-4a38-b08b-c422617acb7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\05.Mouse">
+      <UniqueIdentifier>{15dcaf5b-a546-41d6-90fe-34a6e954a624}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -129,6 +132,12 @@
     <ClInclude Include="UdoBullet.h">
       <Filter>01. Obj\01. Bullet\UdoBullet</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>01. Obj\05.Mouse</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -175,6 +184,12 @@
     </ClCompile>
     <ClCompile Include="UdoBullet.cpp">
       <Filter>01. Obj\01. Bullet\UdoBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>01. Obj\05.Mouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

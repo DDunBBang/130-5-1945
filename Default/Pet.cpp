@@ -89,7 +89,7 @@ void CPet::Move()
 CObj * CPet::Create_Udo()
 {
 	CObj* Udo = CAbstractFactory<CUdoBullet>::Create(m_tInfo.fX, m_tInfo.fY);
-	Udo->Set_Target_List(m_pTarget_List);
+	Udo->Set_Target_List((m_pTarget_List));
 
 	return Udo;
 }
