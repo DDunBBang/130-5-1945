@@ -15,9 +15,9 @@ public:
 private:
 	void Create_Speed(void);
 private:
-	float	m_ffXSpeed;
+	float	m_fXSpeed;
 	float m_fX;
 	float m_fY;
-	int m_iFirst;
+	bool m_bFirst;
 };
 

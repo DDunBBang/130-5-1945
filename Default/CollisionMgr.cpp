@@ -70,7 +70,7 @@ bool CCollisionMgr::Check_Sphere(CObj * pDest, CObj * pSour)
 	return fRadius >= fDiagonal;
 }
 
-void CCollisionMgr::Collision_Item(list<CObj*> _Player, list<CObj*> _Item)
+bool CCollisionMgr::Collision_Item(list<CObj*> _Player, list<CObj*> _Item)
 {
 	RECT		rc{};
 
@@ -80,7 +80,18 @@ void CCollisionMgr::Collision_Item(list<CObj*> _Player, list<CObj*> _Item)
 		{
 			if (IntersectRect(&rc, &(Player->Get_Rect()), &(Item->Get_Rect())))
 			{
-				Player->Set_Up_iLv();
+
+				if (Item->Get_ItemCount() == 1)
+					Player->Set_Up_iLv();
+
+				else if (Item->Get_ItemCount() == 2)
+					Player->Set_Shield_Count();
+
+				else
+				{		Item->Set_Dead();
+					return true;
+				}
+				
 				Item->Set_Dead();
 			}
 		}

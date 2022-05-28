@@ -27,6 +27,9 @@ public:
 	void		Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
 	void		Set_Time(DWORD _m_dwTime) { m_dwTime = _m_dwTime; }
 	void		Hit() { --m_iHP; }
+	void		Set_Shield_Count(void) { ++m_iShieldCount; }
+	int		Get_ItemCount(void) { return m_iItemCount; }
+	void		Set_Marget(void) { m_bMagnet = true; }
 	const int	Get_HP() const { return m_iHP; }
 
 public:
@@ -51,7 +54,9 @@ protected:
 	float		m_fDistance;
 	int			m_iLv;
 	int			m_iShieldCount;
+	int			m_iItemCount;
 	int			m_iHP;
+	bool		m_bMagnet;
 
 	
 	POINT		m_Pt;

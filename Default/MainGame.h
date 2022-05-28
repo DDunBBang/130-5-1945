@@ -32,4 +32,5 @@ private:
 	DWORD		m_dwHitTime;
 
 	bool		m_bUnique[2];
+	bool		m_bCheck;
 };
