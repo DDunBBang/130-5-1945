@@ -3,7 +3,7 @@
 #include "AbstractFactory.h"
 
 CPlayer::CPlayer::CPlayer()
-	:iCount(2), m_bHitCheck(false)
+	:iCount(2), m_bHitCheck(false), m_fdwTime(GetTickCount())
 {
 }
 
@@ -105,10 +105,18 @@ void CPlayer::Key_Input(void)
 		/*m_pBullet->*/
 	}
 
-	else if (GetAsyncKeyState('C'))
+	else if (GetAsyncKeyState('R'))
 	{		
 		if ((m_dwTime /1000)+20 <= (GetTickCount()/1000))
 		{				
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(75, WINCY - 75, DIR_UT));
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(WINCX - 75, WINCY - 75, DIR_UT));
+		}
+	}
+	else if (GetAsyncKeyState('C'))
+	{
+		if ((m_dwTime / 1000) + 20 <= (GetTickCount() / 1000))
+		{
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(75, WINCY - 75, DIR_UT));
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(WINCX - 75, WINCY - 75, DIR_UT));
 		}
