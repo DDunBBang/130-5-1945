@@ -27,6 +27,7 @@ public:
 	void		Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
 	void		Set_Time(DWORD _m_dwTime) { m_dwTime = _m_dwTime; }
 	void		Hit() { --m_iHP; }
+	const int	Get_HP() const { return m_iHP; }
 
 public:
 	virtual		void	Initialize(void)	PURE;

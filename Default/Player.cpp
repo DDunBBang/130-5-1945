@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "AbstractFactory.h"
-CPlayer::CPlayer():iCount(2), m_fdwTime(GetTickCount())
+
+CPlayer::CPlayer::CPlayer()
+	:iCount(2), m_bHitCheck(false)
 {
 }
 
@@ -15,6 +17,7 @@ void CPlayer::Initialize(void)
 {
 	m_tInfo = { 250.f, 650.f, 40.f, 40.f };
 	m_fSpeed = 10.f;
+	m_iHP = 3;
 }
 
 int CPlayer::Update(void)
