@@ -212,7 +212,7 @@ void CMainGame::Render(void)
 			SelectObject(m_hDC, oldBrush);
 			DeleteObject(myBrush);
 
-			swprintf_s(szBuff2, L"필살기 준비 완료 사용 : R");
+			swprintf_s(szBuff2, L"필살기 사용 : R");
 			TextOut(m_hDC, 50, WINCY - 90, szBuff2, lstrlen(szBuff2));
 			if (GetAsyncKeyState('R'))
 			{

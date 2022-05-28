@@ -90,7 +90,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fCX = 50.f;
 		m_tInfo.fCY = 50.f;
 		m_tInfo.fX = 100.f;
-		m_tInfo.fY = 0.f;
+		m_tInfo.fY = 10.f;
 		m_eDir = DIR_DOWN;
 		m_iHP = 3000;
 	}
@@ -100,7 +100,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fCX = 50.f;
 		m_tInfo.fCY = 50.f;
 		m_tInfo.fX = WINCX - 100;
-		m_tInfo.fY = 0.f;
+		m_tInfo.fY = 10.f;
 		m_eDir = DIR_DOWN;
 		m_iHP = 3000;
 	}
