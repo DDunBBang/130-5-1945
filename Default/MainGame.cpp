@@ -116,8 +116,7 @@ void CMainGame::Late_Update(void)
 			iter->Late_Update();
 	}
 
-	for (auto iter = m_ObjList[OBJ_ITEM].begin(); iter != m_ObjList[OBJ_ITEM].end(); ++iter)
-		m_bCheck = CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
+	m_bCheck = CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
 
 	if (m_bCheck)
 	{
@@ -126,7 +125,7 @@ void CMainGame::Late_Update(void)
 	}
 	if (m_bCheck2)
 	{
-		if (CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]))
+		for (auto& iter : m_ObjList[OBJ_ITEM])
 		{
 			iter->Set_Magnet_true();
 			iter->Set_Target(m_ObjList[OBJ_PLAYER].front());
