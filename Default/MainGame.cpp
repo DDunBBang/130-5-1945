@@ -109,20 +109,21 @@ void CMainGame::Late_Update(void)
 			iter->Late_Update();
 	}
 
-	bool m_bCheck = CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
-	if (true == m_bCheck)
-	{
-		for (auto& iter : m_ObjList[OBJ_ITEM])
+	
+	
+		for (auto iter = m_ObjList[OBJ_ITEM].begin();iter!=m_ObjList[OBJ_ITEM].end();++iter)
 		{
-			iter->Set_Marget();
-			iter->Set_Target(m_ObjList[OBJ_PLAYER].front());
-			
+			if (CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]))
+			{
+				(*iter)->Set_Marget();
+				(*iter)->Set_Target(m_ObjList[OBJ_PLAYER].front());
+			}
 		}
-	}
+	
 		
 	for (auto& iter : m_ObjList[OBJ_PBULLET])
 	{
-		if (iter->Get_Dir() == DIR_UT)
+		if (iter->Get_Dir() == DIR_UT|| iter->Get_Dir() == DIR_RC)
 			CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PBULLET]);
 		else
 			CCollisionMgr::Collision_Sphere(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]);
@@ -181,7 +182,7 @@ void CMainGame::Render(void)
 			Rectangle(m_hDC, 50, WINCY - 65, 150, WINCY - 50);
 			swprintf_s(szBuff2, L"필살기 준비 완료 사용 : R");
 			TextOut(m_hDC, 50, WINCY - 90, szBuff2, lstrlen(szBuff2));
-			if (GetAsyncKeyState('C'))
+			if (GetAsyncKeyState('R'))
 			{
 				m_dwStTime = GetTickCount();
 				dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Time(GetTickCount());

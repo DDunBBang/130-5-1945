@@ -36,7 +36,7 @@ int CItem::Update(void)
 
 	Create_Speed();
 
-	if (m_bMagnet == true)
+	if (m_bMagnet)
 	{
 
 		float fWidth = m_tInfo.fX - m_Target->Get_Info().fX;
@@ -44,7 +44,6 @@ int CItem::Update(void)
 		float fRadian = atan2f(fHeight, fWidth);
 		m_tInfo.fX -= cosf(fRadian) * 5.f;
 		m_tInfo.fY -= sinf(fRadian) * 5.f;
-		
 
 	}
 

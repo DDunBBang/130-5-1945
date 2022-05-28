@@ -19,5 +19,6 @@ private:
 	float m_fX;
 	float m_fY;
 	bool m_bFirst;
+
 };
 

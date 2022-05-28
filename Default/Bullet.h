@@ -22,5 +22,6 @@ private:
 
 	list<CObj*>* m_pBullet;
 	bool		m_bCheck;
+	bool        m_bRCSize;
 };
 

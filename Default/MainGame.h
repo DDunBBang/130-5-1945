@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "Monster.h"
 #include "Mouse.h"
+#include "Item.h"
 class CMainGame
 {
 public:					// 持失切, 社瑚切

@@ -108,9 +108,18 @@ void CPlayer::Key_Input(void)
 
 	if (GetAsyncKeyState(VK_LBUTTON))
 	{
-		m_fRadian = atan2f(m_tInfo.fY - m_pMouse->front()->Get_Info().fY, m_tInfo.fX - m_pMouse->front()->Get_Info().fX);
-		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_MD, m_fRadian));
-		/*m_pBullet->*/
+		m_fRadian = atan2f(m_pMouse->front()->Get_Info().fY - m_tInfo.fY, m_pMouse->front()->Get_Info().fX - m_tInfo.fX);
+		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_LC, m_fRadian));
+	}
+
+	if (GetAsyncKeyState(VK_RBUTTON))
+	{
+		if ((m_dwTime / 1000) + 2 <= (GetTickCount() / 1000))
+		{
+			m_fRadian = atan2f(m_pMouse->front()->Get_Info().fY - m_tInfo.fY, m_pMouse->front()->Get_Info().fX - m_tInfo.fX);
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_pMouse->front()->Get_Info().fX, m_pMouse->front()->Get_Info().fY, DIR_RC));
+			m_dwTime = GetTickCount();
+		}
 	}
 
 	else if (GetAsyncKeyState('R'))
