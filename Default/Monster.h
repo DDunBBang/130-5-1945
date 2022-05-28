@@ -14,6 +14,7 @@ public:
 	void Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
 	void Set_Item(list<CObj*>* _pItem) { m_pItem = _pItem; }
 	void Set_Unique(bool* _pUnique) { m_pUnique = _pUnique; }
+	const int Get_LV() const { return m_iLv; }
 
 public:
 	virtual void Initialize(void) override;
