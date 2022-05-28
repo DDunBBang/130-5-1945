@@ -23,7 +23,15 @@ void CPlayer::Initialize(void)
 int CPlayer::Update(void)
 {
 	if (m_bDead)
+	{
+		for (auto& iter = m_pShield->begin(); iter != m_pShield->end();)
+		{
+			(*iter)->Set_Dead();
+			++iter;
+		}
 		return OBJ_DEAD;
+	}
+
 	Key_Input();
 	Update_Rect();
 
@@ -130,8 +138,14 @@ void CPlayer::Key_Input(void)
 	{
 		if (m_iShieldCount > 0)
 		{
-			--m_iShieldCount;
-			m_pItem->push_back(Create_Shield());
+			if (m_pShield->begin() == m_pShield->end())
+			{
+				--m_iShieldCount;
+				m_pShield->push_back(Create_Shield(DIR_UP));
+				m_pShield->push_back(Create_Shield(DIR_DOWN));
+				m_pShield->push_back(Create_Shield(DIR_LEFT));
+				m_pShield->push_back(Create_Shield(DIR_RIGHT));
+			}
 		}
 	}
 		
@@ -156,10 +170,11 @@ CObj * CPlayer::Create_Pet()
 	}
 }
 
-CObj * CPlayer::Create_Shield()
+CObj * CPlayer::Create_Shield(DIRECTION eDir)
 {
 	CObj* Shield = CAbstractFactory<CShield>::Create();
 	Shield->Set_Target(this);
+	Shield->Set_Dir(eDir);
 
 	return Shield;
 }

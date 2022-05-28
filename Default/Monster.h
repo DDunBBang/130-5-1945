@@ -12,6 +12,7 @@ public:
 
 public:
 	void Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
+	void Set_Item(list<CObj*>* _pItem) { m_pItem = _pItem; }
 	void Set_Unique(bool* _pUnique) { m_pUnique = _pUnique; }
 
 public:
@@ -26,5 +27,6 @@ private:
 
 	void		Direction();
 	list<CObj*>* m_pBullet;
+	list<CObj*>* m_pItem;
 	bool*		m_pUnique;
 };

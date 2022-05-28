@@ -27,8 +27,9 @@ int CShield::Update(void)
 		return OBJ_DEAD;
 
 	m_fRadian += m_fSpeed;
-	m_tInfo.fX = m_Target->Get_Info().fX + m_fDistance*cos(m_fRadian*DEGREE);
-	m_tInfo.fY = m_Target->Get_Info().fY - m_fDistance*sin(m_fRadian*DEGREE);
+	
+	Direction();
+
 	Update_Rect();
 
 	return OBJ_NOEVENT;
@@ -36,9 +37,9 @@ int CShield::Update(void)
 
 void CShield::Late_Update(void)
 {
-	if (m_dwTime + 5000 < GetTickCount())
+	/*if (m_dwTime + 5000 < GetTickCount())
 		m_bDead = true;
-
+*/
 }
 
 void CShield::Render(HDC hDC)
@@ -48,4 +49,29 @@ void CShield::Render(HDC hDC)
 
 void CShield::Release(void)
 {
+}
+
+void CShield::Direction(void)
+{
+	switch (m_eDir)
+	{
+	case DIR_LEFT:
+		m_tInfo.fX = m_Target->Get_Info().fX + m_fDistance*cos((135 + m_fRadian)*DEGREE);
+		m_tInfo.fY = m_Target->Get_Info().fY - m_fDistance*sin((135 + m_fRadian)*DEGREE);
+		break;
+	case DIR_UP:
+		m_tInfo.fX = m_Target->Get_Info().fX + m_fDistance*cos((225 + m_fRadian)*DEGREE);
+		m_tInfo.fY = m_Target->Get_Info().fY - m_fDistance*sin((225 + m_fRadian)*DEGREE);
+		break;
+	case DIR_RIGHT:
+		m_tInfo.fX = m_Target->Get_Info().fX + m_fDistance*cos((45 + m_fRadian)*DEGREE);
+		m_tInfo.fY = m_Target->Get_Info().fY - m_fDistance*sin((45 + m_fRadian)*DEGREE);
+		break;
+	case DIR_DOWN:
+		m_tInfo.fX = m_Target->Get_Info().fX + m_fDistance*cos((315 + m_fRadian)*DEGREE);
+		m_tInfo.fY = m_Target->Get_Info().fY - m_fDistance*sin((315 + m_fRadian)*DEGREE);
+		break;
+	
+	
+	}
 }
