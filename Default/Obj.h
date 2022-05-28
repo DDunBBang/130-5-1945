@@ -28,9 +28,11 @@ public:
 	void		Set_Time(DWORD _m_dwTime) { m_dwTime = _m_dwTime; }
 	void		Hit() { --m_iHP; }
 	void		Set_Shield_Count(void) { ++m_iShieldCount; }
-	int			Get_ItemCount(void) { return m_iItemCount; }
-	void		Set_Marget(void) { m_bMagnet = true; }
+	int		Get_ItemCount(void) { return m_iItemCount; }
+	const void		Set_Magnet_true(void) { m_bMagnet = true; }
 	const int	Get_HP() const { return m_iHP; }
+	const void  Set_Magnet_false(void) { m_bMagnet = false; }
+	const void		Set_Check(int _Check) { m_iCheck = _Check; }
 
 public:
 	virtual		void	Initialize(void)	PURE;
@@ -56,6 +58,7 @@ protected:
 	int			m_iItemCount;
 	int			m_iHP;
 	bool		m_bMagnet;
+	int			m_iCheck;
 	
 	POINT		m_Pt;
 	CObj* m_Target;
