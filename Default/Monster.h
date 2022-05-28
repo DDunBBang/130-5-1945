@@ -23,7 +23,8 @@ public:
 	virtual void Release(void) override;
 
 private:
-	void		Key_Input(void);
+	void		Attack_Player();
+
 	void		Direction();
 	list<CObj*>* m_pBullet;
 	list<CObj*>* m_pItem;

@@ -18,6 +18,11 @@ public:
 	void Set_Pet(list<CObj*>* _pPet) { m_pPet = _pPet; }
 	// void Set_Item(list<CObj*>* _pItem) { m_pItem = _pItem; }
 	void Set_Shield(list<CObj*>* _pShield) { m_pShield = _pShield; }
+	void Set_Item(list<CObj*>* _pItem) { m_pItem = _pItem; }
+	void Set_Mouse(list<CObj*>* _pMouse) { m_pMouse = _pMouse; }
+	const bool Get_HitCheck() const { return m_bHitCheck; }
+	void Set_HitCheck(bool _bCheck) { m_bHitCheck = _bCheck; }
+
 public:
 	virtual void Initialize(void) override;
 	virtual int Update(void) override;
@@ -27,15 +32,21 @@ public:
 
 	CObj* Create_Pet();
 	CObj* Create_Shield(DIRECTION eDir);
+
 private:
 	void		Key_Input(void);
+	CObj* Create_Pet();
+	CObj* Create_Shield();
 
 	list<CObj*>* m_pMonster;
 	list<CObj*>* m_pPet;
 	// list<CObj*>* m_pItem;
 	list<CObj*>* m_pShield;
+	list<CObj*>* m_pItem;
+	list<CObj*>* m_pMouse;
 
 	int iCount;
-
+	float m_fdwTime;
+	bool m_bHitCheck;
 };
 

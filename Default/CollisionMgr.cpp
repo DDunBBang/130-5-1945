@@ -26,7 +26,7 @@ void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour)
 	}
 }
 
-void CCollisionMgr::Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour)
+bool CCollisionMgr::Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour)
 {
 	for (auto& Dest : _Dest)
 	{
@@ -36,9 +36,27 @@ void CCollisionMgr::Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour)
 			{
 				Dest->Set_Dead();
 				Sour->Hit();
+				return true;
 			}
 		}
 	}
+	return false;
+}
+
+bool CCollisionMgr::Collision_Player(list<CObj*> _Dest, list<CObj*> _Sour)
+{
+	for (auto& Dest : _Dest)
+	{
+		for (auto& Sour : _Sour)
+		{
+			if (Check_Sphere(Dest, Sour))
+			{
+				Sour->Hit();
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 bool CCollisionMgr::Check_Sphere(CObj * pDest, CObj * pSour)

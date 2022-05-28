@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Monster.h"
-
+#include "Mouse.h"
 class CMainGame
 {
 public:					// 생성자, 소멸자
@@ -18,8 +18,6 @@ public:					// 생성자, 소멸자
 	void		Late_Update(void);
 	void		Render(void);
 	void		Release(void);
-	void		Re_Init(void);
-
 
 // public, protected, private 변수
 private:
@@ -31,6 +29,7 @@ private:
 	int			m_iHp;
 
 	DWORD		m_dwTime;
+	DWORD		m_dwHitTime;
 
 	bool		m_bUnique[2];
 	bool		m_bCheck;

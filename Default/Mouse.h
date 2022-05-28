@@ -1,12 +1,11 @@
 #pragma once
 #include "Obj.h"
-#include "UdoBullet.h"
-class CPet :
+class CMouse :
 	public CObj
 {
 public:
-	CPet();
-	virtual ~CPet();
+	CMouse();
+	virtual ~CMouse();
 
 public:
 	virtual void Initialize(void) override;
@@ -14,11 +13,5 @@ public:
 	virtual	void Late_Update(void) override;
 	virtual void Render(HDC hDC) override;
 	virtual void Release(void) override;
-
-	void Shot();
-	void Move();
-private:
-	CObj* Create_Udo();
-
 };
 
