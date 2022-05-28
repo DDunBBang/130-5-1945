@@ -5,7 +5,7 @@
 #include "AbstractFactory.h"
 #include "Item.h"
 
-CMonster::CMonster():m_bDrop(true)
+CMonster::CMonster() :m_bDrop(true), m_dwPattern1(GetTickCount()), m_dwPattern2(GetTickCount()), m_dwPattern3(GetTickCount())
 {
 }
 
@@ -110,8 +110,8 @@ int CMonster::Update(void)
 {
 	if (m_bDead)
 	{
-		if(m_bDrop)
- 			m_pItem->push_back(CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
+		if (m_bDrop)
+			m_pItem->push_back(CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
 		///*if (2 == rand() % 2 + 1)
 		//{*/
 		//	m_pItem->push_back(CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
@@ -120,6 +120,7 @@ int CMonster::Update(void)
 	}
 
 	Direction();
+
 	if (5 != m_iLv)
 	{
 		if (m_dwTime + 500 < GetTickCount())
@@ -136,6 +137,8 @@ int CMonster::Update(void)
 			m_dwTime = GetTickCount();
 		}
 	}
+
+
 	Update_Rect();
 	return OBJ_NOEVENT;
 }
@@ -161,10 +164,6 @@ void CMonster::Late_Update(void)
 		m_bDrop = false;
 		m_bDead = true;
 	}
-
-	if (101 == m_iLv && 0 >= m_iHP)
-   		m_bDead = true;
-
 }
 
 void CMonster::Render(HDC hDC)
@@ -201,6 +200,23 @@ void CMonster::Attack_Player()
 		dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
 		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_RB));
 		dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+	}
+	else if (101 == m_iLv)
+	{
+	
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_DOWN));
+			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_LB));
+			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_RB));
+			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+			m_dwPattern1 = GetTickCount();
+	
+		
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_DOWN));
+			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+			m_dwPattern2 = GetTickCount();
+	
 	}
 }
 

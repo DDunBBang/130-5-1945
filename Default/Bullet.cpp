@@ -119,6 +119,9 @@ void CBullet::Direction(void)
 			}
 		}
 		break;
+	case DIR_ROCK:
+
+		break;
 	case DIR_UT:
 		while (m_tInfo.fCY < 150)
 		{

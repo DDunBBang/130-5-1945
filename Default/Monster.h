@@ -32,4 +32,8 @@ private:
 
 	bool*		m_pUnique;
 	bool		m_bDrop;
+
+	DWORD		m_dwPattern1;
+	DWORD		m_dwPattern2;
+	DWORD		m_dwPattern3;
 };
