@@ -5,7 +5,7 @@
 
 //,m_dwEdTime(m_dwStTime+1000)
 CMainGame::CMainGame()
-	: m_dwTime(GetTickCount()), m_bUnique{false}, m_iScore(0), m_bBoss(false)
+	: m_dwTime(GetTickCount()), m_bUnique{ false }, m_bCheck(false), m_bCheck2(false), m_dwMTime(GetTickCount()), m_iScore(0), m_bBoss(false)
 {
 	m_iHp = 3;
 	//m_dwDfTime = (m_dwEdTime - m_dwStTime) / 1000;
@@ -14,7 +14,7 @@ CMainGame::CMainGame()
 CMainGame::~CMainGame()
 {
 	Release();
-	
+
 }
 
 void CMainGame::Initialize(void)
@@ -28,9 +28,7 @@ void CMainGame::Initialize(void)
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Monster(&m_ObjList[OBJ_MONSTER]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Pet(&m_ObjList[OBJ_PET]);
-//	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Item(&m_ObjList[OBJ_ITEM]);	
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Shield(&m_ObjList[OBJ_SHIELD]);
-	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Item(&m_ObjList[OBJ_ITEM]);	
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Time(m_dwStTime);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Mouse(&m_ObjList[OBJ_MOUSE]);
 }
@@ -127,17 +125,35 @@ void CMainGame::Late_Update(void)
 			iter->Late_Update();
 	}
 
-	bool m_bCheck = CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
-	if (true == m_bCheck)
+	m_bCheck = CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
+	if (m_bCheck)
+	{
+		m_bCheck2 = true;
+		m_bCheck = false;
+	}
+	if (m_bCheck2)
 	{
 		for (auto& iter : m_ObjList[OBJ_ITEM])
 		{
-			iter->Set_Marget();
+			iter->Set_Magnet_true();
 			iter->Set_Target(m_ObjList[OBJ_PLAYER].front());
-			
 		}
 	}
-		
+	if (m_bCheck2 && m_dwMTime + 4000 < GetTickCount())
+	{
+		m_bCheck2 = false;
+		for (auto& iter : m_ObjList[OBJ_ITEM])
+		{
+			iter->Set_Magnet_false();
+		}
+		m_dwMTime = GetTickCount();
+	}
+
+
+
+
+
+
 	for (auto& iter : m_ObjList[OBJ_PBULLET])
 	{
 		if (iter->Get_Dir() == DIR_UT)
@@ -145,7 +161,7 @@ void CMainGame::Late_Update(void)
 		else
 			CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]);
 	}
-	
+
 	if (!dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Get_HitCheck())
 	{
 		if (CCollisionMgr::Collision_Player(m_ObjList[OBJ_MBULLET], m_ObjList[OBJ_PLAYER]) ||
@@ -157,7 +173,7 @@ void CMainGame::Late_Update(void)
 	}
 	else
 	{
-		if(m_dwHitTime + 3000 < GetTickCount())
+		if (m_dwHitTime + 3000 < GetTickCount())
 			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_HitCheck(false);
 	}
 
@@ -187,14 +203,14 @@ void CMainGame::Render(void)
 	
 	//if()
 	TCHAR	szBuff2[32] = L"";
-	
+
 	int i = ((m_dwStTime / 1000) + 20) - (GetTickCount() / 1000);
 	if (m_ObjList[OBJ_PLAYER].front()->Get_HP() > 0)
 	{
 		if (i > 0 && i <= 20)
 		{
 			Rectangle(m_hDC, 50, WINCY - 65, 150, WINCY - 50);
-			Rectangle(m_hDC, 50, WINCY - 65, 150 - i * 5, WINCY-50);
+			Rectangle(m_hDC, 50, WINCY - 65, 150 - i * 5, WINCY - 50);
 		}
 		else if (i <= 0)
 		{
@@ -212,7 +228,7 @@ void CMainGame::Render(void)
 	{
 		TCHAR	szBuff3[32] = L"";
 		swprintf_s(szBuff3, L"GAME OVER!!!");
-		TextOut(m_hDC, WINCX *0.5-50, WINCY *0.5, szBuff3, lstrlen(szBuff3));
+		TextOut(m_hDC, WINCX *0.5 - 50, WINCY *0.5, szBuff3, lstrlen(szBuff3));
 	}
 
 }
