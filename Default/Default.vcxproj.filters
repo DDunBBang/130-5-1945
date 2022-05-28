@@ -114,9 +114,6 @@
     <ClInclude Include="Pet.h">
       <Filter>01. Obj\03. Pet</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>01. Obj\04, Item</Filter>
-    </ClInclude>
     <ClInclude Include="Shield.h">
       <Filter>01. Obj\04, Item\00. Shield</Filter>
     </ClInclude>
@@ -137,6 +134,9 @@
     </ClInclude>
     <ClInclude Include="Mouse.h">
       <Filter>01. Obj\05.Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>01. Obj\04, Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -167,9 +167,6 @@
     <ClCompile Include="Pet.cpp">
       <Filter>01. Obj\03. Pet</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>01. Obj\04, Item</Filter>
-    </ClCompile>
     <ClCompile Include="Shield.cpp">
       <Filter>01. Obj\04, Item\00. Shield</Filter>
     </ClCompile>
@@ -190,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="Mouse.cpp">
       <Filter>01. Obj\05.Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>01. Obj\04, Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

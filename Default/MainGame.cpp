@@ -5,7 +5,7 @@
 
 //,m_dwEdTime(m_dwStTime+1000)
 CMainGame::CMainGame()
-	: m_dwTime(GetTickCount()), m_bUnique{false}
+	: m_dwTime(GetTickCount()), m_bUnique{false}, m_bCheck{true}
 {
 	m_iHp = 3;
 	//m_dwDfTime = (m_dwEdTime - m_dwStTime) / 1000;
@@ -84,6 +84,17 @@ void CMainGame::Update(void)
 		m_dwTime = GetTickCount();
 	}
 
+
+	if (true == m_bCheck)
+	{
+		for (auto& iter : m_ObjList[OBJ_ITEM])
+		{
+			iter->Set_Marget();
+			iter->Set_Target(m_ObjList[OBJ_PLAYER].front());
+		}
+	}
+
+
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{
 		for (auto& iter = m_ObjList[i].begin();
@@ -109,16 +120,9 @@ void CMainGame::Late_Update(void)
 			iter->Late_Update();
 	}
 
-	bool m_bCheck = CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
-	if (true == m_bCheck)
-	{
-		for (auto& iter : m_ObjList[OBJ_ITEM])
-		{
-			iter->Set_Marget();
-			iter->Set_Target(m_ObjList[OBJ_PLAYER].front());
-			
-		}
-	}
+	m_bCheck = CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
+	
+	
 		
 	for (auto& iter : m_ObjList[OBJ_PBULLET])
 	{
