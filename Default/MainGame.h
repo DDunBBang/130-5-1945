@@ -32,9 +32,12 @@ private:
 	DWORD		m_dwTime;
 	DWORD		m_dwHitTime;
 	DWORD		m_dwMTime;
+	DWORD		m_dwGetItemTime;
 
+	TCHAR		szBuff[32];
 	bool		m_bUnique[2];
 	bool		m_bCheck;
 	bool		m_bCheck2;
 	bool		m_bBoss;
+
 };

@@ -83,22 +83,22 @@ bool CCollisionMgr::Collision_Item(list<CObj*> _Player, list<CObj*> _Item)
 				if (Item->Get_ItemCount() == 1)
 				{
 					Player->Set_Up_iLv();
-					Item->Set_Check(1);
+					
 				}
 
 				else if (Item->Get_ItemCount() == 2)
 				{
 					Player->Set_Shield_Count();
-					Item->Set_Check(2);
+					
 				}
 				else if (Item->Get_ItemCount() == 3)
 				{
 					Item->Set_Dead();
-					Item->Set_Check(3);
+				
 					return true;
 				}
 
-				/*Item->Set_Dead();*/
+				Item->Set_Dead();
 			}
 			
 		}
