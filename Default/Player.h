@@ -16,6 +16,7 @@ public:
 	void Set_Monster(list<CObj*>* _pMonster) { m_pMonster = _pMonster; }
 	void Set_Pet(list<CObj*>* _pPet) { m_pPet = _pPet; }
 	void Set_Item(list<CObj*>* _pItem) { m_pItem = _pItem; }
+	void Set_Mouse(list<CObj*>* _pMouse) { m_pMouse = _pMouse; }
 	const bool Get_HitCheck() const { return m_bHitCheck; }
 	void Set_HitCheck(bool _bCheck) { m_bHitCheck = _bCheck; }
 
@@ -34,9 +35,10 @@ private:
 	list<CObj*>* m_pMonster;
 	list<CObj*>* m_pPet;
 	list<CObj*>* m_pItem;
+	list<CObj*>* m_pMouse;
 
 	int iCount;
+	float m_fdwTime;
 	bool m_bHitCheck;
-
 };
 
