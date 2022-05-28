@@ -26,7 +26,7 @@ void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour)
 	}
 }
 
-void CCollisionMgr::Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour)
+bool CCollisionMgr::Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour)
 {
 	for (auto& Dest : _Dest)
 	{
@@ -35,10 +35,28 @@ void CCollisionMgr::Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour)
 			if (Check_Sphere(Dest, Sour))
 			{
 				Dest->Set_Dead();
-				Sour->Set_Dead();
+				Sour->Hit();
+				return true;
 			}
 		}
 	}
+	return false;
+}
+
+bool CCollisionMgr::Collision_Player(list<CObj*> _Dest, list<CObj*> _Sour)
+{
+	for (auto& Dest : _Dest)
+	{
+		for (auto& Sour : _Sour)
+		{
+			if (Check_Sphere(Dest, Sour))
+			{
+				Sour->Hit();
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 bool CCollisionMgr::Check_Sphere(CObj * pDest, CObj * pSour)
@@ -79,12 +97,7 @@ bool CCollisionMgr::Collision_Oneside(list<CObj*> _Dest, list<CObj*> _Sour)
 		{
 			if (IntersectRect(&rc, &(Dest->Get_Rect()), &(Sour->Get_Rect())))
 			{
-				Dest->Set_Dead(); //몬스터와 플레이어가 충돌할때 플레이어만 삭제
-				if (Sour->Get_Info().fCX == 10) //MBULLET 사이즈가 10이므로 MBULLET과 충돌할때는 MBULLET도 삭제
-				{
-					Sour->Set_Dead();
-					return true;
-				}
+				Dest->Set_Dead();
 				return true;
 			}
 		}

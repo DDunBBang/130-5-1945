@@ -7,7 +7,7 @@
 CMainGame::CMainGame()
 	: m_dwTime(GetTickCount()), m_bUnique{false}
 {
-	m_iHp = 1;
+	m_iHp = 3;
 	//m_dwDfTime = (m_dwEdTime - m_dwStTime) / 1000;
 }
 
@@ -37,10 +37,9 @@ void CMainGame::Update(void)
 		if (m_ObjList[OBJ_PLAYER].size())
 		{
 			m_ObjList[OBJ_PLAYER].front()->Set_Dead();
-			Re_Init();
 		}
 	}
-	if (m_dwTime + 1000 < GetTickCount())
+	if (m_dwTime + 1500 < GetTickCount())
 	{
 		int iLv = rand() % 100+1;
 		if (20 >= iLv && 10 < iLv)
@@ -48,7 +47,9 @@ void CMainGame::Update(void)
 			if (!m_bUnique[0])
 			{
 				m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+				m_ObjList[OBJ_MONSTER].back()->Set_Target(m_ObjList[OBJ_PLAYER].front());
 				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
+				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Unique(&m_bUnique[0]);
 				m_bUnique[0] = true;
 			}
 		}
@@ -57,13 +58,16 @@ void CMainGame::Update(void)
 			if (!m_bUnique[1])
 			{
 				m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+				m_ObjList[OBJ_MONSTER].back()->Set_Target(m_ObjList[OBJ_PLAYER].front());
 				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
+				dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Unique(&m_bUnique[1]);
 				m_bUnique[1] = true;
 			}
 		}
 		else
 		{
 			m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(iLv));
+			m_ObjList[OBJ_MONSTER].back()->Set_Target(m_ObjList[OBJ_PLAYER].front());
 			dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
 		}
 
@@ -102,30 +106,25 @@ void CMainGame::Late_Update(void)
 		if (iter->Get_Dir() == DIR_UT)
 			CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PBULLET]);
 		else
-			if (CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]))
-			{
-
-			}
+			CCollisionMgr::Collision_Sphere(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]);
 	}
 	
-
-	if(CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MBULLET]))
+	if (!dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Get_HitCheck())
 	{
-		--m_iHp;
-		if (m_iHp!=0)
+		if (CCollisionMgr::Collision_Player(m_ObjList[OBJ_MBULLET], m_ObjList[OBJ_PLAYER]) ||
+			CCollisionMgr::Collision_Player(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PLAYER]))
 		{
-			Re_Init();
+			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_HitCheck(true);
+			m_dwHitTime = GetTickCount();
 		}
 	}
-
-	if (CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]))
+	else
 	{
-		--m_iHp;
-		if (m_iHp != 0)
-		{
-			Re_Init();
-		}
-	} //체크 완료
+		if(m_dwHitTime + 3000 < GetTickCount())
+			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_HitCheck(false);
+	}
+
+	 //체크 완료
 	bool check = CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MBULLET], m_ObjList[OBJ_SHIELD]);
 
 }
@@ -140,7 +139,7 @@ void CMainGame::Render(void)
 	}
 
 	TCHAR	szBuff[32] = L"";
-	swprintf_s(szBuff, L"Player Count : %d", m_iHp);
+	swprintf_s(szBuff, L"Player Count : %d", m_ObjList[OBJ_PLAYER].front()->Get_HP());
 	TextOut(m_hDC, 50, WINCY - 50, szBuff, lstrlen(szBuff));
 
 	TCHAR	szBuff1[32] = L"";
@@ -150,7 +149,7 @@ void CMainGame::Render(void)
 	//if()
 	TCHAR	szBuff2[32] = L"";
 	int i = m_dwStTime / 1000 + 10 - GetTickCount() / 1000;
-	if (m_iHp > 0)
+	if (m_ObjList[OBJ_PLAYER].front()->Get_HP() > 0)
 	{
 		if (i > 0 && i <= 10)
 		{
@@ -165,7 +164,7 @@ void CMainGame::Render(void)
 				m_dwStTime = GetTickCount();
 		}
 	}
-	else if (m_iHp <= 0)
+	else if (m_ObjList[OBJ_PLAYER].front()->Get_HP() <= 0)
 	{
 		TCHAR	szBuff3[32] = L"";
 		swprintf_s(szBuff3, L"GAME OVER!!!");
@@ -185,14 +184,4 @@ void CMainGame::Release(void)
 		m_ObjList[i].clear();
 	}
 	ReleaseDC(g_hWnd, m_hDC);
-}
-
-void CMainGame::Re_Init(void)
-{
-	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
-	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
-	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Monster(&m_ObjList[OBJ_MONSTER]);
-	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Pet(&m_ObjList[OBJ_PET]);
-	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_Item(&m_ObjList[OBJ_ITEM]);
-	m_dwStTime = GetTickCount();
 }

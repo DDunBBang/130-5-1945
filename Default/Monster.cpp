@@ -29,7 +29,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = -10.f;
 		m_tInfo.fY = 20.f;
 		m_eDir = DIR_RIGHT;
-		m_iHP = 10;
+		m_iHP = 60;
 	}
 	else if (m_iLv > 70)
 	{
@@ -37,7 +37,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX + 10;
 		m_tInfo.fY = 20.f;
 		m_eDir = DIR_LEFT;
-		m_iHP = 10;
+		m_iHP = 60;
 	}
 	else if (m_iLv > 55)
 	{
@@ -45,51 +45,51 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX - 20.f;
 		m_tInfo.fY = 20.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 60;
+		m_iHP = 120;
 	}
 	else if (m_iLv > 40)
 	{
-		m_iLv = 2;
+		m_iLv = 3;
 		m_tInfo.fX = 20.f;
 		m_tInfo.fY = 20.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 60;
+		m_iHP = 120;
 	}
 	else if (m_iLv > 30)
 	{
-		m_iLv = 3;
+		m_iLv = 4;
 		m_tInfo.fX = WINCX / 2;
 		m_tInfo.fY = -10.f;
 		m_eDir = DIR_LT;
-		m_iHP = 120;
+		m_iHP = 180;
 	}
 	else if (m_iLv > 20)
 	{
-		m_iLv = 3;
+		m_iLv = 4;
 		m_tInfo.fX = WINCX / 2;
 		m_tInfo.fY = -10.f;
 		m_eDir = DIR_RT;
-		m_iHP = 120;
+		m_iHP = 180;
 	}
-	else if (m_iLv > 10 )
+	else if (m_iLv > 10)
 	{
-		m_iLv = 4;
+		m_iLv = 5;
 		m_tInfo.fCX = 50.f;
 		m_tInfo.fCY = 50.f;
 		m_tInfo.fX = 100.f;
 		m_tInfo.fY = 0.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 300;
+		m_iHP = 3000;
 	}
 	else
 	{
-		m_iLv = 4;
+		m_iLv = 5;
 		m_tInfo.fCX = 50.f;
 		m_tInfo.fCY = 50.f;
 		m_tInfo.fX = WINCX - 100;
 		m_tInfo.fY = 0.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 300;
+		m_iHP = 3000;
 	}
 }
 
@@ -99,16 +99,40 @@ int CMonster::Update(void)
 		return OBJ_DEAD;
 
 	Direction();
+	if (5 != m_iLv)
+	{
+		if (m_dwTime + 500 < GetTickCount())
+		{
+			Attack_Player();
+			m_dwTime = GetTickCount();
+		}
+	}
+	else
+	{
+		if (m_dwTime + 1300 < GetTickCount())
+		{
+			Attack_Player();
+			m_dwTime = GetTickCount();
+		}
+	}
 	Update_Rect();
 	return OBJ_NOEVENT;
 }
 
 void CMonster::Late_Update(void)
 {
-	if (4 == m_iLv && 250 < m_tInfo.fY)
+	if (5 == m_iLv && 200 < m_tInfo.fY)
 		m_eDir = DIR_END;
-	if (3 == m_iLv && (20 > m_tInfo.fX || WINCX - 20 < m_tInfo.fX))
+	if (4 == m_iLv && (20 > m_tInfo.fX || WINCX - 20 < m_tInfo.fX))
 		m_fSpeed *= -1.f;
+
+	if (0 >= m_iHP)
+	{
+		if (5 == m_iLv)
+			m_pUnique = false;
+		m_bDead = true;
+	}
+
 }
 
 void CMonster::Render(HDC hDC)
@@ -120,8 +144,32 @@ void CMonster::Release(void)
 {
 }
 
-void CMonster::Key_Input(void)
+void CMonster::Attack_Player()
 {
+	if (1 == m_iLv)
+	{
+		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_DOWN));
+		dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+	}
+	else if (2 == m_iLv)
+	{
+		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_LEFT));
+		dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+	}
+	else if (3 == m_iLv)
+	{
+		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_RIGHT));
+		dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+	}
+	else if (5 == m_iLv)
+	{
+		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_DOWN));
+		dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_LB));
+		dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_RB));
+		dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+	}
 }
 
 void CMonster::Direction()

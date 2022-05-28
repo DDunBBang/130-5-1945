@@ -12,6 +12,7 @@ public:
 
 public:
 	void Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
+	void Set_Unique(bool* _pUnique) { m_pUnique = _pUnique; }
 
 public:
 	virtual void Initialize(void) override;
@@ -21,8 +22,9 @@ public:
 	virtual void Release(void) override;
 
 private:
-	void		Key_Input(void);
+	void		Attack_Player();
+
 	void		Direction();
 	list<CObj*>* m_pBullet;
-	int			m_iHP;
+	bool*		m_pUnique;
 };
