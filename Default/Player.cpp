@@ -102,7 +102,7 @@ void CPlayer::Key_Input(void)
 		/*m_pBullet->*/
 	}
 
-	if (GetAsyncKeyState('C'))
+	else if (GetAsyncKeyState('C'))
 	{		
 		if ((m_dwTime /1000)+20 <= (GetTickCount()/1000))
 		{				
@@ -111,7 +111,7 @@ void CPlayer::Key_Input(void)
 		}
 	}
 
-	if (GetAsyncKeyState('P'))
+	else if (GetAsyncKeyState('P'))
 	{
 		if (iCount > 0)
 		{
@@ -123,7 +123,7 @@ void CPlayer::Key_Input(void)
 			}
 		}
 	}
-	if (GetAsyncKeyState('S'))
+	else if (GetAsyncKeyState('S'))
 	{
 		if (m_iShieldCount > 0)
 		{
