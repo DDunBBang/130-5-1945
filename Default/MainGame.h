@@ -33,4 +33,5 @@ private:
 	DWORD		m_dwTime;
 
 	bool		m_bUnique[2];
+	bool		m_bCheck;
 };

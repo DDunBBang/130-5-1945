@@ -14,6 +14,7 @@ CMainGame::CMainGame()
 CMainGame::~CMainGame()
 {
 	Release();
+	
 }
 
 void CMainGame::Initialize(void)
@@ -28,12 +29,6 @@ void CMainGame::Initialize(void)
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Pet(&m_ObjList[OBJ_PET]);
 //	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Item(&m_ObjList[OBJ_ITEM]);	
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Shield(&m_ObjList[OBJ_SHIELD]);
-
-	for (auto& iter : m_ObjList[OBJ_MONSTER])
-	{
-		dynamic_cast<CMonster*>(iter)->Set_Item(&m_ObjList[OBJ_ITEM]);
-	}
-	
 }
 
 void CMainGame::Update(void)
@@ -76,6 +71,10 @@ void CMainGame::Update(void)
 			dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
 		}
 
+		for (auto& iter : m_ObjList[OBJ_MONSTER])
+		{
+			dynamic_cast<CMonster*>(iter)->Set_Item(&m_ObjList[OBJ_ITEM]);
+		}
 		m_dwTime = GetTickCount();
 	}
 
@@ -104,8 +103,17 @@ void CMainGame::Late_Update(void)
 			iter->Late_Update();
 	}
 
-	CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
-
+	bool m_bCheck = CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
+	if (true == m_bCheck)
+	{
+		for (auto& iter : m_ObjList[OBJ_ITEM])
+		{
+			iter->Set_Marget();
+			iter->Set_Target(m_ObjList[OBJ_PLAYER].front());
+			
+		}
+	}
+		
 	for (auto& iter : m_ObjList[OBJ_PBULLET])
 	{
 		if (iter->Get_Dir() == DIR_UT)
