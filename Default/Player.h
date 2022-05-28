@@ -5,7 +5,7 @@
 #include "Monster.h"
 #include "Pet.h"
 #include "Shield.h"
-
+#include "ScrewBullet.h"
 class CPlayer :	public CObj
 {
 public:

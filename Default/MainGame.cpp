@@ -169,7 +169,7 @@ void CMainGame::Render(void)
 	TCHAR	szBuff2[32] = L"";
 	
 	int i = ((m_dwStTime / 1000) + 20) - (GetTickCount() / 1000);
-	if (m_iHp > 0)
+	if (m_ObjList[OBJ_PLAYER].front()->Get_HP() > 0)
 	{
 		if (i > 0 && i <= 20)
 		{
@@ -179,7 +179,7 @@ void CMainGame::Render(void)
 		else if (i <= 0)
 		{
 			Rectangle(m_hDC, 50, WINCY - 65, 150, WINCY - 50);
-			swprintf_s(szBuff2, L"필살기 준비 완료 사용 : C");
+			swprintf_s(szBuff2, L"필살기 준비 완료 사용 : R");
 			TextOut(m_hDC, 50, WINCY - 90, szBuff2, lstrlen(szBuff2));
 			if (GetAsyncKeyState('C'))
 			{

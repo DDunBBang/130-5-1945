@@ -60,7 +60,7 @@ void CMonster::Initialize(void)
 	{
 		m_iLv = 4;
 		m_tInfo.fX = WINCX / 2;
-		m_tInfo.fY = -10.f;
+		m_tInfo.fY = 10.f;
 		m_eDir = DIR_LT;
 		m_iHP = 1;// 180;
 	}
@@ -68,7 +68,7 @@ void CMonster::Initialize(void)
 	{
 		m_iLv = 4;
 		m_tInfo.fX = WINCX / 2;
-		m_tInfo.fY = -10.f;
+		m_tInfo.fY = 10.f;
 		m_eDir = DIR_RT;
 		m_iHP = 1;// 180;
 	}
@@ -136,8 +136,6 @@ void CMonster::Late_Update(void)
 			m_pUnique = false;
 		m_bDead = true;
 	}
-	if (m_tInfo.fX<0|| m_tInfo.fX>WINCX+50|| m_tInfo.fY>WINCY+50|| m_tInfo.fY<0)
-		m_bDead = true;
 }
 
 void CMonster::Render(HDC hDC)
