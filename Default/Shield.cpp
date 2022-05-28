@@ -37,9 +37,6 @@ int CShield::Update(void)
 
 void CShield::Late_Update(void)
 {
-	/*if (m_dwTime + 5000 < GetTickCount())
-		m_bDead = true;
-*/
 }
 
 void CShield::Render(HDC hDC)

@@ -24,9 +24,11 @@ public:
 
 private:
 	void		Attack_Player();
-
 	void		Direction();
+
 	list<CObj*>* m_pBullet;
 	list<CObj*>* m_pItem;
+
 	bool*		m_pUnique;
+	bool		m_bDrop;
 };

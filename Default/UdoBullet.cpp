@@ -38,8 +38,6 @@ int CUdoBullet::Update(void)
 		}
 		if (m_Target)
 		{		
-			if (m_Target->Get_Info().fX > WINCX + 30 && m_Target->Get_Info().fY > WINCY + 30)
-				m_bDead = true;
 			disX = m_Target->Get_Info().fX - m_tInfo.fX;
 			disY = m_Target->Get_Info().fY - m_tInfo.fY;
 			m_fRadian = atan2(disY, disX);
@@ -48,14 +46,12 @@ int CUdoBullet::Update(void)
 		}
 		else
 		{
-			m_tInfo.fX += 10.f;
-			m_tInfo.fY += 10.f;
+			m_tInfo.fY -= 10.f;
 		}
 	}
 	else
 	{
-		m_tInfo.fX += 10.f;
-		m_tInfo.fY += 10.f;
+		m_tInfo.fY -= 10.f;
 	}
 	Update_Rect();
 

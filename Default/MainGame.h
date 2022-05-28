@@ -25,13 +25,10 @@ private:
 	HDC			m_hDC;
 	list<CObj*> m_ObjList[OBJ_END];
 	DWORD		m_dwStTime;
-	/*DWORD		m_dwEdTime;
-	DWORD		m_dwDfTime;*/
-	int			m_iHp;
-
 	DWORD		m_dwTime;
 	DWORD		m_dwHitTime;
 
+	int			m_iHp;
 	bool		m_bUnique[2];
 	bool		m_bCheck;
 };

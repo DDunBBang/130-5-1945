@@ -21,14 +21,14 @@ public:
 	INFO&		Get_Info() { return m_tInfo; }
 	void		Set_Up_iLv(void)	{ ++m_iLv; }
 	void		Set_Radian(float _fRadian) { m_fRadian = _fRadian; }
-	DIRECTION		Get_Dir() { return m_eDir; }
+	DIRECTION	Get_Dir() { return m_eDir; }
 	void		Set_Target(CObj* m_tar) { m_Target = m_tar; }
 	void		Set_Target_List(list<CObj*>* m_tar) { m_pTarget_List = m_tar; }
 	void		Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
 	void		Set_Time(DWORD _m_dwTime) { m_dwTime = _m_dwTime; }
 	void		Hit() { --m_iHP; }
 	void		Set_Shield_Count(void) { ++m_iShieldCount; }
-	int		Get_ItemCount(void) { return m_iItemCount; }
+	int			Get_ItemCount(void) { return m_iItemCount; }
 	void		Set_Marget(void) { m_bMagnet = true; }
 	const int	Get_HP() const { return m_iHP; }
 
@@ -38,7 +38,6 @@ public:
 	virtual		void	Late_Update(void)	PURE;
 	virtual		void	Render(HDC hDC)		PURE;
 	virtual		void	Release(void)		PURE;
-
 
 protected:
 	void		Update_Rect(void);
@@ -57,7 +56,6 @@ protected:
 	int			m_iItemCount;
 	int			m_iHP;
 	bool		m_bMagnet;
-
 	
 	POINT		m_Pt;
 	CObj* m_Target;

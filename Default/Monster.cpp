@@ -5,7 +5,7 @@
 #include "AbstractFactory.h"
 #include "Item.h"
 
-CMonster::CMonster()
+CMonster::CMonster():m_bDrop(true)
 {
 }
 
@@ -98,7 +98,8 @@ int CMonster::Update(void)
 {
 	if (m_bDead)
 	{
- 		m_pItem->push_back(CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
+		if(m_bDrop)
+ 			m_pItem->push_back(CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
 		return OBJ_DEAD;
 	}
 
@@ -134,6 +135,12 @@ void CMonster::Late_Update(void)
 	{
 		if (5 == m_iLv)
 			m_pUnique = false;
+		m_bDead = true;
+	}
+
+	if (m_tRect.left < -100 || m_tRect.top < -100 || m_tRect.right > WINCX + 300 || m_tRect.bottom > WINCY + 300)
+	{
+		m_bDrop = false;
 		m_bDead = true;
 	}
 }
