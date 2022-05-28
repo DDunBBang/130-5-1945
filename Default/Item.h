@@ -16,8 +16,9 @@ public:
 	virtual void Release(void) override;
 	void Create_Speed(void);
 private:
-	float m_fXSpeed;
-	bool m_bFirst;
-	float m_fX;
-	float m_fY;
+	float	m_fXSpeed;
+	bool	m_bFirst;
+	float	m_fX;
+	float	m_fY;
+	int		m_iTime;
 };

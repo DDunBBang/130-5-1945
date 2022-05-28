@@ -98,7 +98,10 @@ int CMonster::Update(void)
 {
 	if (m_bDead)
 	{
- 		m_pItem->push_back(CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
+		/*if (2 == rand() % 2 + 1)
+		{*/
+			m_pItem->push_back(CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
+		//}
 		return OBJ_DEAD;
 	}
 
