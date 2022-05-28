@@ -40,11 +40,11 @@ void CMouse::Late_Update(void)
 
 void CMouse::Render(HDC hDC)
 {
-	MoveToEx(hDC, m_tInfo.fX-10, m_tInfo.fY,0);
-	LineTo(hDC, m_tInfo.fX + 10, m_tInfo.fY);
-	MoveToEx(hDC, m_tInfo.fX, m_tInfo.fY-10, 0);
-	LineTo(hDC, m_tInfo.fX, m_tInfo.fY+10);
-	Ellipse(hDC, m_tInfo.fX-4, m_tInfo.fY-4, m_tInfo.fX+4, m_tInfo.fY+4);
+	MoveToEx(hDC, m_tInfo.fX-10.f, m_tInfo.fY,0);
+	LineTo(hDC, m_tInfo.fX + 10.f, m_tInfo.fY);
+	MoveToEx(hDC, m_tInfo.fX, m_tInfo.fY-10.f, 0);
+	LineTo(hDC, m_tInfo.fX, m_tInfo.fY+10.f);
+	Ellipse(hDC, m_tInfo.fX-4.f, m_tInfo.fY-4.f, m_tInfo.fX+4.f, m_tInfo.fY+4.f);
 }
 
 void CMouse::Release(void)

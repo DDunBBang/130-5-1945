@@ -30,13 +30,10 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release(void) override;
 
-	CObj* Create_Pet();
-	CObj* Create_Shield(DIRECTION eDir);
-
 private:
 	void		Key_Input(void);
 	CObj* Create_Pet();
-	CObj* Create_Shield();
+	CObj* Create_Shield(DIRECTION eDir);
 
 	list<CObj*>* m_pMonster;
 	list<CObj*>* m_pPet;
