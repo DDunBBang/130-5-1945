@@ -31,7 +31,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX * 0.5f;
 		m_tInfo.fY = 100.f;
 		m_eDir = DIR_LEFT;
-		m_iHP = 20000;
+		m_iHP = 40000;
 		m_fSpeed = 2.f;
 		m_dwPattern1 = GetTickCount();
 		m_dwPattern2 = GetTickCount();
