@@ -23,6 +23,7 @@ void CItem::Initialize(void)
 
 	m_iItemCount = rand() % 3 + 1;
 	m_iTime = rand() % 4 + 3;
+	m_dwTime = GetTickCount();
 }
 
 
@@ -64,6 +65,11 @@ void CItem::Late_Update(void)
 	{
 		m_fSpeed *= -1.f;
 	}	
+	if (m_dwTime + 5000 < GetTickCount())
+	{
+		m_bDead = true;
+		m_dwTime = GetTickCount();
+	}
 }
 
 
@@ -90,18 +96,6 @@ void CItem::Render(HDC hDC)
 
 
 		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-		
-	/*	MoveToEx(hDC, m_tRect.left ,m_tRect.top, nullptr);
-		LineTo(hDC, m_tRect.left, m_tRect.bottom + 20);
-		LineTo(hDC, m_tRect.left + 30, m_tRect.bottom + 50);
-		LineTo(hDC, m_tRect.left + 60, m_tRect.bottom + 20);
-		LineTo(hDC, m_tRect.left + 60, m_tRect.top);
-		LineTo(hDC, m_tRect.left, m_tRect.top);*/
-
-		/*LineTo(hDC, m_tInfo.fX, m_tInfo.fY + 40);
-		LineTo(hDC, m_tInfo.fX + 30, m_tInfo.fY + 20);
-		LineTo(hDC, m_tInfo.fX + 30, m_tInfo.fY - 20);
-		LineTo(hDC, m_tInfo.fX, m_tInfo.fY - 20);*/
 
 		TCHAR	szBuff[32] = L"";
 		wsprintf(szBuff, L"S", nullptr);
@@ -111,7 +105,7 @@ void CItem::Render(HDC hDC)
 		DeleteObject(myBrush);
 	}
 
-	else if (m_iItemCount == 3 && m_iTime == 3)// && rand() & 3 + 2 == 3)
+	else if (m_iItemCount == 3 )//&& m_iTime == 3)// && rand() & 3 + 2 == 3)
 	{
 
 		HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(139, 0, 139));

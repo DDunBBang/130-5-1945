@@ -22,6 +22,7 @@ public:
 
 public:
 	bool		Get_Game() { return m_bGame; }
+	bool		Get_Clear() { return m_bClear; }
 	// public, protected, private º¯¼ö
 private:
 	HDC			m_hDC;
@@ -38,5 +39,6 @@ private:
 	bool		m_bCheck;
 	bool		m_bCheck2;
 	bool		m_bBoss;
+	bool		m_bClear;
 	bool		m_bGame;
 };

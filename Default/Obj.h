@@ -34,6 +34,7 @@ public:
 	const int	Get_HP() const { return m_iHP; }
 	const void  Set_Magnet_false(void) { m_bMagnet = false; }
 	const void		Set_Check(int _Check) { m_iCheck = _Check; }
+	int		Get_Shield_Count(void) { return m_iShieldCount; }
 
 public:
 	virtual		void	Initialize(void)	PURE;
