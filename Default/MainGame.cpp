@@ -34,7 +34,7 @@ void CMainGame::Initialize(void)
 void CMainGame::Update(void)
 {
 
-	if (4 == m_iScore && !m_bBoss)
+	if (20 == m_iScore && !m_bBoss)
 	{
 
 		for (auto& iter : m_ObjList[OBJ_MONSTER])
@@ -117,7 +117,6 @@ void CMainGame::Late_Update(void)
 	}
 
 	m_bCheck = CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
-
 	if (m_bCheck)
 	{
 		m_bCheck2 = true;
@@ -135,9 +134,9 @@ void CMainGame::Late_Update(void)
 	{
 		m_bCheck2 = false;
 		for (auto& iter : m_ObjList[OBJ_ITEM])
-		{
-			iter->Set_Magnet_false();
+		{iter->Set_Magnet_false();
 		}
+			
 		m_dwMTime = GetTickCount();
 	}
 
@@ -250,6 +249,28 @@ void CMainGame::Render(void)
 			}
 			m_dwStTime = GetTickCount();
 		}
+	}
+
+	if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() >= 0)
+	{
+		Rectangle(m_hDC, WINCX - 30, WINCY - 150, WINCX - 10, WINCY - 50);
+		if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 1)
+		{
+			Rectangle(m_hDC, WINCX - 30, WINCY - 75, WINCX - 10, WINCY - 50);
+		}
+		else if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 2)
+		{
+			Rectangle(m_hDC, WINCX - 30, WINCY - 100, WINCX - 10, WINCY - 50);
+		}
+		else if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 3)
+		{
+			Rectangle(m_hDC, WINCX - 30, WINCY - 125, WINCX - 10, WINCY - 50);
+		}
+		else if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 4)
+		{
+			Rectangle(m_hDC, WINCX - 30, WINCY - 150, WINCX - 10, WINCY - 50);
+		}
+		
 	}
 }
 

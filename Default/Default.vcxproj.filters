@@ -126,9 +126,6 @@
     <ClInclude Include="UdoBullet.h">
       <Filter>01. Obj\01. Bullet\00. UdoBullet</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Mouse.h">
       <Filter>01. Obj\05.Mouse</Filter>
     </ClInclude>
@@ -176,14 +173,14 @@
     <ClCompile Include="UdoBullet.cpp">
       <Filter>01. Obj\01. Bullet\00. UdoBullet</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Mouse.cpp">
       <Filter>01. Obj\05.Mouse</Filter>
     </ClCompile>
     <ClCompile Include="ScrewBullet.cpp">
       <Filter>01. Obj\01. Bullet\01. ScrewBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>01. Obj\04, Item</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>01. Obj\04, Item</Filter>

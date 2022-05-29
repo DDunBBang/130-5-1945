@@ -111,7 +111,7 @@ void CItem::Render(HDC hDC)
 		DeleteObject(myBrush);
 	}
 
-	else if (m_iItemCount == 3 && m_iTime == 3)// && rand() & 3 + 2 == 3)
+	else if (m_iItemCount == 3 )//&& m_iTime == 3)// && rand() & 3 + 2 == 3)
 	{
 
 		HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(139, 0, 139));
