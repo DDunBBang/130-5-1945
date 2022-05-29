@@ -32,7 +32,7 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
-	if (10 == m_iScore && !m_bBoss)
+	if (0 == m_iScore && !m_bBoss)
 	{
 		for (auto& iter : m_ObjList[OBJ_MONSTER])
 		{
@@ -148,11 +148,8 @@ void CMainGame::Late_Update(void)
 	}
 	
 	for (auto& iter : m_ObjList[OBJ_PBULLET])
-	{
-		if (iter->Get_Dir() == DIR_UT || iter->Get_Dir() == DIR_RC)
-			CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PBULLET]);
-		else
-			CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]);
+	{	
+		CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]);
 	}
 
 	if (!dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Get_HitCheck())
@@ -182,8 +179,6 @@ void CMainGame::Render(void)
 		for (auto& iter : m_ObjList[i])
 			iter->Render(m_hDC);
 	}
-
-
 	TCHAR	szBuff[32] = L"";
 	swprintf_s(szBuff, L"Player Count : %d", m_ObjList[OBJ_PLAYER].front()->Get_HP());
 	TextOut(m_hDC, 50, WINCY - 50, szBuff, lstrlen(szBuff));
@@ -241,7 +236,7 @@ void CMainGame::Render(void)
 			if (GetAsyncKeyState('R'))
 			{
 				m_dwStTime = GetTickCount();
-				dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Time(GetTickCount());
+				dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Time(m_dwStTime);
 			}
 		}
 	}

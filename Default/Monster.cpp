@@ -124,7 +124,7 @@ int CMonster::Update(void)
 
 		if (101 == m_iLv)
 		{
-			Boss();
+			//Boss();
 		}
 		else if (5 != m_iLv)
 		{
