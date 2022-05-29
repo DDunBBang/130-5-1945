@@ -76,10 +76,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,				// 메모리에 할당되는 실체, 즉
 		{
 			if (dwTime + 10 < GetTickCount())
 			{
-				pMainGame->Update();
-				pMainGame->Late_Update();
-				pMainGame->Render();
-				dwTime = GetTickCount();
+				if (pMainGame->Get_Game())
+				{
+					pMainGame->Update();
+					pMainGame->Late_Update();
+					pMainGame->Render();
+					dwTime = GetTickCount();
+				}
 			}
 		}		
     }
