@@ -27,7 +27,7 @@ public:
 	void		Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
 	void		Set_Time(DWORD _m_dwTime) { m_dwTime = _m_dwTime; }
 	void		Hit() { --m_iHP; }
-	void		Critical_Hit() { m_iHP -= 2000; }
+	void		Critical_Hit() { m_iHP -= 300; }
 	void		Set_Shield_Count(void) { ++m_iShieldCount; }
 	int		Get_ItemCount(void) { return m_iItemCount; }
 	const void		Set_Magnet_true(void) { m_bMagnet = true; }

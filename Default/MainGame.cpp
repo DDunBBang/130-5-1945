@@ -32,7 +32,7 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
-	if (20 < m_iScore && !m_bBoss)
+	if (0 <= m_iScore && !m_bBoss)
 	{
 		for (auto& iter : m_ObjList[OBJ_MONSTER])
 		{
@@ -301,7 +301,6 @@ void CMainGame::Render(void)
 			DeleteObject(myBrush);
 		}
 	}
-
 	if (m_bClear)
 	{
 		TCHAR	szBuff3[32] = L"";
