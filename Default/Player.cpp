@@ -137,7 +137,7 @@ void CPlayer::Key_Input(void)
 
 	if (GetAsyncKeyState('R'))
 	{		
-		if ((m_dwTime /1000)+20 <= (GetTickCount()/1000))
+		if ((m_dwTime /1000)+20 <= GetTickCount()/1000)
 		{				
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(75, WINCY - 75, DIR_UT));
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(WINCX - 75, WINCY - 75, DIR_UT));
