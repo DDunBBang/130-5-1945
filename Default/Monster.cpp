@@ -31,7 +31,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX * 0.5f;
 		m_tInfo.fY = 100.f;
 		m_eDir = DIR_LEFT;
-		m_iHP = 40000;
+		m_iHP = 4000;
 		m_fSpeed = 2.f;
 		m_dwPattern1 = GetTickCount();
 		m_dwPattern2 = GetTickCount();
@@ -60,7 +60,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX - 20.f;
 		m_tInfo.fY = 20.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 1;// 120;
+		m_iHP = 1;
 	}
 	else if (m_iLv > 40)
 	{
@@ -68,7 +68,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = 20.f;
 		m_tInfo.fY = 20.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 1;// 120;
+		m_iHP = 1;
 	}
 	else if (m_iLv > 30)
 	{
@@ -77,7 +77,7 @@ void CMonster::Initialize(void)
 
 		m_tInfo.fY = 0.f;
 		m_eDir = DIR_LT;
-		m_iHP = 1;// 180;
+		m_iHP = 5;
 	}
 	else if (m_iLv > 20)
 	{
@@ -86,7 +86,7 @@ void CMonster::Initialize(void)
 
 		m_tInfo.fY = 0.f;
 		m_eDir = DIR_RT;
-		m_iHP = 1;// 180;
+		m_iHP = 5;
 	}
 	else if (m_iLv > 10)
 	{
@@ -96,7 +96,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = 100.f;
 		m_tInfo.fY = 10.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 3000;
+		m_iHP = 300;
 	}
 	else
 	{
@@ -106,7 +106,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX - 100;
 		m_tInfo.fY = 10.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 3000;
+		m_iHP = 300;
 	}
 }
 
@@ -128,7 +128,7 @@ int CMonster::Update(void)
 		}
 		else if (5 != m_iLv)
 		{
-			if (m_dwTime + 500 < GetTickCount())
+			if (m_dwTime + 700 < GetTickCount())
 			{
 				Attack_Player();
 				m_dwTime = GetTickCount();
@@ -136,7 +136,7 @@ int CMonster::Update(void)
 		}
 		else if (5 == m_iLv)
 		{
-			if (m_dwTime + 1300 < GetTickCount())
+			if (m_dwTime + 1500 < GetTickCount())
 			{
 				Attack_Player();
 				m_dwTime = GetTickCount();
@@ -253,7 +253,7 @@ int CMonster::Update(void)
 		else
 		{
 			m_fTheta = 0;
-			if (m_dwPattern1 + 2000 < GetTickCount())
+			if (m_dwPattern1 + 1500 < GetTickCount())
 			{
 				m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_DOWN));
 				dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
@@ -264,7 +264,7 @@ int CMonster::Update(void)
 				m_dwPattern1 = GetTickCount();
 			}
 
-			if (m_dwPattern2 + 3000 < GetTickCount())
+			if (m_dwPattern2 + 2500 < GetTickCount())
 			{
 				m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tRect.left + 50, m_tRect.bottom, DIR_ROCK));
 				m_pBullet->back()->Set_Radian(

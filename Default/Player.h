@@ -39,6 +39,8 @@ private:
 	list<CObj*>* m_pShield;
 	list<CObj*>* m_pMouse;
 
+	DWORD		m_dwBulletTime;
+
 	int iCount;
 	float m_fdwTime;
 	float m_fSCTime;

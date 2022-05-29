@@ -14,9 +14,10 @@ CPlayer::~CPlayer()
 
 void CPlayer::Initialize(void)
 {
-	m_tInfo = { 250.f, 650.f, 40.f, 40.f };
-	m_fSpeed = 10.f;
+	m_tInfo = { 250.f, 650.f, 30.f, 30.f };
+	m_fSpeed = 6.f;
 	m_iHP = 3;
+	m_dwBulletTime = GetTickCount();
 }
 
 int CPlayer::Update(void)
@@ -115,22 +116,26 @@ void CPlayer::Key_Input(void)
 	else if (GetAsyncKeyState('S') && (m_tRect.bottom < WINCY))
 		m_tInfo.fY += m_fSpeed;
 
-	if (GetAsyncKeyState(VK_LBUTTON))
+	if (m_dwBulletTime + 100 < GetTickCount())
 	{
-		if (m_iLv == 1)
-			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_UP));
-		else if (m_iLv == 2)
+		if (GetAsyncKeyState(VK_LBUTTON))
 		{
-			m_pBullet->push_back(CAbstractFactory<CBullet>::Create((float)m_tRect.left, (float)m_tRect.top, DIR_UP));
-			m_pBullet->push_back(CAbstractFactory<CBullet>::Create((float)m_tRect.right, (float)m_tRect.top, DIR_UP));
+			if (m_iLv == 1)
+				m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_UP));
+			else if (m_iLv == 2)
+			{
+				m_pBullet->push_back(CAbstractFactory<CBullet>::Create((float)m_tRect.left, (float)m_tRect.top, DIR_UP));
+				m_pBullet->push_back(CAbstractFactory<CBullet>::Create((float)m_tRect.right, (float)m_tRect.top, DIR_UP));
+			}
+			else if (m_iLv >= 3)
+			{
+				m_pBullet->push_back(CAbstractFactory<CBullet>::Create((float)m_tRect.left, (float)m_tRect.top, DIR_UP));
+				m_pBullet->push_back(CAbstractFactory<CBullet>::Create((float)m_tRect.right, (float)m_tRect.top, DIR_UP));
+				m_pBullet->push_back(CAbstractFactory<CBullet>::Create((float)m_tRect.left, m_tInfo.fY, DIR_LT));
+				m_pBullet->push_back(CAbstractFactory<CBullet>::Create((float)m_tRect.right, m_tInfo.fY, DIR_RT));
+			}
 		}
-		else if (m_iLv >= 3)
-		{
-			m_pBullet->push_back(CAbstractFactory<CBullet>::Create((float)m_tRect.left, (float)m_tRect.top, DIR_UP));
-			m_pBullet->push_back(CAbstractFactory<CBullet>::Create((float)m_tRect.right, (float)m_tRect.top, DIR_UP));
-			m_pBullet->push_back(CAbstractFactory<CBullet>::Create((float)m_tRect.left, m_tInfo.fY, DIR_LT));
-			m_pBullet->push_back(CAbstractFactory<CBullet>::Create((float)m_tRect.right, m_tInfo.fY, DIR_RT));
-		}
+		m_dwBulletTime = GetTickCount();
 	}
 
 	/*if (GetAsyncKeyState(VK_LBUTTON))
