@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Obj.h"
+#include "Monster.h"
 class CCollisionMgr
 {
 public:

@@ -19,10 +19,14 @@ void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour)
 		{
 			if (IntersectRect(&rc, &(Dest->Get_Rect()), &(Sour->Get_Rect())))
 			{
-				Dest->Set_Dead();
-				if (Dest->Get_Dir() == DIR_UT|| Dest->Get_Dir() == DIR_RC)
+				if (Dest->Get_Dir() == DIR_UT || Dest->Get_Dir() == DIR_RC)
+				{
+					if (dynamic_cast<CMonster*>(Sour)->Get_LV() == 101)
+						Dest->Set_Dead();
 					Sour->Critical_Hit();
+				}
 				else
+					Dest->Set_Dead();
 					Sour->Hit();
 			}
 		}
