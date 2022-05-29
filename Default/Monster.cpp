@@ -174,6 +174,8 @@ int CMonster::Update(void)
 	void CMonster::Render(HDC hDC)
 	{
 		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+		if(m_iLv==101)
+			Rectangle(hDC, 0, 0, m_iHP /80, 50);
 	}
 
 	void CMonster::Release(void)
