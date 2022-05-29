@@ -45,5 +45,7 @@ private:
 	float m_fRCTime;
 	bool m_bHitCheck;
 	bool m_bPause;
+	bool m_bPet;
+	bool m_bPet1;
 };
 
