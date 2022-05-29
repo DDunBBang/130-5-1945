@@ -32,7 +32,7 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
-	if (0 == m_iScore && !m_bBoss)
+	if (10 == m_iScore && !m_bBoss)
 	{
 		for (auto& iter : m_ObjList[OBJ_MONSTER])
 		{
