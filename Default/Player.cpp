@@ -3,7 +3,7 @@
 #include "AbstractFactory.h"
 
 CPlayer::CPlayer::CPlayer()
-	:iCount(2), m_bHitCheck(false), m_fdwTime(GetTickCount()), m_fSCTime(GetTickCount()), m_fRCTime(GetTickCount()), m_bPause(false)
+	:iCount(2), m_bHitCheck(false), m_fdwTime(GetTickCount()), m_fSCTime(GetTickCount()), m_fRCTime(GetTickCount()), m_bPause(false),m_bPet(true), m_bPet1(true)
 {
 }
 
@@ -42,6 +42,16 @@ void CPlayer::Late_Update(void)
 	if (m_iShieldCount > 4)
 	{
 		m_iShieldCount = 4;
+	}
+	if (m_iLv == 4 && m_bPet)
+	{
+		m_pPet->push_back(Create_Pet());
+		m_bPet = false;
+	}
+	if (m_iLv == 5 && m_bPet1)
+	{
+		m_pPet->push_back(Create_Pet());
+		m_bPet1 = false;
 	}
 }
 
@@ -157,18 +167,18 @@ void CPlayer::Key_Input(void)
 		}
 	}
 
-	if (GetAsyncKeyState('P'))
-	{
-		if (iCount > 0)
-		{
-			if (m_fdwTime + 2000 <= GetTickCount())
-			{
-				m_pPet->push_back(Create_Pet());
-				--iCount;
-				m_fdwTime = GetTickCount();
-			}
-		}
-	}
+	//if (GetAsyncKeyState('P'))
+	//{
+	//	if (iCount > 0)
+	//	{
+	//		if (m_fdwTime + 2000 <= GetTickCount())
+	//		{
+	//			
+	//			--iCount;
+	//			m_fdwTime = GetTickCount();
+	//		}
+	//	}
+	//}
 	if (GetAsyncKeyState('Q'))
 	{
 		if (m_iShieldCount > 0)
@@ -216,7 +226,7 @@ void CPlayer::Key_Input(void)
 }
 CObj * CPlayer::Create_Pet()
 {
-	if (iCount == 2)
+	if (m_iLv == 4)
 	{
 		CObj* pet = CAbstractFactory<CPet>::Create(m_tInfo.fX - 40, m_tInfo.fY, DIR_LEFT);
 		pet->Set_Target(this);
@@ -224,14 +234,15 @@ CObj * CPlayer::Create_Pet()
 		pet->Set_Target_List(m_pMonster);
 		return pet;
 	}
-	else if (iCount == 1)
+	else if (m_iLv == 5)
 	{
-		CObj* pet = CAbstractFactory<CPet>::Create(m_tInfo.fX + 40, m_tInfo.fY, DIR_RIGHT);
-		pet->Set_Target(this);
-		pet->Set_Bullet(m_pBullet);
-		pet->Set_Target_List(m_pMonster);
-		return pet;
+		CObj* pet1 = CAbstractFactory<CPet>::Create(m_tInfo.fX + 40, m_tInfo.fY, DIR_RIGHT);
+		pet1->Set_Target(this);
+		pet1->Set_Bullet(m_pBullet);
+		pet1->Set_Target_List(m_pMonster);
+		return pet1;
 	}
+	
 }
 
 CObj * CPlayer::Create_Shield(DIRECTION eDir)
