@@ -34,7 +34,7 @@ void CMainGame::Initialize(void)
 void CMainGame::Update(void)
 {
 
-	if (4 == m_iScore && !m_bBoss)
+	if (0 == m_iScore && !m_bBoss)
 	{
 
 		for (auto& iter : m_ObjList[OBJ_MONSTER])
@@ -44,6 +44,7 @@ void CMainGame::Update(void)
 		m_ObjList[OBJ_MONSTER].clear();
 		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(101));
 		m_ObjList[OBJ_MONSTER].back()->Set_Target(m_ObjList[OBJ_PLAYER].front());
+		dynamic_cast<CMonster*>(m_ObjList[OBJ_MONSTER].back())->Set_Bullet(&m_ObjList[OBJ_MBULLET]);
 		m_bBoss = true;
 	}
 	else if (!m_bBoss)
@@ -93,6 +94,8 @@ void CMainGame::Update(void)
 			{
 				if (OBJ_MONSTER == i)
 				{
+					if (dynamic_cast<CMonster*>(*iter)->Get_LV() == 101)
+						m_bBoss = false;
 					++m_iScore;
 				}
 				Safe_Delete<CObj*>(*iter);

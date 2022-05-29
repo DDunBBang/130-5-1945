@@ -119,6 +119,10 @@ void CBullet::Direction(void)
 			}
 		}
 		break;
+	case DIR_ROCK:
+		m_tInfo.fX += m_fSpeed*cos(m_fRadian);
+		m_tInfo.fY += m_fSpeed*sin(m_fRadian);
+		break;
 	case DIR_UT:
 		while (m_tInfo.fCY < 150)
 		{
