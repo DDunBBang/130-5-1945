@@ -20,6 +20,8 @@ public:
 	void		Render(void);
 	void		Release(void);
 
+public:
+	bool		Get_Game() { return m_bGame; }
 	// public, protected, private º¯¼ö
 private:
 	HDC			m_hDC;
@@ -36,5 +38,5 @@ private:
 	bool		m_bCheck;
 	bool		m_bCheck2;
 	bool		m_bBoss;
-
+	bool		m_bGame;
 };
