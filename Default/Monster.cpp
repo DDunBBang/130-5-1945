@@ -31,8 +31,12 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX * 0.5f;
 		m_tInfo.fY = 100.f;
 		m_eDir = DIR_LEFT;
-		m_iHP = 300;
+		m_iHP = 20000;
 		m_fSpeed = 2.f;
+		m_dwPattern1 = GetTickCount();
+		m_dwPattern2 = GetTickCount();
+		m_dwPattern2_1 = GetTickCount();
+		m_dwPattern3 = GetTickCount();
 	}
 	else if (m_iLv > 85 && 100 >= m_iLv)
 	{
@@ -121,7 +125,11 @@ int CMonster::Update(void)
 
 	Direction();
 
-	if (5 != m_iLv)
+	if (101 == m_iLv)
+	{
+		Boss();
+	}
+	else if (5 != m_iLv)
 	{
 		if (m_dwTime + 500 < GetTickCount())
 		{
@@ -129,7 +137,7 @@ int CMonster::Update(void)
 			m_dwTime = GetTickCount();
 		}
 	}
-	else
+	else if (5 == m_iLv)
 	{
 		if (m_dwTime + 1300 < GetTickCount())
 		{
@@ -201,23 +209,6 @@ void CMonster::Attack_Player()
 		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_RB));
 		dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
 	}
-	else if (101 == m_iLv)
-	{
-	
-			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_DOWN));
-			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
-			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_LB));
-			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
-			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_RB));
-			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
-			m_dwPattern1 = GetTickCount();
-	
-		
-			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_DOWN));
-			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
-			m_dwPattern2 = GetTickCount();
-	
-	}
 }
 
 void CMonster::Direction()
@@ -244,5 +235,55 @@ void CMonster::Direction()
 		m_tInfo.fY += 3.f;
 		m_tInfo.fX += m_fSpeed;
 		break;
+	}
+}
+
+void CMonster::Boss()
+{
+	if (m_dwPattern3 + 10000 < GetTickCount())
+	{
+		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_ROCK));
+		dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+		m_pBullet->back()->Set_Radian(
+			m_fTheta * PI / 180
+		);
+		if (m_fTheta > 180)
+			m_fTheta -= 180;
+		m_fTheta += 13;
+		if (m_dwPattern3 + 13000 < GetTickCount())
+			m_dwPattern3 = GetTickCount();
+	}
+	else
+	{
+		m_fTheta = 0;
+		if (m_dwPattern1 + 2000 < GetTickCount())
+		{
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_DOWN));
+			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_LB));
+			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_RB));
+			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+			m_dwPattern1 = GetTickCount();
+		}
+
+		if (m_dwPattern2 + 3000 < GetTickCount())
+		{
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tRect.left + 50, m_tRect.bottom, DIR_ROCK));
+			m_pBullet->back()->Set_Radian(
+				atan2(
+					m_Target->Get_Info().fY - m_tRect.bottom, m_Target->Get_Info().fX - m_tRect.left + 50
+				)
+			);
+			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tRect.right - 50, m_tRect.bottom, DIR_ROCK));
+			m_pBullet->back()->Set_Radian(
+				atan2(
+					m_Target->Get_Info().fY - m_tRect.bottom, m_Target->Get_Info().fX - m_tRect.right - 50
+				)
+			);
+			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+			m_dwPattern2 = GetTickCount();
+		}
 	}
 }
