@@ -32,10 +32,8 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
-
 	if (10 == m_iScore && !m_bBoss)
 	{
-
 		for (auto& iter : m_ObjList[OBJ_MONSTER])
 		{
 			Safe_Delete<CObj*>(iter);
@@ -122,30 +120,33 @@ void CMainGame::Late_Update(void)
 	}
 
 	m_bCheck = CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
-
 	if (m_bCheck)
 	{
 		m_bCheck2 = true;
 		m_bCheck = false;
+		m_dwMTime = GetTickCount();
 	}
 	if (m_bCheck2)
 	{
 		for (auto& iter : m_ObjList[OBJ_ITEM])
 		{
-			iter->Set_Magnet_true();
 			iter->Set_Target(m_ObjList[OBJ_PLAYER].front());
+			iter->Set_Magnet_true();
 		}
-	}
-	if (m_bCheck2 && m_dwMTime + 4000 < GetTickCount())
-	{
-		m_bCheck2 = false;
-		for (auto& iter : m_ObjList[OBJ_ITEM])
-		{
-			iter->Set_Magnet_false();
-		}
-		m_dwMTime = GetTickCount();
-	}
 
+		if (m_dwMTime + 4000 < GetTickCount())
+		{
+			m_bCheck2 = false;
+			for (auto& iter : m_ObjList[OBJ_ITEM])
+			{
+				iter->Set_Magnet_false();
+			}
+
+			m_dwMTime = GetTickCount();
+		}
+
+	}
+	
 	for (auto& iter : m_ObjList[OBJ_PBULLET])
 	{
 		if (iter->Get_Dir() == DIR_UT || iter->Get_Dir() == DIR_RC)
@@ -169,7 +170,8 @@ void CMainGame::Late_Update(void)
 			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_HitCheck(false);
 	}
 
-	CCollisionMgr::Collision_Sphere(m_ObjList[OBJ_SHIELD], m_ObjList[OBJ_MONSTER]);
+	CCollisionMgr::Collision_Sphere(m_ObjList[OBJ_SHIELD], m_ObjList[OBJ_MBULLET]);
+	CCollisionMgr::Collision_Sphere(m_ObjList[OBJ_MBULLET], m_ObjList[OBJ_SHIELD]);
 }
 
 void CMainGame::Render(void)
@@ -260,6 +262,51 @@ void CMainGame::Render(void)
 			}
 		}
 	}
+	if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() >= 0)
+	{
+		Rectangle(m_hDC, WINCX - 30, WINCY - 150, WINCX - 10, WINCY - 50);
+		if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 1)
+		{
+			HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(240, 230, 140));
+			HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
+
+			Rectangle(m_hDC, WINCX - 30, WINCY - 75, WINCX - 10, WINCY - 50);
+
+			SelectObject(m_hDC, oldBrush);
+			DeleteObject(myBrush);
+		}
+		else if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 2)
+		{
+			HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(240, 230, 140));
+			HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
+
+			Rectangle(m_hDC, WINCX - 30, WINCY - 100, WINCX - 10, WINCY - 50);
+
+			SelectObject(m_hDC, oldBrush);
+			DeleteObject(myBrush);
+		}
+		else if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 3)
+		{
+			HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(240, 230, 140));
+			HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
+
+			Rectangle(m_hDC, WINCX - 30, WINCY - 125, WINCX - 10, WINCY - 50);
+
+			SelectObject(m_hDC, oldBrush);
+			DeleteObject(myBrush);
+		}
+		else if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 4)
+		{
+			HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(240, 230, 140));
+			HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
+
+			Rectangle(m_hDC, WINCX - 30, WINCY - 150, WINCX - 10, WINCY - 50);
+
+			SelectObject(m_hDC, oldBrush);
+			DeleteObject(myBrush);
+		}
+	}
+
 	if (m_bClear)
 	{
 		TCHAR	szBuff3[32] = L"";

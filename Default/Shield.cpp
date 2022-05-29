@@ -68,6 +68,10 @@ void CShield::Direction(void)
 		m_tInfo.fX = m_Target->Get_Info().fX + m_fDistance*cos((315 + m_fRadian)*DEGREE);
 		m_tInfo.fY = m_Target->Get_Info().fY - m_fDistance*sin((315 + m_fRadian)*DEGREE);
 		break;
+	case DIR_RT:
+		m_tInfo.fX = m_Target->Get_Info().fX + m_fDistance*cos((90 + m_fRadian)*DEGREE);
+		m_tInfo.fY = m_Target->Get_Info().fY - m_fDistance*sin((90 + m_fRadian)*DEGREE);
+		break;
 	
 	
 	}

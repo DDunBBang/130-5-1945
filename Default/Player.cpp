@@ -39,6 +39,10 @@ int CPlayer::Update(void)
 
 void CPlayer::Late_Update(void)
 {
+	if (m_iShieldCount > 4)
+	{
+		m_iShieldCount = 4;
+	}
 }
 
 void CPlayer::Render(HDC hDC)
@@ -171,11 +175,32 @@ void CPlayer::Key_Input(void)
 		{
 			if (m_pShield->begin() == m_pShield->end())
 			{
-				--m_iShieldCount;
-				m_pShield->push_back(Create_Shield(DIR_UP));
-				m_pShield->push_back(Create_Shield(DIR_DOWN));
-				m_pShield->push_back(Create_Shield(DIR_LEFT));
-				m_pShield->push_back(Create_Shield(DIR_RIGHT));
+				if (m_iShieldCount == 1)
+				{
+					m_iShieldCount -= 1;
+					m_pShield->push_back(Create_Shield(DIR_UP));
+				}
+				else if (m_iShieldCount == 2)
+				{
+					m_iShieldCount -= 2;
+					m_pShield->push_back(Create_Shield(DIR_UP));
+					m_pShield->push_back(Create_Shield(DIR_RIGHT));
+				}
+				else if (m_iShieldCount == 3)
+				{
+					m_iShieldCount -= 3;
+					m_pShield->push_back(Create_Shield(DIR_UP));
+					m_pShield->push_back(Create_Shield(DIR_DOWN));
+					m_pShield->push_back(Create_Shield(DIR_RT));
+				}
+				else if (m_iShieldCount == 4)
+				{
+					m_iShieldCount -= 4;
+					m_pShield->push_back(Create_Shield(DIR_UP));
+					m_pShield->push_back(Create_Shield(DIR_DOWN));
+					m_pShield->push_back(Create_Shield(DIR_LEFT));
+					m_pShield->push_back(Create_Shield(DIR_RIGHT));
+				}
 			}
 		}
 	}
