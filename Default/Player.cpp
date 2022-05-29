@@ -3,7 +3,7 @@
 #include "AbstractFactory.h"
 
 CPlayer::CPlayer::CPlayer()
-	:iCount(2), m_bHitCheck(false), m_fdwTime(GetTickCount()), m_fSCTime(GetTickCount()), m_fRCTime(GetTickCount())
+	:iCount(2), m_bHitCheck(false), m_fdwTime(GetTickCount()), m_fSCTime(GetTickCount()), m_fRCTime(GetTickCount()), m_bPause(false)
 {
 }
 
@@ -47,10 +47,10 @@ void CPlayer::Late_Update(void)
 
 void CPlayer::Render(HDC hDC)
 {
-	Rectangle(hDC, 
-		m_tRect.left, 
-		m_tRect.top, 
-		m_tRect.right, 
+	Rectangle(hDC,
+		m_tRect.left,
+		m_tRect.top,
+		m_tRect.right,
 		m_tRect.bottom);
 	Ellipse(hDC,
 		m_tRect.left,
@@ -60,21 +60,21 @@ void CPlayer::Render(HDC hDC)
 }
 
 void CPlayer::Release(void)
-{	
+{
 }
 
 
 void CPlayer::Key_Input(void)
 {
 	// GetKeyState()
-	if (GetAsyncKeyState(VK_RIGHT) && (m_tRect.right < WINCX))
+	if (GetAsyncKeyState('D') && (m_tRect.right < WINCX))
 	{
-		if (GetAsyncKeyState(VK_UP) && (m_tRect.top > 0))
+		if (GetAsyncKeyState('W') && (m_tRect.top > 0))
 		{
 			m_tInfo.fX += m_fSpeed*sqrtf(0.5);
 			m_tInfo.fY -= m_fSpeed*sqrtf(0.5);
 		}
-		else if (GetAsyncKeyState(VK_DOWN) && (m_tRect.bottom < WINCY))
+		else if (GetAsyncKeyState('S') && (m_tRect.bottom < WINCY))
 		{
 			m_tInfo.fX += m_fSpeed*sqrtf(0.5);
 			m_tInfo.fY += m_fSpeed*sqrtf(0.5);
@@ -83,9 +83,9 @@ void CPlayer::Key_Input(void)
 			m_tInfo.fX += m_fSpeed;
 	}
 
-	else if (GetAsyncKeyState(VK_LEFT) && (m_tRect.left > 0))
+	else if (GetAsyncKeyState('A') && (m_tRect.left > 0))
 	{
-		if (GetAsyncKeyState(VK_UP) && (m_tRect.top > 0))
+		if (GetAsyncKeyState('W') && (m_tRect.top > 0))
 		{
 			m_tInfo.fX -= m_fSpeed*sqrtf(0.5);
 			m_tInfo.fY -= m_fSpeed*sqrtf(0.5);
@@ -99,15 +99,15 @@ void CPlayer::Key_Input(void)
 			m_tInfo.fX -= m_fSpeed;
 	}
 
-	else if (GetAsyncKeyState(VK_UP)&& (m_tRect.top>0))		
-			m_tInfo.fY -= m_fSpeed;
+	else if (GetAsyncKeyState('W') && (m_tRect.top > 0))
+		m_tInfo.fY -= m_fSpeed;
 
-	else if (GetAsyncKeyState(VK_DOWN)&& (m_tRect.bottom<WINCY))
-			m_tInfo.fY += m_fSpeed;
+	else if (GetAsyncKeyState('S') && (m_tRect.bottom < WINCY))
+		m_tInfo.fY += m_fSpeed;
 
-	if (GetAsyncKeyState(VK_SPACE))
+	if (GetAsyncKeyState(VK_LBUTTON))
 	{
-		if(m_iLv==1)
+		if (m_iLv == 1)
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_UP));
 		else if (m_iLv == 2)
 		{
@@ -123,11 +123,11 @@ void CPlayer::Key_Input(void)
 		}
 	}
 
-	if (GetAsyncKeyState(VK_LBUTTON))
+	/*if (GetAsyncKeyState(VK_LBUTTON))
 	{
 		m_fRadian = atan2f(m_pMouse->front()->Get_Info().fY - m_tInfo.fY, m_pMouse->front()->Get_Info().fX - m_tInfo.fX);
 		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_LC, m_fRadian));
-	}
+	}*/
 
 	if (GetAsyncKeyState(VK_RBUTTON))
 	{
@@ -140,9 +140,9 @@ void CPlayer::Key_Input(void)
 	}
 
 	if (GetAsyncKeyState('R'))
-	{		
-		if ((m_dwTime /1000)+20 <= (GetTickCount()/1000))
-		{				
+	{
+		if ((m_dwTime / 1000) + 20 <= (GetTickCount() / 1000))
+		{
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(75, WINCY - 75, DIR_UT));
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(WINCX - 75, WINCY - 75, DIR_UT));
 			m_dwTime = GetTickCount();
@@ -169,7 +169,7 @@ void CPlayer::Key_Input(void)
 			}
 		}
 	}
-	if (GetAsyncKeyState('S'))
+	if (GetAsyncKeyState('Q'))
 	{
 		if (m_iShieldCount > 0)
 		{
@@ -204,20 +204,21 @@ void CPlayer::Key_Input(void)
 			}
 		}
 	}
+
 	if (GetAsyncKeyState('O'))
 	{
-		while (!GetAsyncKeyState('L')&0x8001)
+		while (!GetAsyncKeyState('L') & 0x8001)
 		{
 			continue;
 		}
 	}
-		
+
 }
 CObj * CPlayer::Create_Pet()
 {
 	if (iCount == 2)
 	{
-		CObj* pet = CAbstractFactory<CPet>::Create(m_tInfo.fX-40,m_tInfo.fY,DIR_LEFT);
+		CObj* pet = CAbstractFactory<CPet>::Create(m_tInfo.fX - 40, m_tInfo.fY, DIR_LEFT);
 		pet->Set_Target(this);
 		pet->Set_Bullet(m_pBullet);
 		pet->Set_Target_List(m_pMonster);
