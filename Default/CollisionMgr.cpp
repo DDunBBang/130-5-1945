@@ -87,16 +87,16 @@ bool CCollisionMgr::Collision_Item(list<CObj*> _Player, list<CObj*> _Item)
 		{
 			if (IntersectRect(&rc, &(Player->Get_Rect()), &(Item->Get_Rect())))
 			{
-				if (Item->Get_ItemCount() == 1)
+				if (Item->Get_ItemCount() <= 3)
 				{
 					Player->Set_Up_iLv();
 				}
 
-				else if (Item->Get_ItemCount() == 2)
+				else if (Item->Get_ItemCount() == 4)
 				{
 					Player->Set_Shield_Count();
 				}
-				else if (Item->Get_ItemCount() == 3)
+				else if (Item->Get_ItemCount() == 5)
 				{
 					Item->Set_Dead();	
 					return true;
