@@ -4,11 +4,10 @@
 #include "CollisionMgr.h"
 
 CMainGame::CMainGame()
-	: m_dwTime(GetTickCount()), m_bUnique{ false }, m_bCheck(false), m_bCheck2(false), m_dwMTime(GetTickCount()), m_iScore(0), m_bBoss(false), m_bGame(true)
-
+	: m_dwTime(GetTickCount()), m_bUnique{ false }, m_bCheck(false), m_bCheck2(false), m_dwMTime(GetTickCount()), m_iScore(0), m_bBoss(false), m_bGame(true), m_bClear(false)
 {
 	m_iHp = 3;
-	
+
 }
 
 CMainGame::~CMainGame()
@@ -21,7 +20,7 @@ void CMainGame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
 	m_dwStTime = GetTickCount();
-	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());	
+	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 	m_ObjList[OBJ_MOUSE].push_back(CAbstractFactory<CMouse>::Create());
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Monster(&m_ObjList[OBJ_MONSTER]);
@@ -34,7 +33,7 @@ void CMainGame::Initialize(void)
 void CMainGame::Update(void)
 {
 
-	if (0 == m_iScore && !m_bBoss)
+	if (10 == m_iScore && !m_bBoss)
 	{
 
 		for (auto& iter : m_ObjList[OBJ_MONSTER])
@@ -95,7 +94,10 @@ void CMainGame::Update(void)
 				if (OBJ_MONSTER == i&&dynamic_cast<CMonster*>(*iter)->Get_Drop())
 				{
 					if (dynamic_cast<CMonster*>(*iter)->Get_LV() == 101)
+					{
 						m_bBoss = false;
+						m_bClear = true;
+					}
 					++m_iScore;
 				}
 				Safe_Delete<CObj*>(*iter);
@@ -146,7 +148,7 @@ void CMainGame::Late_Update(void)
 
 	for (auto& iter : m_ObjList[OBJ_PBULLET])
 	{
-		if (iter->Get_Dir() == DIR_UT|| iter->Get_Dir() == DIR_RC)
+		if (iter->Get_Dir() == DIR_UT || iter->Get_Dir() == DIR_RC)
 			CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PBULLET]);
 		else
 			CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]);
@@ -173,27 +175,25 @@ void CMainGame::Late_Update(void)
 void CMainGame::Render(void)
 {
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
-	if (m_iScore < 6 && m_iHp>0)
+	for (size_t i = 0; i < OBJ_END; ++i)
 	{
-		for (size_t i = 0; i < OBJ_END; ++i)
-		{
-			for (auto& iter : m_ObjList[i])
-				iter->Render(m_hDC);
-		}
+		for (auto& iter : m_ObjList[i])
+			iter->Render(m_hDC);
 	}
-	
+
+
 	TCHAR	szBuff[32] = L"";
 	swprintf_s(szBuff, L"Player Count : %d", m_ObjList[OBJ_PLAYER].front()->Get_HP());
 	TextOut(m_hDC, 50, WINCY - 50, szBuff, lstrlen(szBuff));
 
 	TCHAR	szBuff1[32] = L"";
 	swprintf_s(szBuff1, L"Bullet Count : %zd", m_ObjList[OBJ_PBULLET].size());
-	TextOut(m_hDC, WINCX-150, WINCY - 50, szBuff1, lstrlen(szBuff1));
+	TextOut(m_hDC, WINCX - 150, WINCY - 50, szBuff1, lstrlen(szBuff1));
 
 	TCHAR	szBuff4[32] = L"";
 	swprintf_s(szBuff4, L"SCORE : %d", m_iScore);
 	TextOut(m_hDC, WINCX *0.5, WINCY - 50, szBuff4, lstrlen(szBuff4));
-	
+
 	//if()
 	TCHAR	szBuff2[32] = L"";
 
@@ -211,9 +211,9 @@ void CMainGame::Render(void)
 				Rectangle(m_hDC, 50, WINCY - 65, 150 - i * 5, WINCY - 50);
 
 				SelectObject(m_hDC, oldBrush);
-				DeleteObject(myBrush);				
+				DeleteObject(myBrush);
 			}
-			else if (i>10&&i <= 20)
+			else if (i > 10 && i <= 20)
 			{
 				HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(255, 0, 0));
 				HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
@@ -259,6 +259,12 @@ void CMainGame::Render(void)
 				m_bGame = false;
 			}
 		}
+	}
+	if (m_bClear)
+	{
+		TCHAR	szBuff3[32] = L"";
+		swprintf_s(szBuff3, L"GAME CLEAR!!!");
+		TextOut(m_hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff3, (int)lstrlen(szBuff3));
 	}
 }
 
