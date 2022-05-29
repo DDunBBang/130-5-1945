@@ -12,8 +12,10 @@ public:
 
 public:
 	void Set_Bullet(list<CObj*>* _pBullet) { m_pBullet = _pBullet; }
+	void Set_Item(list<CObj*>* _pItem) { m_pItem = _pItem; }
 	void Set_Unique(bool* _pUnique) { m_pUnique = _pUnique; }
-
+	const int Get_LV() const { return m_iLv; }
+	const bool Get_Drop() { return m_bDrop; }
 public:
 	virtual void Initialize(void) override;
 	virtual int Update(void) override;
@@ -23,8 +25,19 @@ public:
 
 private:
 	void		Attack_Player();
-
 	void		Direction();
+	void		Boss();
+
 	list<CObj*>* m_pBullet;
+	list<CObj*>* m_pItem;
+
 	bool*		m_pUnique;
+	bool		m_bDrop;
+
+	DWORD		m_dwPattern1;
+	DWORD		m_dwPattern2;
+	DWORD		m_dwPattern2_1;
+	DWORD		m_dwPattern3;
+
+	float		m_fTheta;
 };

@@ -3,7 +3,7 @@
 
 
 CItem::CItem()
-	: m_ffXSpeed(0), m_iFirst(1)
+	: m_fXSpeed(0.f), m_bFirst(true), m_fX(0.f), m_fY(0.f)
 {
 }
 
@@ -15,8 +15,15 @@ CItem::~CItem()
 
 void CItem::Initialize(void)
 {
-	m_tInfo.fCX = 60.f;
-	m_tInfo.fCY = 25.f;
+	m_tInfo.fCX = 50.f;
+	m_tInfo.fCY = 20.f;
+
+	m_fSpeed = float(rand() % 45 + 3.f) / 10.f;
+	m_fXSpeed = float(rand() % 25 + 0.5f) / 10.f;
+
+	m_iItemCount = rand() % 3 + 1;
+	m_iTime = rand() % 4 + 3;
+	m_dwTime = GetTickCount();
 }
 
 
@@ -25,23 +32,43 @@ int CItem::Update(void)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
+	
 
 	Create_Speed();
 
-	m_tInfo.fY += m_fSpeed;
+	if (m_bMagnet)
+	{
+		float fWidth = m_tInfo.fX - m_Target->Get_Info().fX;
+		float fHeight = m_tInfo.fY - m_Target->Get_Info().fY;
+		float fRadian = atan2f(fHeight, fWidth);
+		m_tInfo.fX -= cosf(fRadian) * 5.f;
+		m_tInfo.fY -= sinf(fRadian) * 5.f;
+	}
+	else
+	{
+		m_tInfo.fX += m_fXSpeed;
+		m_tInfo.fY += m_fSpeed;
+	}	
+
+	Update_Rect();
 
 	return OBJ_NOEVENT;
 }
 
 void CItem::Late_Update(void)
 {
-	if (100 >= m_tRect.left || WINCX - 100 <= m_tRect.right)
+	if (0 >= m_tInfo.fX || WINCX < m_tInfo.fX)
 	{
-		m_ffXSpeed *= -1.f;
+		m_fXSpeed *= -1.f;
 	}
-	else if (WINCY - 100 <= m_tRect.bottom || 100 >= m_tRect.top)
+	if (WINCY <= m_tInfo.fY || 0 >= m_tInfo.fY)
 	{
 		m_fSpeed *= -1.f;
+	}	
+	if (m_dwTime + 5000 < GetTickCount())
+	{
+		m_bDead = true;
+		m_dwTime = GetTickCount();
 	}
 }
 
@@ -49,7 +76,51 @@ void CItem::Late_Update(void)
 
 void CItem::Render(HDC hDC)
 {
-	Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+	if (m_iItemCount == 1)
+	{
+		HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(184, 134, 11));
+		HBRUSH oldBrush = (HBRUSH)SelectObject(hDC, myBrush); 
+
+		Ellipse(hDC,m_tRect.left,m_tRect.top,m_tRect.right,m_tRect.bottom);
+		TCHAR	szBuff[32] = L"";
+		wsprintf(szBuff, L"B", nullptr);
+		TextOut(hDC, m_tInfo.fX - 5, m_tInfo.fY - 8, szBuff, lstrlen(szBuff));
+
+		SelectObject(hDC, oldBrush);
+		DeleteObject(myBrush);
+	}
+	else if (m_iItemCount == 2)
+	{
+		HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(0, 0, 139));
+		HBRUSH oldBrush = (HBRUSH)SelectObject(hDC, myBrush);
+
+
+		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+
+		TCHAR	szBuff[32] = L"";
+		wsprintf(szBuff, L"S", nullptr);
+		TextOut(hDC, m_tInfo.fX - 5, m_tInfo.fY - 8, szBuff, lstrlen(szBuff));
+
+		SelectObject(hDC, oldBrush);
+		DeleteObject(myBrush);
+	}
+
+	else if (m_iItemCount == 3 )//&& m_iTime == 3)// && rand() & 3 + 2 == 3)
+	{
+
+		HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(139, 0, 139));
+		HBRUSH oldBrush = (HBRUSH)SelectObject(hDC, myBrush);
+
+
+		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+		TCHAR	szBuff[32] = L"";
+		wsprintf(szBuff, L"M", nullptr);
+		TextOut(hDC, m_tInfo.fX - 5, m_tInfo.fY - 8, szBuff, lstrlen(szBuff));
+
+
+		SelectObject(hDC, oldBrush);
+		DeleteObject(myBrush);
+	}
 }
 
 
@@ -60,24 +131,14 @@ void CItem::Release(void)
 
 void CItem::Create_Speed(void)
 {
-	if (1 == m_iFirst)
+	if (m_bFirst)
 	{
 		m_fX = m_tInfo.fX;
 		m_fY = m_tInfo.fY;
 
-		srand(unsigned(time(NULL)));
+		if (m_fX > WINCX * 0.5)
+			m_fXSpeed = m_fXSpeed * -1.f;
 
-		m_fSpeed = float(rand() % 45 + 3.f) / 10;
-		m_ffXSpeed = float(rand() % 25 + 0.5f) / 10;
-		m_iFirst = 0;
-	}
-
-	if (WINCX - 400 > m_fX)
-	{
-		m_tInfo.fX += m_ffXSpeed;
-	}
-	else if (WINCX - 400 < m_fX)
-	{
-		m_tInfo.fX -= m_ffXSpeed;
+		m_bFirst = false;
 	}
 }
