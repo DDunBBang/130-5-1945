@@ -33,8 +33,8 @@ int CScrewBullet::Update(void)
 	m_tInfo.fX=pt.x+ m_fDistance*cos(m_fRadian*DEGREE);
 	m_tInfo.fY = pt.y-m_fDistance*sin(m_fRadian*DEGREE);
 
-	m_tInfo2.fX = pt.x + m_fDistance*cos((m_fRadian-180)*DEGREE);
-	m_tInfo2.fY = pt.y - m_fDistance*sin((m_fRadian - 180)*DEGREE);
+	m_tInfo2.fX = pt.x + m_fDistance*cos((m_fRadian+180)*DEGREE);
+	m_tInfo2.fY = pt.y - m_fDistance*sin((m_fRadian + 180)*DEGREE);
 
 	Update_Rect();
 	Update_Rect2();
