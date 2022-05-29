@@ -67,20 +67,42 @@ void CPlayer::Release(void)
 void CPlayer::Key_Input(void)
 {
 	// GetKeyState()
-	if (GetAsyncKeyState(VK_RIGHT))
-		if(m_tRect.right<WINCX)
+	if (GetAsyncKeyState(VK_RIGHT) && (m_tRect.right < WINCX))
+	{
+		if (GetAsyncKeyState(VK_UP) && (m_tRect.top > 0))
+		{
+			m_tInfo.fX += m_fSpeed*sqrtf(0.5);
+			m_tInfo.fY -= m_fSpeed*sqrtf(0.5);
+		}
+		else if (GetAsyncKeyState(VK_DOWN) && (m_tRect.bottom < WINCY))
+		{
+			m_tInfo.fX += m_fSpeed*sqrtf(0.5);
+			m_tInfo.fY += m_fSpeed*sqrtf(0.5);
+		}
+		else
 			m_tInfo.fX += m_fSpeed;
+	}
 
-	if (GetAsyncKeyState(VK_LEFT))
-		if (m_tRect.left>0)
+	else if (GetAsyncKeyState(VK_LEFT) && (m_tRect.left > 0))
+	{
+		if (GetAsyncKeyState(VK_UP) && (m_tRect.top > 0))
+		{
+			m_tInfo.fX -= m_fSpeed*sqrtf(0.5);
+			m_tInfo.fY -= m_fSpeed*sqrtf(0.5);
+		}
+		else if (GetAsyncKeyState(VK_DOWN) && (m_tRect.bottom < WINCY))
+		{
+			m_tInfo.fX -= m_fSpeed*sqrtf(0.5);
+			m_tInfo.fY += m_fSpeed*sqrtf(0.5);
+		}
+		else
 			m_tInfo.fX -= m_fSpeed;
+	}
 
-	if (GetAsyncKeyState(VK_UP))
-		if (m_tRect.top>0)
+	else if (GetAsyncKeyState(VK_UP)&& (m_tRect.top>0))		
 			m_tInfo.fY -= m_fSpeed;
 
-	if (GetAsyncKeyState(VK_DOWN))
-		if (m_tRect.bottom<WINCY)
+	else if (GetAsyncKeyState(VK_DOWN)&& (m_tRect.bottom<WINCY))
 			m_tInfo.fY += m_fSpeed;
 
 	if (GetAsyncKeyState(VK_SPACE))
@@ -117,7 +139,7 @@ void CPlayer::Key_Input(void)
 		}
 	}
 
-	else if (GetAsyncKeyState('R'))
+	if (GetAsyncKeyState('R'))
 	{		
 		if ((m_dwTime /1000)+20 <= (GetTickCount()/1000))
 		{				
@@ -126,7 +148,7 @@ void CPlayer::Key_Input(void)
 			m_dwTime = GetTickCount();
 		}
 	}
-	else if (GetAsyncKeyState('C'))
+	if (GetAsyncKeyState('C'))
 	{
 		if ((m_fSCTime / 1000) + 2 <= (GetTickCount() / 1000))
 		{
@@ -135,7 +157,7 @@ void CPlayer::Key_Input(void)
 		}
 	}
 
-	else if (GetAsyncKeyState('P'))
+	if (GetAsyncKeyState('P'))
 	{
 		if (iCount > 0)
 		{
@@ -147,7 +169,7 @@ void CPlayer::Key_Input(void)
 			}
 		}
 	}
-	else if (GetAsyncKeyState('S'))
+	if (GetAsyncKeyState('S'))
 	{
 		if (m_iShieldCount > 0)
 		{
@@ -180,6 +202,13 @@ void CPlayer::Key_Input(void)
 					m_pShield->push_back(Create_Shield(DIR_RIGHT));
 				}
 			}
+		}
+	}
+	if (GetAsyncKeyState('O'))
+	{
+		while (!GetAsyncKeyState('L')&0x8001)
+		{
+			continue;
 		}
 	}
 		
