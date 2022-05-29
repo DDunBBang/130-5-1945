@@ -4,7 +4,7 @@
 #include "CollisionMgr.h"
 
 CMainGame::CMainGame()
-	: m_dwTime(GetTickCount()), m_bUnique{ false }, m_bCheck(false), m_bCheck2(false), m_dwMTime(GetTickCount()), m_iScore(0), m_bBoss(false)
+	: m_dwTime(GetTickCount()), m_bUnique{ false }, m_bCheck(false), m_bCheck2(false), m_dwMTime(GetTickCount()), m_iScore(0), m_bBoss(false), m_bGame(true)
 
 {
 	m_iHp = 3;
@@ -256,17 +256,9 @@ void CMainGame::Render(void)
 				TCHAR	szBuff3[32] = L"";
 				swprintf_s(szBuff3, L"GAME OVER!!!");
 				TextOut(m_hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff3, (int)lstrlen(szBuff3));
+				m_bGame = false;
 			}
 		}
-	}
-	if (m_iScore >= 5)
-	{
-		TCHAR	szBuff4[32] = L"";
-		swprintf_s(szBuff4, L"GAME WIN!!!");
-		TextOut(m_hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff4, (int)lstrlen(szBuff4));
-		TCHAR	szBuff5[32] = L"";
-		swprintf_s(szBuff5, L"SCORE : %d",m_iScore);
-		TextOut(m_hDC, (int)WINCX *0.5 - 40, (int)WINCY *0.5+20, szBuff5, (int)lstrlen(szBuff5));
 	}
 }
 
