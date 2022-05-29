@@ -91,7 +91,7 @@ void CMainGame::Update(void)
 			int iEvent = (*iter)->Update();
 			if (OBJ_DEAD == iEvent)
 			{
-				if (OBJ_MONSTER == i)
+				if (OBJ_MONSTER == i&&dynamic_cast<CMonster*>(*iter)->Get_Drop())
 				{
 					++m_iScore;
 				}
@@ -255,6 +255,15 @@ void CMainGame::Render(void)
 				TextOut(m_hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff3, (int)lstrlen(szBuff3));
 			}
 		}
+	}
+	if (m_iScore >= 5)
+	{
+		TCHAR	szBuff4[32] = L"";
+		swprintf_s(szBuff4, L"GAME WIN!!!");
+		TextOut(m_hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff4, (int)lstrlen(szBuff4));
+		TCHAR	szBuff5[32] = L"";
+		swprintf_s(szBuff5, L"SCORE : %d",m_iScore);
+		TextOut(m_hDC, (int)WINCX *0.5 - 40, (int)WINCY *0.5+20, szBuff5, (int)lstrlen(szBuff5));
 	}
 }
 

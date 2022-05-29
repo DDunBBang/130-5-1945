@@ -15,7 +15,7 @@ public:
 	void Set_Item(list<CObj*>* _pItem) { m_pItem = _pItem; }
 	void Set_Unique(bool* _pUnique) { m_pUnique = _pUnique; }
 	const int Get_LV() const { return m_iLv; }
-
+	const bool Get_Drop() { return m_bDrop; }
 public:
 	virtual void Initialize(void) override;
 	virtual int Update(void) override;
