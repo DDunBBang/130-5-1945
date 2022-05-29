@@ -16,9 +16,9 @@ void CShield::Initialize(void)
 	m_tInfo.fCX = 20.f;
 	m_tInfo.fCY = 20.f;
 
-	m_fDistance = 60.f;
+	m_fDistance = 30.f;
 	m_fRadian = 0.f;
-	m_fSpeed = 5.f;
+	m_fSpeed = 15.f;
 }
 
 int CShield::Update(void)
