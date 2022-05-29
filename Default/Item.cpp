@@ -121,15 +121,6 @@ void CItem::Render(HDC hDC)
 		SelectObject(hDC, oldBrush);
 		DeleteObject(myBrush);
 	}
-
-	/*if (m_iCheck == 1)
-	{
-		TCHAR szBuff[32] = L"";
-		wsprintf(szBuff, L"POWER UP!!", nullptr);
-		TextOut(hDC, m_tInfo.fX - 10, m_tInfo.fY - 8, szBuff, lstrlen(szBuff));
-		
-	}*/
-
 }
 
 
