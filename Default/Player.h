@@ -44,5 +44,6 @@ private:
 	float m_fSCTime;
 	float m_fRCTime;
 	bool m_bHitCheck;
+	bool m_bPause;
 };
 
