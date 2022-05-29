@@ -31,7 +31,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX * 0.5f;
 		m_tInfo.fY = 100.f;
 		m_eDir = DIR_LEFT;
-		m_iHP = 4000;
+		m_iHP = 10000;
 		m_fSpeed = 2.f;
 		m_dwPattern1 = GetTickCount();
 		m_dwPattern2 = GetTickCount();
@@ -96,7 +96,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = 100.f;
 		m_tInfo.fY = 10.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 300;
+		m_iHP = 150;
 	}
 	else
 	{
@@ -106,7 +106,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX - 100;
 		m_tInfo.fY = 10.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 300;
+		m_iHP = 150;
 	}
 }
 
@@ -176,7 +176,7 @@ void CMonster::Render(HDC hDC)
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 	if (101 == m_iLv)
 	{
-		Rectangle(hDC, 50, 15, m_iHP / 8 - 50, 35);
+		Rectangle(hDC, 50, 15, m_iHP / 20 - 50, 35);
 	}
 }
 
