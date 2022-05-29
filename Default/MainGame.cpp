@@ -145,11 +145,8 @@ void CMainGame::Late_Update(void)
 	}
 
 	for (auto& iter : m_ObjList[OBJ_PBULLET])
-	{
-		if (iter->Get_Dir() == DIR_UT || iter->Get_Dir() == DIR_RC)
-			CCollisionMgr::Collision_Oneside(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PBULLET]);
-		else
-			CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]);
+	{	
+		CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]);
 	}
 
 	if (!dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Get_HitCheck())

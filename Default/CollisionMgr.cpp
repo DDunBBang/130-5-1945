@@ -20,7 +20,10 @@ void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour)
 			if (IntersectRect(&rc, &(Dest->Get_Rect()), &(Sour->Get_Rect())))
 			{
 				Dest->Set_Dead();
-				Sour->Hit();
+				if (Dest->Get_Dir() == DIR_UT|| Dest->Get_Dir() == DIR_RC)
+					Sour->Critical_Hit();
+				else
+					Sour->Hit();
 			}
 		}
 	}
