@@ -31,7 +31,6 @@ private:
 	DWORD		m_dwTime;
 	DWORD		m_dwHitTime;
 	DWORD		m_dwMTime;
-	DWORD		m_dwGetItemTime;
 
 	int			m_iHp;
 	int			m_iScore;

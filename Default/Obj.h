@@ -33,7 +33,6 @@ public:
 	const void		Set_Magnet_true(void) { m_bMagnet = true; }
 	const int	Get_HP() const { return m_iHP; }
 	const void  Set_Magnet_false(void) { m_bMagnet = false; }
-	const void		Set_Check(int _Check) { m_iCheck = _Check; }
 	int		Get_Shield_Count(void) { return m_iShieldCount; }
 
 public:
@@ -60,7 +59,7 @@ protected:
 	int			m_iItemCount;
 	int			m_iHP;
 	bool		m_bMagnet;
-	int			m_iCheck;
+	
 	
 	POINT		m_Pt;
 	CObj* m_Target;
