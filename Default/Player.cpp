@@ -214,6 +214,10 @@ void CPlayer::Key_Input(void)
 			}
 		}
 	}
+	if (GetAsyncKeyState('1'))
+	{
+		++m_iShieldCount;
+	}
 
 	if (GetAsyncKeyState('O'))
 	{
