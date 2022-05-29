@@ -36,5 +36,5 @@ private:
 	bool		m_bCheck;
 	bool		m_bCheck2;
 	bool		m_bBoss;
-
+	bool		m_bClear;
 };
