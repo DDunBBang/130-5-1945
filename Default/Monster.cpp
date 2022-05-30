@@ -35,8 +35,10 @@ void CMonster::Initialize(void)
 		m_fSpeed = 2.f;
 		m_dwPattern1 = GetTickCount();
 		m_dwPattern2 = GetTickCount();
+		m_dwPattern2_1 = GetTickCount();
 		m_dwPattern3_1 = GetTickCount();
 		m_dwPattern3 = GetTickCount();
+		m_bPattern2 = false;
 	}
 	else if (m_iLv > 85 && 100 >= m_iLv)
 	{
@@ -261,7 +263,7 @@ void CMonster::Boss()
 	else
 	{
 		m_fTheta = 0;
-		if (m_dwPattern1 + 1500 < GetTickCount())
+		if (m_dwPattern1 + 3000 < GetTickCount())
 		{
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_DOWN));
 			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
@@ -272,23 +274,43 @@ void CMonster::Boss()
 			m_dwPattern1 = GetTickCount();
 		}
 
-		if (m_dwPattern2 + 2500 < GetTickCount())
+		if (m_dwPattern2 + 1000 < GetTickCount())
 		{
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tRect.left + 50, m_tRect.bottom, DIR_ROCK));
 			m_pBullet->back()->Set_Radian(
 				atan2(
-					m_Target->Get_Info().fY - m_tRect.bottom, m_Target->Get_Info().fX - m_tRect.left + 50
+					m_Target->Get_Info().fY - m_tRect.bottom, m_Target->Get_Info().fX - (m_tRect.left + 50)
 				)
 			);
 			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tRect.right - 50, m_tRect.bottom, DIR_ROCK));
 			m_pBullet->back()->Set_Radian(
 				atan2(
-					m_Target->Get_Info().fY - m_tRect.bottom, m_Target->Get_Info().fX - m_tRect.right - 50
+					m_Target->Get_Info().fY - m_tRect.bottom, m_Target->Get_Info().fX - (m_tRect.right - 50)
 				)
 			);
 			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
 			m_dwPattern2 = GetTickCount();
+			m_dwPattern2_1 = GetTickCount();
+			m_bPattern2 = true;
+		}
+		if (m_dwPattern2_1 + 300 < GetTickCount() && m_bPattern2)
+		{
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tRect.left + 50, m_tRect.bottom, DIR_ROCK));
+			m_pBullet->back()->Set_Radian(
+				atan2(
+					m_Target->Get_Info().fY - m_tRect.bottom, m_Target->Get_Info().fX - (m_tRect.left + 50)
+				)
+			);
+			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tRect.right - 50, m_tRect.bottom, DIR_ROCK));
+			m_pBullet->back()->Set_Radian(
+				atan2(
+					m_Target->Get_Info().fY - m_tRect.bottom, m_Target->Get_Info().fX - (m_tRect.right - 50)
+				)
+			);
+			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+			m_bPattern2 = false;
 		}
 	}
 }
