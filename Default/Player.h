@@ -20,6 +20,7 @@ public:
 	void Set_Mouse(list<CObj*>* _pMouse) { m_pMouse = _pMouse; }
 	void Set_HitCheck(bool _bCheck) { m_bHitCheck = _bCheck; }
 	const bool Get_HitCheck() const { return m_bHitCheck; }
+	const bool Get_Imu() const { return m_bImu; }
 
 public:
 	virtual void Initialize(void) override;
@@ -49,5 +50,6 @@ private:
 	bool m_bPause;
 	bool m_bPet;
 	bool m_bPet1;
+	bool m_bImu;
 };
 

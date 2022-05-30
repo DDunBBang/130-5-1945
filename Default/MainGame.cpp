@@ -152,19 +152,22 @@ void CMainGame::Late_Update(void)
 		CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]);
 	}
 
-	if (!dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Get_HitCheck())
+	if (!dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Get_Imu())
 	{
-		if (CCollisionMgr::Collision_Player(m_ObjList[OBJ_MBULLET], m_ObjList[OBJ_PLAYER]) ||
-			CCollisionMgr::Collision_Player(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PLAYER]))
+		if (!dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Get_HitCheck())
 		{
-			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_HitCheck(true);
-			m_dwHitTime = GetTickCount();
+			if (CCollisionMgr::Collision_Player(m_ObjList[OBJ_MBULLET], m_ObjList[OBJ_PLAYER]) ||
+				CCollisionMgr::Collision_Player(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PLAYER]))
+			{
+				dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_HitCheck(true);
+				m_dwHitTime = GetTickCount();
+			}
 		}
-	}
-	else
-	{
-		if (m_dwHitTime + 3000 < GetTickCount())
-			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_HitCheck(false);
+		else
+		{
+			if (m_dwHitTime + 3000 < GetTickCount())
+				dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].back())->Set_HitCheck(false);
+		}
 	}
 
 	CCollisionMgr::Collision_Sphere(m_ObjList[OBJ_SHIELD], m_ObjList[OBJ_MBULLET]);
