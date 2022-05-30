@@ -122,7 +122,7 @@ void CPlayer::Key_Input(void)
 			m_tInfo.fX -= m_fSpeed*sqrtf(0.5);
 			m_tInfo.fY -= m_fSpeed*sqrtf(0.5);
 		}
-		else if (GetAsyncKeyState(VK_DOWN) && (m_tRect.bottom < WINCY))
+		else if (GetAsyncKeyState('S') && (m_tRect.bottom < WINCY))
 		{
 			m_tInfo.fX -= m_fSpeed*sqrtf(0.5);
 			m_tInfo.fY += m_fSpeed*sqrtf(0.5);
@@ -181,7 +181,7 @@ void CPlayer::Key_Input(void)
 		{				
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(75, WINCY - 75, DIR_UT));
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(WINCX - 75, WINCY - 75, DIR_UT));
-			m_dwTime = GetTickCount();
+			//m_dwTime = GetTickCount();
 		}
 	}
 	if (GetAsyncKeyState('C'))
