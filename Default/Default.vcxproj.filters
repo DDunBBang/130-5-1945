@@ -55,14 +55,14 @@
     <Filter Include="01. Obj\01. Bullet\01. ScrewBullet">
       <UniqueIdentifier>{41976088-61c0-47bf-b664-ef47fa40ebbe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\03. Pet\04, Item">
-      <UniqueIdentifier>{720fd5c0-a367-492a-bd5c-3d8b029b8298}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\03. Pet\04, Item\00. Shield">
-      <UniqueIdentifier>{9019fc30-79c9-44de-8c58-14859862fce6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Obj\06. Text">
       <UniqueIdentifier>{d2ee731c-e3c9-43e6-adc6-4aac9a66e42b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04, Item">
+      <UniqueIdentifier>{720fd5c0-a367-492a-bd5c-3d8b029b8298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04, Item\00. Shield">
+      <UniqueIdentifier>{9019fc30-79c9-44de-8c58-14859862fce6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -121,7 +121,7 @@
       <Filter>01. Obj\03. Pet</Filter>
     </ClInclude>
     <ClInclude Include="Shield.h">
-      <Filter>01. Obj\03. Pet\04, Item\00. Shield</Filter>
+      <Filter>01. Obj\04, Item\00. Shield</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>01. Obj\02. Monster</Filter>
@@ -168,7 +168,7 @@
       <Filter>01. Obj\03. Pet</Filter>
     </ClCompile>
     <ClCompile Include="Shield.cpp">
-      <Filter>01. Obj\03. Pet\04, Item\00. Shield</Filter>
+      <Filter>01. Obj\04, Item\00. Shield</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>01. Obj\02. Monster</Filter>
@@ -183,7 +183,7 @@
       <Filter>01. Obj\01. Bullet\01. ScrewBullet</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>01. Obj\03. Pet\04, Item</Filter>
+      <Filter>01. Obj\04, Item</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>소스 파일</Filter>
