@@ -128,7 +128,6 @@ void CText::Render(HDC hDC)
 			HBRUSH oldBrush = (HBRUSH)SelectObject(hDC, myBrush);
 
 			Rectangle(hDC, WINCX - 30, WINCY - 125, WINCX - 10, WINCY - 50);
-
 			SelectObject(hDC, oldBrush);
 			DeleteObject(myBrush);
 		}
