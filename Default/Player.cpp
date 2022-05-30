@@ -3,7 +3,7 @@
 #include "AbstractFactory.h"
 
 CPlayer::CPlayer::CPlayer()
-	:iCount(2), m_bHitCheck(false), m_fdwTime(GetTickCount()), m_fSCTime(GetTickCount()), m_fRCTime(GetTickCount()), m_bPause(false),m_bPet(true), m_bPet1(true)
+	:iCount(2), m_bHitCheck(false), m_fdwTime(GetTickCount()), m_fSCTime(GetTickCount()), m_fRCTime(GetTickCount()), m_bPause(false),m_bPet(true), m_bPet1(true), m_bImu(false)
 {
 }
 
@@ -172,18 +172,11 @@ void CPlayer::Key_Input(void)
 		}
 	}
 
-	//if (GetAsyncKeyState('P'))
-	//{
-	//	if (iCount > 0)
-	//	{
-	//		if (m_fdwTime + 2000 <= GetTickCount())
-	//		{
-	//			
-	//			--iCount;
-	//			m_fdwTime = GetTickCount();
-	//		}
-	//	}
-	//}
+	if (GetAsyncKeyState('T'))
+		m_bImu = true;
+	else if (GetAsyncKeyState('Y'))
+		m_bImu = false;
+
 	if (GetAsyncKeyState('Q'))
 	{
 		if (m_iShieldCount > 0)
