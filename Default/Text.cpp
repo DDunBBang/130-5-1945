@@ -2,7 +2,7 @@
 #include "Text.h"
 
 
-CText::CText()
+CText::CText():m_dwGTime ( GetTickCount())
 {
 }
 
@@ -145,9 +145,44 @@ void CText::Render(HDC hDC)
 	}
 	if (*m_bClear)
 	{
-		TCHAR	szBuff3[32] = L"";
-		swprintf_s(szBuff3, L"GAME CLEAR!!!");
-		TextOut(hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff3, (int)lstrlen(szBuff3));
+		TCHAR	szBuff5[32] = L"";
+		swprintf_s(szBuff5, L"GAME CLEAR!!!");
+		TextOut(hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff5, (int)lstrlen(szBuff5));
+	}
+	if (*m_iCheck)
+	{
+		m_iCH = *m_iCheck;	
+		m_dwGTime = GetTickCount();
+	}
+	if (m_iCH == 1)
+	{
+		if (m_dwGTime + 1000 > GetTickCount())
+		{
+			TCHAR	szBuff3[32] = L"";
+			swprintf_s(szBuff3, L"POWER UP!!!");
+			TextOut(hDC, m_pObjList[OBJ_PLAYER].front()->Get_Info().fX-40, m_pObjList[OBJ_PLAYER].front()->Get_Info().fY-30, szBuff3, (int)lstrlen(szBuff3));
+
+		}
+	}
+	else if (m_iCH == 2)
+	{
+		if (m_dwGTime + 1000 > GetTickCount())
+		{
+			TCHAR	szBuff3[32] = L"";
+			swprintf_s(szBuff3, L"CHARGE!!!");
+			TextOut(hDC, m_pObjList[OBJ_PLAYER].front()->Get_Info().fX - 30, m_pObjList[OBJ_PLAYER].front()->Get_Info().fY - 30, szBuff3, (int)lstrlen(szBuff3));
+
+		}
+	}
+	else if (m_iCH == 3)
+	{
+		if (m_dwGTime + 1000 > GetTickCount())
+		{
+			TCHAR	szBuff3[32] = L"";
+			swprintf_s(szBuff3, L"PULL!!!");
+			TextOut(hDC, m_pObjList[OBJ_PLAYER].front()->Get_Info().fX - 20, m_pObjList[OBJ_PLAYER].front()->Get_Info().fY - 30, szBuff3, (int)lstrlen(szBuff3));
+		
+		}
 	}
 }
 

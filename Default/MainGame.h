@@ -36,7 +36,7 @@ private:
 	int			m_iHp;
 	int			m_iScore;
 	bool		m_bUnique[2];
-	bool		m_bCheck;
+	int		m_iCheck;
 	bool		m_bCheck2;
 	bool		m_bBoss;
 	bool		m_bClear;

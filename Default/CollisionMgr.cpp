@@ -77,7 +77,7 @@ bool CCollisionMgr::Check_Sphere(CObj * pDest, CObj * pSour)
 	return fRadius >= fDiagonal;
 }
 
-bool CCollisionMgr::Collision_Item(list<CObj*> _Player, list<CObj*> _Item)
+int CCollisionMgr::Collision_Item(list<CObj*> _Player, list<CObj*> _Item)
 {
 	RECT		rc{};
 
@@ -90,22 +90,27 @@ bool CCollisionMgr::Collision_Item(list<CObj*> _Player, list<CObj*> _Item)
 				if (Item->Get_ItemCount() <= 3)
 				{
 					Player->Set_Up_iLv();
+					Item->Set_Dead();
+					return 1;
+
 				}
 
 				else if (Item->Get_ItemCount() == 4)
 				{
 					Player->Set_Shield_Count();
+					Item->Set_Dead();
+					return 2;
 				}
 				else if (Item->Get_ItemCount() == 5)
 				{
 					Item->Set_Dead();	
-					return true;
+					return 3;
 				}
-				Item->Set_Dead();
+				
 			}
 		}
 	}
-	return false;
+	return 0;
 }
 
 

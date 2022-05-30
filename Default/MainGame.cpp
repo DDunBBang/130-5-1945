@@ -4,7 +4,7 @@
 #include "CollisionMgr.h"
 
 CMainGame::CMainGame()
-	: m_dwTime(GetTickCount()), m_bUnique{ false }, m_bCheck(false), m_bCheck2(false), m_dwMTime(GetTickCount()), m_iScore(0), m_bBoss(false), m_bGame(true), m_bClear(false)
+	: m_dwTime(GetTickCount()), m_bUnique{ false }, m_iCheck(0), m_bCheck2(false), m_dwMTime(GetTickCount()), m_iScore(0), m_bBoss(false), m_bGame(true), m_bClear(false)
 {
 	m_iHp = 3;
 
@@ -124,11 +124,10 @@ void CMainGame::Late_Update(void)
 			iter->Late_Update();
 	}
 
-	m_bCheck = CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
-	if (m_bCheck)
+	m_iCheck = CCollisionMgr::Collision_Item(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
+	if (m_iCheck==3)
 	{
 		m_bCheck2 = true;
-		m_bCheck = false;
 		m_dwMTime = GetTickCount();
 	}
 	if (m_bCheck2)
@@ -181,6 +180,7 @@ void CMainGame::Late_Update(void)
 	dynamic_cast<CText*>(m_ObjList[OBJ_TEXT].front())->Set_dwStt(&m_dwStTime);
 	dynamic_cast<CText*>(m_ObjList[OBJ_TEXT].front())->Set_bGame(&m_bGame);
 	dynamic_cast<CText*>(m_ObjList[OBJ_TEXT].front())->Set_bClear(&m_bClear);
+	dynamic_cast<CText*>(m_ObjList[OBJ_TEXT].front())->Set_iCheck(&m_iCheck);
 }
 
 void CMainGame::Render(void)
