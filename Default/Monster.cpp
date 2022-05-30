@@ -35,7 +35,7 @@ void CMonster::Initialize(void)
 		m_fSpeed = 2.f;
 		m_dwPattern1 = GetTickCount();
 		m_dwPattern2 = GetTickCount();
-		m_dwPattern2_1 = GetTickCount();
+		m_dwPattern3_1 = GetTickCount();
 		m_dwPattern3 = GetTickCount();
 	}
 	else if (m_iLv > 85 && 100 >= m_iLv)
@@ -243,14 +243,18 @@ void CMonster::Boss()
 {
 	if (m_dwPattern3 + 10000 < GetTickCount())
 	{
-		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_ROCK));
-		dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
-		m_pBullet->back()->Set_Radian(
-			m_fTheta * PI / 180
-		);
-		if (m_fTheta > 180)
-			m_fTheta -= 180;
-		m_fTheta += 13;
+		if (m_dwPattern3_1 + 25 < GetTickCount())
+		{
+			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_ROCK));
+			dynamic_cast<CBullet*>(m_pBullet->back())->Check_Bullet();
+			m_pBullet->back()->Set_Radian(
+				m_fTheta * PI / 180
+			);
+			if (m_fTheta > 180)
+				m_fTheta -= 180;
+			m_fTheta += 13;
+			m_dwPattern3_1 = GetTickCount();
+		}
 		if (m_dwPattern3 + 13000 < GetTickCount())
 			m_dwPattern3 = GetTickCount();
 	}

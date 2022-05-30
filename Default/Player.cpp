@@ -3,7 +3,7 @@
 #include "AbstractFactory.h"
 
 CPlayer::CPlayer::CPlayer()
-	:iCount(2), m_bHitCheck(false), m_fdwTime(GetTickCount()), m_fSCTime(GetTickCount()), m_fRCTime(GetTickCount()), m_bPause(false), m_bPet(true), m_bPet1(true)
+	:iCount(2), m_bHitCheck(false), m_fdwTime(GetTickCount()), m_fSCTime(GetTickCount()), m_fRCTime(GetTickCount()),m_bPause(false), m_bPet(true), m_bPet1(true), m_bImu(false), m_dwHitTime(GetTickCount())
 {
 }
 
@@ -59,16 +59,36 @@ void CPlayer::Late_Update(void)
 
 void CPlayer::Render(HDC hDC)
 {
-	Rectangle(hDC,
-		m_tRect.left,
-		m_tRect.top,
-		m_tRect.right,
-		m_tRect.bottom);
-	Ellipse(hDC,
-		m_tRect.left,
-		m_tRect.top,
-		m_tRect.right,
-		m_tRect.bottom);
+	if (m_bHitCheck)
+	{
+		if (m_dwHitTime + 100 < GetTickCount())
+		{
+			Rectangle(hDC,
+				m_tRect.left,
+				m_tRect.top,
+				m_tRect.right,
+				m_tRect.bottom);
+			Ellipse(hDC,
+				m_tRect.left,
+				m_tRect.top,
+				m_tRect.right,
+				m_tRect.bottom);
+			m_dwHitTime = GetTickCount();
+		}
+	}
+	else
+	{
+		Rectangle(hDC,
+			m_tRect.left,
+			m_tRect.top,
+			m_tRect.right,
+			m_tRect.bottom);
+		Ellipse(hDC,
+			m_tRect.left,
+			m_tRect.top,
+			m_tRect.right,
+			m_tRect.bottom);
+	}
 }
 
 void CPlayer::Release(void)
@@ -102,7 +122,7 @@ void CPlayer::Key_Input(void)
 			m_tInfo.fX -= m_fSpeed*sqrtf(0.5);
 			m_tInfo.fY -= m_fSpeed*sqrtf(0.5);
 		}
-		else if (GetAsyncKeyState(VK_DOWN) && (m_tRect.bottom < WINCY))
+		else if (GetAsyncKeyState('S') && (m_tRect.bottom < WINCY))
 		{
 			m_tInfo.fX -= m_fSpeed*sqrtf(0.5);
 			m_tInfo.fY += m_fSpeed*sqrtf(0.5);
@@ -161,7 +181,7 @@ void CPlayer::Key_Input(void)
 		{				
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(75, WINCY - 75, DIR_UT));
 			m_pBullet->push_back(CAbstractFactory<CBullet>::Create(WINCX - 75, WINCY - 75, DIR_UT));
-			m_dwTime = GetTickCount();
+			//m_dwTime = GetTickCount();
 		}
 	}
 	if (GetAsyncKeyState('C'))
@@ -173,18 +193,11 @@ void CPlayer::Key_Input(void)
 		}
 	}
 
-	//if (GetAsyncKeyState('P'))
-	//{
-	//	if (iCount > 0)
-	//	{
-	//		if (m_fdwTime + 2000 <= GetTickCount())
-	//		{
-	//			
-	//			--iCount;
-	//			m_fdwTime = GetTickCount();
-	//		}
-	//	}
-	//}
+	if (GetAsyncKeyState('T'))
+		m_bImu = true;
+	else if (GetAsyncKeyState('Y'))
+		m_bImu = false;
+
 	if (GetAsyncKeyState('Q'))
 	{
 		if (m_iShieldCount > 0)

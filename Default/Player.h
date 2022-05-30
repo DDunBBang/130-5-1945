@@ -22,7 +22,8 @@ public:
 	void Set_HitCheck(bool _bCheck) { m_bHitCheck = _bCheck; }
 	void Set_Item(list<CObj*>* Item) { m_pItem = Item; }
 	const bool Get_HitCheck() const { return m_bHitCheck; }
-	
+	const bool Get_Imu() const { return m_bImu; }
+
 
 public:
 	virtual void Initialize(void) override;
@@ -46,6 +47,7 @@ private:
 
 	DWORD		m_dwBulletTime;
 	DWORD		m_dwCountTime;
+	DWORD		m_dwHitTime;
 
 	int iCount;
 	float m_fdwTime;
@@ -55,5 +57,6 @@ private:
 	bool m_bPause;
 	bool m_bPet;
 	bool m_bPet1;
+	bool m_bImu;
 };
 

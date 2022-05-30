@@ -36,7 +36,7 @@ private:
 
 	DWORD		m_dwPattern1;
 	DWORD		m_dwPattern2;
-	DWORD		m_dwPattern2_1;
+	DWORD		m_dwPattern3_1;
 	DWORD		m_dwPattern3;
 
 	float		m_fTheta;
