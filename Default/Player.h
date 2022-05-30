@@ -41,6 +41,7 @@ private:
 	list<CObj*>* m_pMouse;
 
 	DWORD		m_dwBulletTime;
+	DWORD		m_dwHitTime;
 
 	int iCount;
 	float m_fdwTime;

@@ -3,7 +3,8 @@
 #include "AbstractFactory.h"
 
 CPlayer::CPlayer::CPlayer()
-	:iCount(2), m_bHitCheck(false), m_fdwTime(GetTickCount()), m_fSCTime(GetTickCount()), m_fRCTime(GetTickCount()), m_bPause(false),m_bPet(true), m_bPet1(true), m_bImu(false)
+	:iCount(2), m_bHitCheck(false), m_fdwTime(GetTickCount()), m_fSCTime(GetTickCount()), m_fRCTime(GetTickCount()),
+	m_bPause(false), m_bPet(true), m_bPet1(true), m_bImu(false), m_dwHitTime(GetTickCount())
 {
 }
 
@@ -58,16 +59,36 @@ void CPlayer::Late_Update(void)
 
 void CPlayer::Render(HDC hDC)
 {
-	Rectangle(hDC,
-		m_tRect.left,
-		m_tRect.top,
-		m_tRect.right,
-		m_tRect.bottom);
-	Ellipse(hDC,
-		m_tRect.left,
-		m_tRect.top,
-		m_tRect.right,
-		m_tRect.bottom);
+	if (m_bHitCheck)
+	{
+		if (m_dwHitTime + 100 < GetTickCount())
+		{
+			Rectangle(hDC,
+				m_tRect.left,
+				m_tRect.top,
+				m_tRect.right,
+				m_tRect.bottom);
+			Ellipse(hDC,
+				m_tRect.left,
+				m_tRect.top,
+				m_tRect.right,
+				m_tRect.bottom);
+			m_dwHitTime = GetTickCount();
+		}
+	}
+	else
+	{
+		Rectangle(hDC,
+			m_tRect.left,
+			m_tRect.top,
+			m_tRect.right,
+			m_tRect.bottom);
+		Ellipse(hDC,
+			m_tRect.left,
+			m_tRect.top,
+			m_tRect.right,
+			m_tRect.bottom);
+	}
 }
 
 void CPlayer::Release(void)
