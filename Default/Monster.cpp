@@ -46,7 +46,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = -10.f;
 		m_tInfo.fY = 20.f;
 		m_eDir = DIR_RIGHT;
-		m_iHP = 1;	// 60;
+		m_iHP = 3;
 	}
 	else if (m_iLv > 70)
 	{
@@ -54,7 +54,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX + 10;
 		m_tInfo.fY = 20.f;
 		m_eDir = DIR_LEFT;
-		m_iHP = 1; //60;
+		m_iHP = 3;
 	}
 	else if (m_iLv > 55)
 	{
@@ -62,7 +62,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = WINCX - 20.f;
 		m_tInfo.fY = 20.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 1;
+		m_iHP = 3;
 	}
 	else if (m_iLv > 40)
 	{
@@ -70,7 +70,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fX = 20.f;
 		m_tInfo.fY = 20.f;
 		m_eDir = DIR_DOWN;
-		m_iHP = 1;
+		m_iHP = 3;
 	}
 	else if (m_iLv > 30)
 	{
