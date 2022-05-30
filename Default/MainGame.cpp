@@ -146,9 +146,9 @@ void CMainGame::Late_Update(void)
 		}
 
 	}
-	
+
 	for (auto& iter : m_ObjList[OBJ_PBULLET])
-	{	
+	{
 		CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PBULLET], m_ObjList[OBJ_MONSTER]);
 	}
 
@@ -242,20 +242,12 @@ void CMainGame::Render(void)
 	}
 	else if (m_ObjList[OBJ_PLAYER].front()->Get_HP() <= 0)
 	{
-		if (m_dwStTime + 2000 < GetTickCount())
-		{
-			if ((m_dwStTime + 4000) < GetTickCount())
-			{
-				m_dwStTime = GetTickCount();
-			}
-			else
-			{
-				TCHAR	szBuff3[32] = L"";
-				swprintf_s(szBuff3, L"GAME OVER!!!");
-				TextOut(m_hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff3, (int)lstrlen(szBuff3));
-				m_bGame = false;
-			}
-		}
+
+		TCHAR	szBuff3[32] = L"";
+		swprintf_s(szBuff3, L"GAME OVER!!!");
+		TextOut(m_hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff3, (int)lstrlen(szBuff3));
+		m_bGame = false;
+
 	}
 	if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() >= 0)
 	{
