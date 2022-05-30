@@ -174,9 +174,9 @@ void CMonster::Late_Update(void)
 void CMonster::Render(HDC hDC)
 {
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-	if (101 == m_iLv)
+	if (101 == m_iLv&&m_iHP>0)
 	{
-		Rectangle(hDC, 50, 15, m_iHP / 20 - 50, 35);
+		Rectangle(hDC, 50, 15, m_iHP / 25+50, 35);
 	}
 }
 
