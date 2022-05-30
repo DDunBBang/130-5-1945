@@ -233,10 +233,10 @@ void CPlayer::Key_Input(void)
 			}
 		}
 	}
-	if (GetAsyncKeyState('1'))
+	/*if (GetAsyncKeyState('1'))
 	{
 		++m_iShieldCount;
-	}
+	}*/
 
 	if (GetAsyncKeyState('O'))
 	{
@@ -245,7 +245,7 @@ void CPlayer::Key_Input(void)
 			continue;
 		}
 	}
-	if (GetAsyncKeyState('2'))
+	if (GetAsyncKeyState('1'))
 	{
 		if (m_dwCountTime + 1000 < GetTickCount())
 		{
@@ -253,7 +253,7 @@ void CPlayer::Key_Input(void)
 			m_dwCountTime = GetTickCount();
 		}
 	}
-	if (GetAsyncKeyState('3'))
+	if (GetAsyncKeyState('2'))
 	{
 		if (m_dwCountTime + 1000 < GetTickCount())
 		{
@@ -261,7 +261,7 @@ void CPlayer::Key_Input(void)
 			m_dwCountTime = GetTickCount();
 		}
 
-	}	if (GetAsyncKeyState('4'))
+	}	if (GetAsyncKeyState('3'))
 	{
 		if (m_dwCountTime + 1000 < GetTickCount())
 		{
