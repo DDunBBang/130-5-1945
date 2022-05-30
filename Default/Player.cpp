@@ -165,7 +165,7 @@ void CPlayer::Key_Input(void)
 		m_pBullet->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_LC, m_fRadian));
 	}*/
 
-	if (GetAsyncKeyState(VK_RBUTTON))
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8001)
 	{
 		if ((m_fRCTime / 1000) + 2 <= (GetTickCount() / 1000))
 		{
