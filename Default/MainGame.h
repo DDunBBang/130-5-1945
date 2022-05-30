@@ -6,6 +6,7 @@
 #include "Monster.h"
 #include "Mouse.h"
 #include "Item.h"
+#include "Text.h"
 class CMainGame
 {
 public:					// 持失切, 社瑚切

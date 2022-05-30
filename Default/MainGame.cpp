@@ -22,6 +22,8 @@ void CMainGame::Initialize(void)
 	m_dwStTime = GetTickCount();
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 	m_ObjList[OBJ_MOUSE].push_back(CAbstractFactory<CMouse>::Create());
+	m_ObjList[OBJ_TEXT].push_back(CAbstractFactory<CText>::Create());
+
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Bullet(&m_ObjList[OBJ_PBULLET]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Monster(&m_ObjList[OBJ_MONSTER]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Pet(&m_ObjList[OBJ_PET]);
@@ -29,6 +31,7 @@ void CMainGame::Initialize(void)
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Time(m_dwStTime);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Mouse(&m_ObjList[OBJ_MOUSE]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Item(&m_ObjList[OBJ_ITEM]);
+	dynamic_cast<CText*>(m_ObjList[OBJ_TEXT].front())->Set_Obj(m_ObjList);
 }
 
 void CMainGame::Update(void)
@@ -110,6 +113,7 @@ void CMainGame::Update(void)
 	{
 		dynamic_cast<CMonster*>(iter)->Set_Item(&m_ObjList[OBJ_ITEM]);
 	}
+	
 }
 
 void CMainGame::Late_Update(void)
@@ -173,6 +177,10 @@ void CMainGame::Late_Update(void)
 
 	CCollisionMgr::Collision_Sphere(m_ObjList[OBJ_SHIELD], m_ObjList[OBJ_MBULLET]);
 	CCollisionMgr::Collision_Sphere(m_ObjList[OBJ_MBULLET], m_ObjList[OBJ_SHIELD]);
+	dynamic_cast<CText*>(m_ObjList[OBJ_TEXT].front())->Set_Score(&m_iScore);
+	dynamic_cast<CText*>(m_ObjList[OBJ_TEXT].front())->Set_dwStt(&m_dwStTime);
+	dynamic_cast<CText*>(m_ObjList[OBJ_TEXT].front())->Set_bGame(&m_bGame);
+	dynamic_cast<CText*>(m_ObjList[OBJ_TEXT].front())->Set_bClear(&m_bClear);
 }
 
 void CMainGame::Render(void)
@@ -183,126 +191,126 @@ void CMainGame::Render(void)
 		for (auto& iter : m_ObjList[i])
 			iter->Render(m_hDC);
 	}
-	TCHAR	szBuff[32] = L"";
-	swprintf_s(szBuff, L"Player Count : %d", m_ObjList[OBJ_PLAYER].front()->Get_HP());
-	TextOut(m_hDC, 50, WINCY - 50, szBuff, lstrlen(szBuff));
+	//TCHAR	szBuff[32] = L"";
+	//swprintf_s(szBuff, L"Player Count : %d", m_ObjList[OBJ_PLAYER].front()->Get_HP());
+	//TextOut(m_hDC, 50, WINCY - 50, szBuff, lstrlen(szBuff));
 
-	TCHAR	szBuff1[32] = L"";
-	swprintf_s(szBuff1, L"Bullet Count : %zd", m_ObjList[OBJ_PBULLET].size());
-	TextOut(m_hDC, WINCX - 150, WINCY - 50, szBuff1, lstrlen(szBuff1));
+	//TCHAR	szBuff1[32] = L"";
+	//swprintf_s(szBuff1, L"Bullet Count : %zd", m_ObjList[OBJ_PBULLET].size());
+	//TextOut(m_hDC, WINCX - 150, WINCY - 50, szBuff1, lstrlen(szBuff1));
 
-	TCHAR	szBuff4[32] = L"";
-	swprintf_s(szBuff4, L"SCORE : %d", m_iScore);
-	TextOut(m_hDC, WINCX *0.5, WINCY - 50, szBuff4, lstrlen(szBuff4));
+	//TCHAR	szBuff4[32] = L"";
+	//swprintf_s(szBuff4, L"SCORE : %d", m_iScore);
+	//TextOut(m_hDC, WINCX *0.5, WINCY - 50, szBuff4, lstrlen(szBuff4));
 
-	//if()
-	TCHAR	szBuff2[32] = L"";
+	////if()
+	//TCHAR	szBuff2[32] = L"";
 
-	int i = ((m_dwStTime / 1000) + 20) - (GetTickCount() / 1000);
-	if (m_ObjList[OBJ_PLAYER].front()->Get_HP() > 0)
-	{
-		if (i > 0 && i <= 20)
-		{
-			Rectangle(m_hDC, 50, WINCY - 65, 150, WINCY - 50);
-			if (i <= 10)
-			{
-				HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(255, 215, 0));
-				HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
+	//int i = ((m_dwStTime / 1000) + 20) - (GetTickCount() / 1000);
+	//if (m_ObjList[OBJ_PLAYER].front()->Get_HP() > 0)
+	//{
+	//	if (i > 0 && i <= 20)
+	//	{
+	//		Rectangle(m_hDC, 50, WINCY - 65, 150, WINCY - 50);
+	//		if (i <= 10)
+	//		{
+	//			HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(255, 215, 0));
+	//			HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
 
-				Rectangle(m_hDC, 50, WINCY - 65, 150 - i * 5, WINCY - 50);
+	//			Rectangle(m_hDC, 50, WINCY - 65, 150 - i * 5, WINCY - 50);
 
-				SelectObject(m_hDC, oldBrush);
-				DeleteObject(myBrush);
-			}
-			else if (i > 10 && i <= 20)
-			{
-				HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(255, 0, 0));
-				HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
+	//			SelectObject(m_hDC, oldBrush);
+	//			DeleteObject(myBrush);
+	//		}
+	//		else if (i > 10 && i <= 20)
+	//		{
+	//			HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(255, 0, 0));
+	//			HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
 
-				Rectangle(m_hDC, 50, WINCY - 65, 150 - i * 5, WINCY - 50);
+	//			Rectangle(m_hDC, 50, WINCY - 65, 150 - i * 5, WINCY - 50);
 
-				SelectObject(m_hDC, oldBrush);
-				DeleteObject(myBrush);
-			}
-		}
-		else if (i <= 0)
-		{
-			HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(0, 255, 127));
-			HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
+	//			SelectObject(m_hDC, oldBrush);
+	//			DeleteObject(myBrush);
+	//		}
+	//	}
+	//	else if (i <= 0)
+	//	{
+	//		HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(0, 255, 127));
+	//		HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
 
-			Rectangle(m_hDC, 50, WINCY - 65, 150, WINCY - 50);
+	//		Rectangle(m_hDC, 50, WINCY - 65, 150, WINCY - 50);
 
-			SelectObject(m_hDC, oldBrush);
-			DeleteObject(myBrush);
+	//		SelectObject(m_hDC, oldBrush);
+	//		DeleteObject(myBrush);
 
-			swprintf_s(szBuff2, L"필살기 사용 : R");
-			TextOut(m_hDC, 50, WINCY - 90, szBuff2, lstrlen(szBuff2));
-			if (GetAsyncKeyState('R'))
-			{
-				m_dwStTime = GetTickCount();
-				dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Time(m_dwStTime);
-			}
-		}
-	}
-	else if (m_ObjList[OBJ_PLAYER].front()->Get_HP() <= 0)
-	{
+	//		swprintf_s(szBuff2, L"필살기 사용 : R");
+	//		TextOut(m_hDC, 50, WINCY - 90, szBuff2, lstrlen(szBuff2));
+	//		if (GetAsyncKeyState('R'))
+	//		{
+	//			m_dwStTime = GetTickCount();
+	//			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Time(m_dwStTime);
+	//		}
+	//	}
+	//}
+	//else if (m_ObjList[OBJ_PLAYER].front()->Get_HP() <= 0)
+	//{
 
-		TCHAR	szBuff3[32] = L"";
-		swprintf_s(szBuff3, L"GAME OVER!!!");
-		TextOut(m_hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff3, (int)lstrlen(szBuff3));
-		m_bGame = false;
+	//	TCHAR	szBuff3[32] = L"";
+	//	swprintf_s(szBuff3, L"GAME OVER!!!");
+	//	TextOut(m_hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff3, (int)lstrlen(szBuff3));
+	//	m_bGame = false;
 
-	}
-	if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() >= 0)
-	{
-		Rectangle(m_hDC, WINCX - 30, WINCY - 150, WINCX - 10, WINCY - 50);
-		if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 1)
-		{
-			HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(240, 230, 140));
-			HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
+	//}
+	//if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() >= 0)
+	//{
+	//	Rectangle(m_hDC, WINCX - 30, WINCY - 150, WINCX - 10, WINCY - 50);
+	//	if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 1)
+	//	{
+	//		HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(240, 230, 140));
+	//		HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
 
-			Rectangle(m_hDC, WINCX - 30, WINCY - 75, WINCX - 10, WINCY - 50);
+	//		Rectangle(m_hDC, WINCX - 30, WINCY - 75, WINCX - 10, WINCY - 50);
 
-			SelectObject(m_hDC, oldBrush);
-			DeleteObject(myBrush);
-		}
-		else if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 2)
-		{
-			HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(240, 230, 140));
-			HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
+	//		SelectObject(m_hDC, oldBrush);
+	//		DeleteObject(myBrush);
+	//	}
+	//	else if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 2)
+	//	{
+	//		HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(240, 230, 140));
+	//		HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
 
-			Rectangle(m_hDC, WINCX - 30, WINCY - 100, WINCX - 10, WINCY - 50);
+	//		Rectangle(m_hDC, WINCX - 30, WINCY - 100, WINCX - 10, WINCY - 50);
 
-			SelectObject(m_hDC, oldBrush);
-			DeleteObject(myBrush);
-		}
-		else if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 3)
-		{
-			HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(240, 230, 140));
-			HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
+	//		SelectObject(m_hDC, oldBrush);
+	//		DeleteObject(myBrush);
+	//	}
+	//	else if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 3)
+	//	{
+	//		HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(240, 230, 140));
+	//		HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
 
-			Rectangle(m_hDC, WINCX - 30, WINCY - 125, WINCX - 10, WINCY - 50);
+	//		Rectangle(m_hDC, WINCX - 30, WINCY - 125, WINCX - 10, WINCY - 50);
 
-			SelectObject(m_hDC, oldBrush);
-			DeleteObject(myBrush);
-		}
-		else if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 4)
-		{
-			HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(240, 230, 140));
-			HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
+	//		SelectObject(m_hDC, oldBrush);
+	//		DeleteObject(myBrush);
+	//	}
+	//	else if (m_ObjList[OBJ_PLAYER].front()->Get_Shield_Count() == 4)
+	//	{
+	//		HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(240, 230, 140));
+	//		HBRUSH oldBrush = (HBRUSH)SelectObject(m_hDC, myBrush);
 
-			Rectangle(m_hDC, WINCX - 30, WINCY - 150, WINCX - 10, WINCY - 50);
+	//		Rectangle(m_hDC, WINCX - 30, WINCY - 150, WINCX - 10, WINCY - 50);
 
-			SelectObject(m_hDC, oldBrush);
-			DeleteObject(myBrush);
-		}
-	}
-	if (m_bClear)
-	{
-		TCHAR	szBuff3[32] = L"";
-		swprintf_s(szBuff3, L"GAME CLEAR!!!");
-		TextOut(m_hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff3, (int)lstrlen(szBuff3));
-	}
+	//		SelectObject(m_hDC, oldBrush);
+	//		DeleteObject(myBrush);
+	//	}
+	//}
+	//if (m_bClear)
+	//{
+	//	TCHAR	szBuff3[32] = L"";
+	//	swprintf_s(szBuff3, L"GAME CLEAR!!!");
+	//	TextOut(m_hDC, (int)WINCX *0.5 - 50, (int)WINCY *0.5, szBuff3, (int)lstrlen(szBuff3));
+	//}
 }
 
 void CMainGame::Release(void)
