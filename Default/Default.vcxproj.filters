@@ -61,6 +61,9 @@
     <Filter Include="01. Obj\03. Pet\04, Item\00. Shield">
       <UniqueIdentifier>{9019fc30-79c9-44de-8c58-14859862fce6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\Item">
+      <UniqueIdentifier>{8b8774a9-34b3-4157-ae2d-4c0372f26ec9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -132,9 +135,6 @@
     <ClInclude Include="ScrewBullet.h">
       <Filter>01. Obj\01. Bullet\01. ScrewBullet</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>01. Obj\04, Item</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -180,10 +180,10 @@
       <Filter>01. Obj\01. Bullet\01. ScrewBullet</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>01. Obj\04, Item</Filter>
+      <Filter>01. Obj\03. Pet\04, Item</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>01. Obj\03. Pet\04, Item</Filter>
+      <Filter>01. Obj\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

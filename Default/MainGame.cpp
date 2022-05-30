@@ -28,6 +28,7 @@ void CMainGame::Initialize(void)
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Shield(&m_ObjList[OBJ_SHIELD]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Time(m_dwStTime);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Mouse(&m_ObjList[OBJ_MOUSE]);
+	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Set_Item(&m_ObjList[OBJ_ITEM]);
 }
 
 void CMainGame::Update(void)

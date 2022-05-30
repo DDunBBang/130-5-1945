@@ -3,7 +3,7 @@
 #include "AbstractFactory.h"
 
 CPlayer::CPlayer::CPlayer()
-	:iCount(2), m_bHitCheck(false), m_fdwTime(GetTickCount()), m_fSCTime(GetTickCount()), m_fRCTime(GetTickCount()), m_bPause(false),m_bPet(true), m_bPet1(true)
+	:iCount(2), m_bHitCheck(false), m_fdwTime(GetTickCount()), m_fSCTime(GetTickCount()), m_fRCTime(GetTickCount()), m_bPause(false), m_bPet(true), m_bPet1(true)
 {
 }
 
@@ -18,6 +18,7 @@ void CPlayer::Initialize(void)
 	m_fSpeed = 6.f;
 	m_iHP = 3;
 	m_dwBulletTime = GetTickCount();
+	m_dwCountTime = GetTickCount();
 }
 
 int CPlayer::Update(void)
@@ -231,6 +232,31 @@ void CPlayer::Key_Input(void)
 			continue;
 		}
 	}
+	if (GetAsyncKeyState('2'))
+	{
+		if (m_dwCountTime + 1000 < GetTickCount())
+		{
+			m_pItem->push_back(Create_Item(2));
+			m_dwCountTime = GetTickCount();
+		}
+	}
+	if (GetAsyncKeyState('3'))
+	{
+		if (m_dwCountTime + 1000 < GetTickCount())
+		{
+			m_pItem->push_back(Create_Item(4));
+			m_dwCountTime = GetTickCount();
+		}
+
+	}	if (GetAsyncKeyState('4'))
+	{
+		if (m_dwCountTime + 1000 < GetTickCount())
+		{
+			m_pItem->push_back(Create_Item(5));
+			m_dwCountTime = GetTickCount();
+		}
+
+	}
 
 }
 CObj * CPlayer::Create_Pet()
@@ -260,4 +286,11 @@ CObj * CPlayer::Create_Shield(DIRECTION eDir)
 	Shield->Set_Target(this);
 	Shield->Set_Dir(eDir);
 	return Shield;
+}
+
+CObj * CPlayer::Create_Item(int Count)
+{
+	CObj* pItem = CAbstractFactory<CItem>::Create(WINCX - 100, WINCY - 300);
+	pItem->Set_ItemCount(Count);
+	return pItem;
 }

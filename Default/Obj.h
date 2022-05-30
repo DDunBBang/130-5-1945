@@ -34,6 +34,7 @@ public:
 	const int	Get_HP() const { return m_iHP; }
 	const void  Set_Magnet_false(void) { m_bMagnet = false; }
 	int		Get_Shield_Count(void) { return m_iShieldCount; }
+	void	Set_ItemCount(int Count) { m_iItemCount = Count; }
 
 public:
 	virtual		void	Initialize(void)	PURE;
